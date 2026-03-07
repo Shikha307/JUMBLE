@@ -156,3 +156,9 @@ body {
   animation: fadeUp 0.3s ease-out;
 }
 
+.required-mark {
+  color: #e53e3e;
+  margin-left: 4px;
+  font-weight: bold;
+}
+
