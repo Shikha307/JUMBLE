@@ -1,4 +1,4 @@
-package com.jumble.userjob;
+package com.jumble.userjob.config;
 
 import com.mongodb.ConnectionString;
 import com.mongodb.MongoClientSettings;
