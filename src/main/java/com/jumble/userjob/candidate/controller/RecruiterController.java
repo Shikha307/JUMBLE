@@ -1,11 +1,12 @@
-package com.jumble.userjob.user.controller;
+package com.jumble.userjob.candidate.controller;
 
-import com.jumble.userjob.user.model.Recruiter;
-import com.jumble.userjob.user.service.RecruiterService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import com.jumble.userjob.candidate.model.Recruiter;
+import com.jumble.userjob.candidate.service.RecruiterService;
 
 @RestController
 @RequestMapping("/api/recruiters")

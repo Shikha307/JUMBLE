@@ -1,4 +1,4 @@
-package com.jumble.userjob.user.model;
+package com.jumble.userjob.candidate.model;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -10,8 +10,8 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Document(collection = "users")
-public class User {
+@Document(collection = "candidates")
+public class Candidate {
     @Id
     private String id;
     private String name;
@@ -21,5 +21,5 @@ public class User {
     private String resumeContentType;
 
     @com.fasterxml.jackson.annotation.JsonIgnore
-    private byte[] resumeData; // Stored directly in MongoDB as BSON binary
+    private byte[] resumeData;
 }

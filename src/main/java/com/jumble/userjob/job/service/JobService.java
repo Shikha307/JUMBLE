@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class JobService {
@@ -25,6 +26,11 @@ public class JobService {
         if (skills == null || skills.isEmpty()) {
             return getAllJobs();
         }
-        return jobRepository.findBySkillsNeededIn(skills);
+        // findBySkillsNeededIn returns one result per matching skill element,
+        // so we deduplicate to ensure each job appears at most once.
+        return jobRepository.findBySkillsNeededIn(skills)
+                .stream()
+                .distinct()
+                .collect(Collectors.toList());
     }
 }
