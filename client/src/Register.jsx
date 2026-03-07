@@ -146,10 +146,10 @@ function Register() {
           <p>Create your account & get matched!</p>
         </div>
 
-        <form className="login-form" onSubmit={handleSubmit}>
+        <form className="login-form" onSubmit={handleSubmit} noValidate>
           
           <div className="input-group">
-            <label htmlFor="name">Full Name</label>
+            <label htmlFor="name">Full Name<span className="required-mark">*</span></label>
             <input 
               type="text" 
               id="name" 
@@ -162,7 +162,7 @@ function Register() {
           </div>
 
           <div className="input-group">
-            <label htmlFor="role">I am a...</label>
+            <label htmlFor="role">I am a...<span className="required-mark">*</span></label>
             <select 
               id="role" 
               value={formData.role} 
@@ -187,7 +187,7 @@ function Register() {
           </div>
 
           <div className="input-group">
-            <label htmlFor="email">Email</label>
+            <label htmlFor="email">Email<span className="required-mark">*</span></label>
             <input 
               type="email" 
               id="email" 
@@ -200,7 +200,7 @@ function Register() {
           </div>
 
           <div className="input-group">
-            <label htmlFor="password">Password</label>
+            <label htmlFor="password">Password<span className="required-mark">*</span></label>
             <input 
               type="password" 
               id="password" 
@@ -213,7 +213,7 @@ function Register() {
           </div>
           
           <div className="input-group">
-            <label htmlFor="confirmPassword">Confirm Password</label>
+            <label htmlFor="confirmPassword">Confirm Password<span className="required-mark">*</span></label>
             <input 
               type="password" 
               id="confirmPassword" 
