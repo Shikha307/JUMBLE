@@ -21,6 +21,9 @@ public class Swipe {
     @Indexed
     private String jobId;
     
+    @Indexed
+    private String recruiterId;
+    
     private UserRole swiperRole;
     private SwipeDirection direction;
     private Instant timestamp;

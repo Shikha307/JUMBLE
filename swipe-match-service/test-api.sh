@@ -23,12 +23,16 @@ curl -s -X POST "$BASE_URL/swipes" \
      -d '{
            "candidateId": "C1",
            "jobId": "J1",
+           "recruiterId": "R1",
            "swiperRole": "RECRUITER",
            "direction": "RIGHT"
          }'
 
 echo -e "\n\n3️⃣ Checking Matches for Candidate (C1)"
 curl -s -X GET "$BASE_URL/matches/candidate/C1" | python3 -m json.tool
+
+echo -e "\n\n4️⃣ Checking Matches for Recruiter (R1)"
+curl -s -X GET "$BASE_URL/matches/recruiter/R1" | python3 -m json.tool
 
 echo -e "\n======================================"
 echo "✅ Test Completed"

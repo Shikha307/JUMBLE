@@ -17,10 +17,11 @@ Represents a singular action taken by a user on the platform.
   - `id`: Unique identifier (UUID).
   - `candidateId`: The ID of the candidate involved in the swipe.
   - `jobId`: The ID of the job listing involved in the swipe.
+  - `recruiterId`: The ID of the recruiter (populated when a recruiter swipes).
   - `swiperRole`: Enum (`CANDIDATE` or `RECRUITER`) identifying who initiated the action.
   - `direction`: Enum (`LEFT` or `RIGHT`). Left means dislike/reject, Right means like/approve.
   - `timestamp`: The exact time the action was recorded.
-- **Storage**: Stored in a Redis Hash. Fields are annotated with `@Indexed` to allow quick horizontal lookups by `candidateId` and `jobId`.
+- **Storage**: Stored in a Redis Hash. Fields are annotated with `@Indexed` to allow quick horizontal lookups by `candidateId`, `jobId`, and `recruiterId`.
 
 ### 2. Match
 Represents a successful, mutual "Right Swipe" (Like) between a specific Candidate and a specific Recruiter's Job.
@@ -28,8 +29,9 @@ Represents a successful, mutual "Right Swipe" (Like) between a specific Candidat
   - `id`: Unique identifier (UUID).
   - `candidateId`: The ID of the candidate.
   - `jobId`: The ID of the matched job.
+  - `recruiterId`: The ID of the recruiter.
   - `matchedAt`: The timestamp when the mutual match was achieved.
-- **Storage**: Stored in a Redis Hash. Indexed by `candidateId` and `jobId` for quick profile population.
+- **Storage**: Stored in a Redis Hash. Indexed by `candidateId`, `jobId`, and `recruiterId` for quick profile population.
 
 ---
 
