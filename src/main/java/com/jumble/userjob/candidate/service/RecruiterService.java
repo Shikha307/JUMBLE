@@ -1,9 +1,11 @@
-package com.jumble.userjob.user.service;
+package com.jumble.userjob.candidate.service;
 
-import com.jumble.userjob.user.model.Recruiter;
-import com.jumble.userjob.user.repository.RecruiterRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.jumble.userjob.candidate.model.Recruiter;
+import com.jumble.userjob.candidate.repository.RecruiterRepository;
+
 import java.util.Optional;
 
 @Service

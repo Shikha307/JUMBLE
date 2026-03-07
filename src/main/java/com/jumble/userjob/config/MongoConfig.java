@@ -21,7 +21,6 @@ public class MongoConfig extends AbstractMongoClientConfiguration {
 
     @Override
     public MongoClient mongoClient() {
-        System.out.println("-----> CUSTOM MONGO CONFIG LOADED! URI: " + mongoUri);
         ConnectionString connectionString = new ConnectionString(mongoUri);
         MongoClientSettings mongoClientSettings = MongoClientSettings.builder()
                 .applyConnectionString(connectionString)
