@@ -1,0 +1,10 @@
+spring:
+  application:
+    name: user-job-management
+  data:
+    mongodb:
+      uri: mongodb+srv://jumble_app_user:test123@jumble.ewhoayr.mongodb.net/jumbledb?retryWrites=true&w=majority&appName=JUMBLE
+logging:
+  level:
+    org.springframework.data.mongodb: DEBUG
+    org.mongodb.driver: DEBUG
