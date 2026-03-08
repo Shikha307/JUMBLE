@@ -171,7 +171,7 @@ export default function RecruiterHome() {
               <h2>Loading candidates...</h2>
             </div>
           ) : currentCandidate ? (
-            <div className="list-card-wrapper active-card" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+            <div className="list-card-wrapper" style={{ width: '100%', maxWidth: '450px', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
               <div className="suggested-header">
                 <h2>
                   <Briefcase size={24} style={{ color: 'var(--primary)' }} />
@@ -179,11 +179,14 @@ export default function RecruiterHome() {
                 </h2>
                 <div className="accent-line"></div>
               </div>
-              <CandidateCard 
-                candidate={currentCandidate} 
-                onLike={(id) => handleAction(id, 'LIKED')}
-                onPass={(id) => handleAction(id, 'PASSED')}
-              />
+              
+              <div className="active-card">
+                <CandidateCard 
+                  candidate={currentCandidate} 
+                  onLike={(id) => handleAction(id, 'LIKED')}
+                  onPass={(id) => handleAction(id, 'PASSED')}
+                />
+              </div>
             </div>
           ) : (
             <div className="no-more-profiles">
