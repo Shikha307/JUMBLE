@@ -23,6 +23,7 @@ public class SwipeService {
     private final MatchDetectionService matchDetectionService;
     private final MongoSwipeRecordRepository mongoSwipeRecordRepository;
     private final com.jumble.swipematch.repository.CandidateRepository candidateRepository;
+    private final com.jumble.swipematch.repository.JobRepository jobRepository;
 
     /**
      * Central method — ALL swipe processing goes through here.
@@ -100,6 +101,23 @@ public class SwipeService {
         return candidateRepository.findAll()
                 .stream()
                 .filter(candidate -> !swipedIds.contains(candidate.getId()))
+                .toList();
+    }
+
+    /**
+     * Returns a list of *unswiped* Job objects for a specific candidate.
+     * Excludes any job the candidate has already swiped left or right on.
+     */
+    public java.util.List<com.jumble.swipematch.model.Job> getUnswipedJobsForCandidate(String candidateId) {
+        java.util.List<String> swipedJobIds = mongoSwipeRecordRepository
+                .findByCandidateIdAndCandidateSwipeIsNotNull(candidateId)
+                .stream()
+                .map(SwipeRecord::getJobId)
+                .toList();
+
+        return jobRepository.findAll()
+                .stream()
+                .filter(job -> !swipedJobIds.contains(job.getId()))
                 .toList();
     }
 }
