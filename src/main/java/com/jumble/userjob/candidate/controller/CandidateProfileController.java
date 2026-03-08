@@ -38,6 +38,9 @@ public class CandidateProfileController {
             response.put("name", candidate.getName());
             response.put("email", candidate.getEmail());
             response.put("skills", candidate.getSkills());
+            response.put("country", candidate.getCountry());
+            response.put("university", candidate.getUniversity());
+            response.put("linkedin", candidate.getLinkedin());
             response.put("resumeFilename", candidate.getResumeFilename());
             return ResponseEntity.ok(response);
         }
@@ -48,7 +51,10 @@ public class CandidateProfileController {
     public ResponseEntity<?> updateProfile(
             Authentication authentication,
             @RequestParam("skills") List<String> skills,
-            @RequestParam("resume") MultipartFile resume) {
+            @RequestParam(value = "country", required = false) String country,
+            @RequestParam(value = "University", required = false) String university,
+            @RequestParam(value = "linkedin", required = false) String linkedin,
+            @RequestParam(value = "resume", required = false) MultipartFile resume) {
         String email = authentication.getName();
         Optional<Candidate> candidateOpt = candidateRepository.findByEmail(email);
 
@@ -59,9 +65,16 @@ public class CandidateProfileController {
         try {
             Candidate candidate = candidateOpt.get();
             candidate.setSkills(skills);
-            candidate.setResumeFilename(resume.getOriginalFilename());
-            candidate.setResumeContentType(resume.getContentType());
-            candidate.setResumeData(resume.getBytes());
+            candidate.setCountry(country);
+            candidate.setUniversity(university);
+            candidate.setLinkedin(linkedin);
+            
+            // ManageProfile.jsx sends a 5-byte "dummy" blob if the resume wasn't changed.
+            if (resume != null && !resume.isEmpty() && resume.getSize() > 10) {
+                candidate.setResumeFilename(resume.getOriginalFilename());
+                candidate.setResumeContentType(resume.getContentType());
+                candidate.setResumeData(resume.getBytes());
+            }
 
             candidateRepository.save(candidate);
             return ResponseEntity.ok("Profile updated successfully.");

@@ -24,7 +24,7 @@ export default function AddJob() {
     };
     
     try {
-      const response = await fetch('http://localhost:8081/api/jobs', {
+      const response = await fetch('http://localhost:8080/api/jobs', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload)

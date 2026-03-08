@@ -46,7 +46,7 @@ export default function RecruiterHome() {
     const fetchCandidates = async () => {
       try {
         const token = localStorage.getItem('token');
-        const res = await fetch('http://localhost:8081/api/candidates/all', {
+        const res = await fetch('http://localhost:8080/api/candidates/all', {
           headers: token ? { 'Authorization': `Bearer ${token}` } : {}
         });
         if (res.ok) {

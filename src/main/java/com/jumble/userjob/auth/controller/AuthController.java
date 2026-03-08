@@ -86,6 +86,9 @@ public class AuthController {
             @RequestParam("email") String email,
             @RequestParam("password") String password,
             @RequestParam("skills") List<String> skills,
+            @RequestParam(value = "country", required = false) String country,
+            @RequestParam(value = "University", required = false) String university,
+            @RequestParam(value = "linkedin", required = false) String linkedin,
             @RequestParam("resume") MultipartFile resume) {
         if (candidateRepository.findByEmail(email).isPresent() || recruiterRepository.findByEmail(email).isPresent()) {
             return ResponseEntity.status(HttpStatus.CONFLICT).body("Email is already in use.");
@@ -97,6 +100,9 @@ public class AuthController {
             candidate.setEmail(email);
             candidate.setPassword(passwordEncoder.encode(password));
             candidate.setSkills(skills);
+            candidate.setCountry(country);
+            candidate.setUniversity(university);
+            candidate.setLinkedin(linkedin);
             candidate.setResumeFilename(resume.getOriginalFilename());
             candidate.setResumeContentType(resume.getContentType());
             candidate.setResumeData(resume.getBytes());

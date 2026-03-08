@@ -15,6 +15,7 @@ function ManageProfile() {
   const [existingResume, setExistingResume] = useState(null);
   const [country, setCountry] = useState('');
   const [university, setUniversity] = useState('');
+  const [linkedin, setLinkedin] = useState('');
   const [countries, setCountries] = useState([]);
   const fileRef = useRef(null);
 
@@ -54,7 +55,7 @@ function ManageProfile() {
   const fetchProfile = async () => {
     try {
       const endpoint = role === 'candidate' ? '/api/candidates/me' : '/api/recruiters/me';
-      const res = await fetch(`http://localhost:8081${endpoint}`, {
+      const res = await fetch(`http://localhost:8080${endpoint}`, {
         headers: { 'Authorization': `Bearer ${token}` }
       });
       if (res.ok) {
@@ -64,6 +65,7 @@ function ManageProfile() {
           setExistingResume(data.resumeFilename || null);
           setCountry(data.country || '');
           setUniversity(data.university || '');
+          setLinkedin(data.linkedin || '');
         } else {
           setCompanyName(data.company || '');
         }
@@ -119,6 +121,7 @@ function ManageProfile() {
         skills.forEach(s => formData.append('skills', s));
         formData.append('country', country);
         formData.append('University', university);   // backend expects capital-U "University"
+        if (linkedin) formData.append('linkedin', linkedin);
         if (resumeFile) formData.append('resume', resumeFile);
         else if (!existingResume) {
           setErrorMsg('Resume is required');
@@ -131,7 +134,7 @@ function ManageProfile() {
           formData.append('resume', blob, existingResume);
         }
 
-        const res = await fetch('http://localhost:8081/api/candidates/me/profile', {
+        const res = await fetch('http://localhost:8080/api/candidates/me/profile', {
           method: 'PUT',
           headers: { 'Authorization': `Bearer ${token}` },
           body: formData
@@ -140,7 +143,7 @@ function ManageProfile() {
         if (res.ok) setMessage('Profile updated successfully!');
         else setErrorMsg(await res.text() || 'Failed to update profile.');
       } else {
-        const res = await fetch('http://localhost:8081/api/recruiters/me/profile', {
+        const res = await fetch('http://localhost:8080/api/recruiters/me/profile', {
           method: 'PUT',
           headers: {
             'Authorization': `Bearer ${token}`,
@@ -176,7 +179,7 @@ function ManageProfile() {
     setPasswordLoading(true);
     try {
       const endpoint = role === 'candidate' ? '/api/candidates/me/password' : '/api/recruiters/me/password';
-      const res = await fetch(`http://localhost:8081${endpoint}`, {
+      const res = await fetch(`http://localhost:8080${endpoint}`, {
         method: 'PUT',
         headers: {
           'Authorization': `Bearer ${token}`,
@@ -270,6 +273,16 @@ function ManageProfile() {
                     value={university}
                     onChange={(e) => setUniversity(e.target.value)}
                     placeholder="Enter your university name"
+                />
+              </div>
+
+              <div className="input-group">
+                <label>LinkedIn Profile (Optional)</label>
+                <input
+                    type="url"
+                    value={linkedin}
+                    onChange={(e) => setLinkedin(e.target.value)}
+                    placeholder="https://linkedin.com/in/yourprofile"
                 />
               </div>
 
