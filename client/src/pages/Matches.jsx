@@ -153,23 +153,30 @@ function CandidateModal({ match, onClose }) {
                   <FileText size={18} /> Resume
                 </a>
               )}
+              {details.email && (
+                <a
+                  href={`mailto:${details.email}`}
+                  className="nav-action-btn subtle"
+                  style={{ padding: '0.6rem 1.25rem', fontSize: '0.9rem', textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '0.5rem', borderRadius: '12px', color: '#64748b' }}
+                >
+                  <Mail size={18} /> Email
+                </a>
+              )}
               {details.linkedin && (
                 <a
                   href={details.linkedin.startsWith('http') ? details.linkedin : `https://${details.linkedin}`}
                   target="_blank" rel="noreferrer"
-                  className="nav-action-btn subtle"
-                  style={{ padding: '0.6rem 1.25rem', fontSize: '0.9rem', textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '0.5rem', color: '#0077b5', background: 'rgba(0,119,181,0.08)', borderRadius: '12px' }}
-                >
-                  <Linkedin size={18} /> LinkedIn
-                </a>
-              )}
-              {details.email && (
-                <a
-                  href={`mailto:${details.email}`}
                   className="btn-primary"
-                  style={{ padding: '0.6rem 1.5rem', fontSize: '0.9rem', textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '0.5rem', borderRadius: '12px', background: '#f43f5e', color: 'white', fontWeight: 600 }}
+                  style={{ 
+                    padding: '0.6rem 1.5rem', fontSize: '0.9rem', textDecoration: 'none', 
+                    display: 'flex', alignItems: 'center', gap: '0.5rem', 
+                    color: 'white', background: '#0077b5', borderRadius: '12px',
+                    fontWeight: 600, boxShadow: '0 4px 6px -1px rgba(0, 119, 181, 0.2)'
+                  }}
+                  onMouseEnter={e => e.currentTarget.style.background = '#006194'}
+                  onMouseLeave={e => e.currentTarget.style.background = '#0077b5'}
                 >
-                  <Mail size={18} /> Contact
+                  <Linkedin size={18} /> LinkedIn Profile
                 </a>
               )}
             </div>
