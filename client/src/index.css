@@ -3,12 +3,23 @@
 :root {
   --primary: #f94e70; /* Bumble-like / Tinder-like vibrant primary color */
   --primary-hover: #e04564;
+  --primary-light: rgba(249, 78, 112, 0.1);
+  --primary-light-hover: rgba(249, 78, 112, 0.2);
   --bg-gradient: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
   --surface: rgba(255, 255, 255, 0.9);
   --text-dark: #2d3748;
   --text-light: #718096;
   --input-border: #e2e8f0;
   --input-focus: #f94e70;
+  --nav-bg: rgba(255, 255, 255, 0.9);
+}
+
+.recruiter-theme {
+  --primary: #3b82f6; /* Nice light blue for recruiters */
+  --primary-hover: #2563eb;
+  --primary-light: rgba(59, 130, 246, 0.1);
+  --primary-light-hover: rgba(59, 130, 246, 0.2);
+  --input-focus: #3b82f6;
 }
 
 * {
@@ -247,12 +258,12 @@ body {
 }
 
 .nav-action-btn.subtle {
-  background: rgba(249, 78, 112, 0.1);
+  background: var(--primary-light);
   color: var(--primary);
 }
 
 .nav-action-btn.subtle:hover {
-  background: rgba(249, 78, 112, 0.2);
+  background: var(--primary-light-hover);
 }
 
 /* NAVBAR DROPDOWN STYLES */
@@ -264,7 +275,7 @@ body {
   width: 40px;
   height: 40px;
   border-radius: 50%;
-  background: rgba(249, 78, 112, 0.1);
+  background: var(--primary-light);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -274,7 +285,7 @@ body {
 }
 
 .avatar-circle:hover, .profile-dropdown-container:hover .avatar-circle {
-  background: rgba(249, 78, 112, 0.2);
+  background: var(--primary-light-hover);
   border-color: var(--primary);
 }
 
@@ -756,7 +767,7 @@ body {
 }
 
 .skill-pill {
-  background: rgba(249, 78, 112, 0.1);
+  background: var(--primary-light);
   color: var(--primary);
   padding: 0.4rem 1rem;
   border-radius: 20px;
@@ -942,7 +953,7 @@ body {
 
 /* Candidate Card */
 .candidate-card { width:100%; display:flex; flex-direction:column; background:white; border-radius:20px; }
-.candidate-header { background:linear-gradient(135deg,var(--primary) 0%,#ff7e5f 100%); color:white; padding:2.5rem 1rem 1.5rem; display:flex; flex-direction:column; align-items:center; border-bottom-left-radius:20px; border-bottom-right-radius:20px; box-shadow:0 4px 10px rgba(0,0,0,0.1); }
+.candidate-header { background: linear-gradient(135deg, var(--primary) 0%, var(--primary-hover) 100%); color:white; padding:2.5rem 1rem 1.5rem; display:flex; flex-direction:column; align-items:center; border-bottom-left-radius:20px; border-bottom-right-radius:20px; box-shadow:0 4px 10px rgba(0,0,0,0.1); }
 .avatar-icon { margin-bottom:1rem; opacity:0.9; }
 .candidate-header h2 { font-size:1.8rem; font-weight:700; }
 .candidate-body { flex:1; padding:1.5rem; display:flex; flex-direction:column; gap:1.5rem; }

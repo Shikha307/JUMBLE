@@ -351,7 +351,7 @@ function JobModal({ match, onClose }) {
               <button
                 onClick={onClose}
                 className="btn-primary"
-                style={{ padding: '0.8rem 2rem', borderRadius: '12px', background: '#f43f5e', color: 'white', fontWeight: 600, cursor: 'pointer', border: 'none' }}
+                style={{ padding: '0.8rem 2rem', borderRadius: '12px', background: 'var(--primary)', color: 'white', fontWeight: 600, cursor: 'pointer', border: 'none' }}
               >
                 Close Details
               </button>
@@ -448,7 +448,7 @@ export default function Matches({ userRole }) {
   const role = (userRole || localStorage.getItem('role') || 'candidate').toLowerCase();
 
   return (
-    <div className="dashboard-layout bg-dots">
+    <div className={`dashboard-layout bg-dots ${role === 'recruiter' ? 'recruiter-theme' : ''}`}>
       <Navbar role={role} name={userName} />
 
       {/* MODAL PORTAL (Recruiter Only) */}
@@ -470,7 +470,7 @@ export default function Matches({ userRole }) {
             </p>
           </div>
           {role === 'recruiter' && matches.length > 0 && (
-            <span style={{ fontSize: '0.9rem', color: 'var(--primary)', fontWeight: 600, background: 'rgba(249,78,112,0.1)', padding: '0.5rem 1rem', borderRadius: '12px' }}>
+            <span style={{ fontSize: '0.9rem', color: 'var(--primary)', fontWeight: 600, background: 'var(--primary-light)', padding: '0.5rem 1rem', borderRadius: '12px' }}>
               {matches.length} {matches.length === 1 ? 'Match' : 'Matches'} Found
             </span>
           )}
@@ -500,7 +500,7 @@ export default function Matches({ userRole }) {
                 onMouseEnter={e => {
                   e.currentTarget.style.transform = 'translateY(-6px)';
                   e.currentTarget.style.boxShadow = '0 12px 30px rgba(0,0,0,0.08)';
-                  e.currentTarget.style.borderColor = 'rgba(244, 63, 94, 0.3)';
+                  e.currentTarget.style.borderColor = 'var(--primary-light-hover)';
                 }}
                 onMouseLeave={e => {
                   e.currentTarget.style.transform = 'translateY(0)';
@@ -557,7 +557,7 @@ export default function Matches({ userRole }) {
 
                 <div style={{ marginTop: 'auto', paddingTop: '1.25rem', borderTop: '1px solid #f1f5f9' }}>
                   <div style={{ display: 'flex', alignItems: 'flex-start', gap: '0.75rem' }}>
-                    <div style={{ background: '#fff1f2', padding: '0.6rem', borderRadius: '10px', color: '#f43f5e', flexShrink: 0 }}>
+                    <div style={{ background: 'var(--primary-light)', padding: '0.6rem', borderRadius: '10px', color: 'var(--primary)', flexShrink: 0 }}>
                       <Briefcase size={18} />
                     </div>
                     <div>

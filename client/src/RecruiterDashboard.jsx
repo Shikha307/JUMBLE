@@ -4,7 +4,7 @@ import { PlusCircle } from 'lucide-react';
 
 function RecruiterDashboard({ userName }) {
   return (
-    <div className="dashboard-layout">
+    <div className="dashboard-layout recruiter-theme">
       <Navbar role="recruiter" name={userName} />
 
       <main className="dashboard-content">
