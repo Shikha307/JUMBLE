@@ -435,22 +435,20 @@ export default function Matches({ userRole }) {
               <div
                 key={match.id || Math.random()}
                 className="job-card"
-                onClick={role === 'recruiter' ? () => setSelectedMatch(match) : undefined}
+                onClick={() => setSelectedMatch(match)}
                 style={{
                   padding: '1.8rem', background: 'white', borderRadius: '20px',
                   boxShadow: '0 4px 20px rgba(0,0,0,0.04)', display: 'flex', flexDirection: 'column',
-                  cursor: role === 'recruiter' ? 'pointer' : 'default',
+                  cursor: 'pointer',
                   transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
                   border: '1px solid #f1f5f9',
                   position: 'relative',
                   overflow: 'hidden'
                 }}
                 onMouseEnter={e => {
-                  if (role === 'recruiter') {
-                    e.currentTarget.style.transform = 'translateY(-6px)';
-                    e.currentTarget.style.boxShadow = '0 12px 30px rgba(0,0,0,0.08)';
-                    e.currentTarget.style.borderColor = 'rgba(244, 63, 94, 0.3)';
-                  }
+                  e.currentTarget.style.transform = 'translateY(-6px)';
+                  e.currentTarget.style.boxShadow = '0 12px 30px rgba(0,0,0,0.08)';
+                  e.currentTarget.style.borderColor = 'rgba(244, 63, 94, 0.3)';
                 }}
                 onMouseLeave={e => {
                   e.currentTarget.style.transform = 'translateY(0)';
@@ -459,8 +457,10 @@ export default function Matches({ userRole }) {
                 }}
               >
                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end', marginBottom: '1.25rem' }}>
-                  {role === 'recruiter' && (
-                    <span style={{ fontSize: '0.75rem', color: '#94a3b8', fontWeight: 500 }}>Click to view</span>
+                  {role === 'recruiter' ? (
+                    <span style={{ fontSize: '0.75rem', color: '#94a3b8', fontWeight: 500 }}>Click to view profile</span>
+                  ) : (
+                    <span style={{ fontSize: '0.75rem', color: '#94a3b8', fontWeight: 500 }}>Click to view job</span>
                   )}
                 </div>
 
