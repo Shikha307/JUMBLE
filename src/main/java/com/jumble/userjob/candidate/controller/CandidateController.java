@@ -66,11 +66,4 @@ public class CandidateController {
                         .body(candidate.getResumeData()))
                 .orElse(ResponseEntity.notFound().build());
     }
-
-    @PostMapping("/update/{id}")
-    public ResponseEntity<Candidate> updateUser(@PathVariable String id, @RequestBody Candidate user) {
-        return userService.updateUser(id, user)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
-    }
 }

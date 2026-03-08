@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Briefcase, LogOut, UserCircle2, User } from 'lucide-react';
+import { Briefcase, LogOut, User, PlusCircle } from 'lucide-react';
 
 export default function Navbar() {
   const navigate = useNavigate();
@@ -13,9 +13,7 @@ export default function Navbar() {
 
   const handleProfileClick = () => {
     setIsDropdownOpen(false);
-    // placeholder for future profile route
-    // navigate('/profile'); 
-    alert('Profile page coming soon!');
+    navigate('/profile'); 
   };
 
   // Close dropdown if clicked outside
@@ -33,44 +31,46 @@ export default function Navbar() {
 
   return (
     <nav className="navbar">
-      <div className="nav-container">
-        <Link to="/recruiter" className="nav-brand">
+      <div className="navbar-left">
+        <Link to="/recruiter" className="brand-name" style={{ textDecoration: 'none' }}>
           JUMBLE
         </Link>
+      </div>
         
-        <div className="nav-links">
-          <Link to="/my-jobs" className="nav-btn my-jobs-btn">
-            <Briefcase size={18} />
-            <span className="hide-on-mobile">My Jobs</span>
-          </Link>
+      <div className="navbar-right">
+        <Link to="/my-jobs" className="nav-action-btn subtle">
+          <Briefcase size={20} />
+          <span>My Jobs</span>
+        </Link>
 
-          <Link to="/add-job" className="nav-btn add-job-btn">
-            <Briefcase size={18} />
-            <span className="hide-on-mobile">Add Job</span>
-          </Link>
+        <Link to="/add-job" className="nav-action-btn subtle">
+          <PlusCircle size={20} />
+          <span>Add Job</span>
+        </Link>
           
-          <div className="profile-menu-container" ref={dropdownRef}>
+          <div className="profile-dropdown-container" ref={dropdownRef}>
             <button 
-              className="nav-btn profile-avatar-btn" 
+              className="icon-btn profile-trigger" 
               onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+              aria-label="Profile Menu"
             >
-              <UserCircle2 size={24} />
+              <div className="avatar-circle">
+                <User size={20} />
+              </div>
             </button>
 
             {isDropdownOpen && (
-              <div className="profile-dropdown">
+              <div className="dropdown-menu">
                 <button className="dropdown-item" onClick={handleProfileClick}>
-                  <User size={16} />
-                  <span>Profile</span>
+                  <User size={18} /> Manage Profile
                 </button>
-                <button className="dropdown-item signout-item" onClick={handleSignOut}>
-                  <LogOut size={16} />
-                  <span>Sign Out</span>
+                <div className="dropdown-divider"></div>
+                <button className="dropdown-item text-danger" onClick={handleSignOut}>
+                  <LogOut size={18} /> Sign out
                 </button>
               </div>
             )}
           </div>
-        </div>
       </div>
     </nav>
   );
