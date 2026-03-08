@@ -3,14 +3,14 @@ package com.jumble.swipematch.model;
 import lombok.Data;
 import lombok.Builder;
 import org.springframework.data.annotation.Id;
-import org.springframework.data.redis.core.RedisHash;
-import org.springframework.data.redis.core.index.Indexed;
+import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.index.Indexed;
 
 import java.time.Instant;
 
 @Data
 @Builder
-@RedisHash("Match")
+@Document(collection = "matches")
 public class Match {
     @Id
     private String id;
