@@ -29,4 +29,8 @@ public class CandidateService {
     public Optional<Candidate> getUserById(String id) {
         return candidateRepository.findById(id);
     }
+
+    public Candidate updateUser(String id, Candidate user) {
+        return candidateRepository.save(user);
+    }
 }
