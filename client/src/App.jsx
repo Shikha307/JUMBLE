@@ -10,6 +10,7 @@ import ManageProfile from './ManageProfile';
 import RecruiterHome from './pages/RecruiterHome';
 import AddJob from './pages/AddJob';
 import MyJobs from './pages/MyJobs';
+import Matches from './pages/Matches';
 import './index.css';
 
 function App() {
@@ -46,7 +47,6 @@ function App() {
         <Route path="/recruiter" element={<RecruiterHome />} />
         <Route path="/add-job" element={<AddJob />} />
         <Route path="/my-jobs" element={<MyJobs />} />
-
         {/* Protected dashboard */}
         <Route
           path="/dashboard"

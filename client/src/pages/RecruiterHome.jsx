@@ -41,8 +41,35 @@ export default function RecruiterHome() {
   const [candidates] = useState(DUMMY_CANDIDATES);
   const [currentIndex, setCurrentIndex] = useState(0);
 
-  const handleAction = (candidateId, actionType) => {
-    console.log(`Recruiter ${actionType} candidate ${candidateId}`);
+  const handleAction = async (candidateId, actionType) => {
+    // actionType comes in as 'LIKED' or 'PASSED' from the UI components. Map to 'RIGHT' or 'LEFT'
+    const direction = actionType === 'LIKED' ? 'RIGHT' : 'LEFT';
+    
+    const payload = {
+      candidateId: candidateId.toString(),
+      jobId: "J1", // Hardcoded job for now
+      recruiterId: "R1", // Hardcoded recruiter
+      swiperRole: "RECRUITER",
+      direction: direction
+    };
+
+    try {
+      const response = await fetch('http://localhost:8080/api/v1/swipes', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(payload)
+      });
+      
+      if (!response.ok) {
+        console.error("Failed to record swipe in backend");
+      }
+    } catch (error) {
+      console.error("Error recording swipe:", error);
+    }
+
+    // Optimistically skip to next candidate regardless of backend success to keep UI fluid
     setCurrentIndex(prevIndex => prevIndex + 1);
   };
 
