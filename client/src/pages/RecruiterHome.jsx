@@ -20,7 +20,7 @@ export default function RecruiterHome() {
       setLoadingCandidates(true);
       try {
         const token = localStorage.getItem('token');
-        const res = await fetch(`http://localhost:8080/api/v1/swipes/jobs/${selectedJob.id}/unswiped-candidates`, {
+        const res = await fetch(`http://localhost:8082/api/v1/swipes/jobs/${selectedJob.id}/unswiped-candidates`, {
           headers: token ? { 'Authorization': `Bearer ${token}` } : {}
         });
         if (res.ok) {
@@ -87,7 +87,7 @@ export default function RecruiterHome() {
     };
 
     try {
-      const response = await fetch('http://localhost:8080/api/v1/swipes', {
+      const response = await fetch('http://localhost:8082/api/v1/swipes', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload)
