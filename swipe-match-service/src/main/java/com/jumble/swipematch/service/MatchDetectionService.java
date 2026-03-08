@@ -44,11 +44,21 @@ public class MatchDetectionService {
                                s.getDirection() == SwipeDirection.RIGHT);
                                
         if (mutualRightSwipeExists) {
+            // Find the recruiterId from either the latestSwipe or the historical recruiter swipe
+            String recruiterId = latestSwipe.getSwiperRole() == UserRole.RECRUITER 
+                    ? latestSwipe.getRecruiterId() 
+                    : historicalSwipes.stream()
+                            .filter(s -> s.getSwiperRole() == UserRole.RECRUITER)
+                            .findFirst()
+                            .map(Swipe::getRecruiterId)
+                            .orElse(null);
+
             // A match is found!
             Match match = Match.builder()
                     .id(UUID.randomUUID().toString())
                     .candidateId(latestSwipe.getCandidateId())
                     .jobId(latestSwipe.getJobId())
+                    .recruiterId(recruiterId)
                     .matchedAt(Instant.now())
                     .build();
                     
