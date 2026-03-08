@@ -73,7 +73,7 @@ function RecruiterRegister() {
 
     setLoading(true);
     try {
-      const response = await fetch('http://localhost:8080/api/auth/register/recruiter', {
+      const response = await fetch('http://localhost:8081/api/auth/register/recruiter', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -87,6 +87,7 @@ function RecruiterRegister() {
       if (response.ok) {
         const data = await response.json();
         localStorage.setItem('token', data.token);
+        localStorage.setItem('id', data.id);
         localStorage.setItem('role', data.role);
         localStorage.setItem('name', data.name);
         window.location.href = '/dashboard';

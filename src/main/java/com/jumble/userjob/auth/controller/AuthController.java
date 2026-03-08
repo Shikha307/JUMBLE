@@ -25,6 +25,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/auth")
+@CrossOrigin(origins = "http://localhost:5173")
 public class AuthController {
 
     @Autowired
@@ -56,23 +57,26 @@ public class AuthController {
             // Determine role and name based on which repository yields the result
             String role;
             String name;
+            String id;
 
             Optional<Candidate> candidateOpt = candidateRepository.findByEmail(request.getEmail());
             if (candidateOpt.isPresent()) {
                 role = "candidate";
                 name = candidateOpt.get().getName();
+                id = candidateOpt.get().getId();
             } else {
                 Recruiter recruiter = recruiterRepository.findByEmail(request.getEmail()).get();
                 role = "recruiter";
                 name = recruiter.getName();
+                id = recruiter.getId();
             }
 
             String token = jwtService.generateToken(userDetails, role);
 
-            return ResponseEntity.ok(new AuthResponse(token, role, name, "Login successful"));
+            return ResponseEntity.ok(new AuthResponse(token, id, role, name, "Login successful"));
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
-                    .body(new AuthResponse(null, null, null, "Invalid credentials"));
+                    .body(new AuthResponse(null, null, null, null, "Invalid credentials"));
         }
     }
 
@@ -103,7 +107,7 @@ public class AuthController {
             String token = jwtService.generateToken(userDetails, "candidate");
 
             return ResponseEntity.status(HttpStatus.CREATED)
-                    .body(new AuthResponse(token, "candidate", name, "Candidate registered successfully"));
+                    .body(new AuthResponse(token, candidate.getId(), "candidate", name, "Candidate registered successfully"));
         } catch (IOException e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to process resume file.");
         }
@@ -128,6 +132,6 @@ public class AuthController {
         String token = jwtService.generateToken(userDetails, "recruiter");
 
         return ResponseEntity.status(HttpStatus.CREATED)
-                .body(new AuthResponse(token, "recruiter", recruiter.getName(), "Recruiter registered successfully"));
+                .body(new AuthResponse(token, recruiter.getId(), "recruiter", recruiter.getName(), "Recruiter registered successfully"));
     }
 }

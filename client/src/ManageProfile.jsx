@@ -54,7 +54,7 @@ function ManageProfile() {
   const fetchProfile = async () => {
     try {
       const endpoint = role === 'candidate' ? '/api/candidates/me' : '/api/recruiters/me';
-      const res = await fetch(`http://localhost:8080${endpoint}`, {
+      const res = await fetch(`http://localhost:8081${endpoint}`, {
         headers: { 'Authorization': `Bearer ${token}` }
       });
       if (res.ok) {
@@ -131,7 +131,7 @@ function ManageProfile() {
           formData.append('resume', blob, existingResume);
         }
 
-        const res = await fetch('http://localhost:8080/api/candidates/me/profile', {
+        const res = await fetch('http://localhost:8081/api/candidates/me/profile', {
           method: 'PUT',
           headers: { 'Authorization': `Bearer ${token}` },
           body: formData
@@ -140,7 +140,7 @@ function ManageProfile() {
         if (res.ok) setMessage('Profile updated successfully!');
         else setErrorMsg(await res.text() || 'Failed to update profile.');
       } else {
-        const res = await fetch('http://localhost:8080/api/recruiters/me/profile', {
+        const res = await fetch('http://localhost:8081/api/recruiters/me/profile', {
           method: 'PUT',
           headers: {
             'Authorization': `Bearer ${token}`,
@@ -176,7 +176,7 @@ function ManageProfile() {
     setPasswordLoading(true);
     try {
       const endpoint = role === 'candidate' ? '/api/candidates/me/password' : '/api/recruiters/me/password';
-      const res = await fetch(`http://localhost:8080${endpoint}`, {
+      const res = await fetch(`http://localhost:8081${endpoint}`, {
         method: 'PUT',
         headers: {
           'Authorization': `Bearer ${token}`,
