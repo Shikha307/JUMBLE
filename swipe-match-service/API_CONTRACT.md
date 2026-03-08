@@ -18,6 +18,7 @@ Records a swipe action (left or right) from either a Candidate or a Recruiter.
 | ------------- | ------ | -------- | ------------------------------------------------------------ | ----------- |
 | `candidateId` | string | Yes      | The unique ID of the candidate profile.                      | `"C100"`    |
 | `jobId`       | string | Yes      | The unique ID of the job listing.                            | `"J200"`    |
+| `recruiterId` | string | Optional | The unique ID of the recruiter (required if swiperRole = RECRUITER). | `"R100"`    |
 | `swiperRole`  | string | Yes      | Defines who made the swipe. Must be `CANDIDATE` or `RECRUITER`. | `"CANDIDATE"` |
 | `direction`   | string | Yes      | Defines the swipe action. Must be `LEFT` or `RIGHT`.         | `"RIGHT"`   |
 
@@ -26,7 +27,8 @@ Records a swipe action (left or right) from either a Candidate or a Recruiter.
 {
   "candidateId": "C100",
   "jobId": "J200",
-  "swiperRole": "CANDIDATE",
+  "recruiterId": "R100",
+  "swiperRole": "RECRUITER",
   "direction": "RIGHT"
 }
 ```
@@ -105,13 +107,54 @@ Returns a JSON array of Match objects. If no matches exist, an empty array `[]` 
     "id": "e4c8bc12-7b24-4a56-8201-90a6125028c7",
     "candidateId": "C100",
     "jobId": "J200",
+    "recruiterId": "R100",
     "matchedAt": "2026-03-07T14:30:00.000Z"
   },
   {
     "id": "f5a9ba23-9c35-4f12-8e12-8b2d78e34a56",
     "candidateId": "C404",
     "jobId": "J200",
+    "recruiterId": "R100",
     "matchedAt": "2026-03-07T16:45:00.000Z"
   }
 ]
+
+---
+
+## 4. Get Matches for a Recruiter
+
+Retrieves a list of all successful mutual matches associated with a specific Recruiter, spanning across all of their jobs.
+
+- **Endpoint:** `/matches/recruiter/{recruiterId}`
+- **Method:** `GET`
+
+### Path Parameters
+
+| Parameter      | Type   | Required | Description                          |
+| -------------- | ------ | -------- | ------------------------------------ |
+| `recruiterId`  | string | Yes      | The unique ID of the recruiter.      |
+
+### Responses
+
+#### Success (200 OK)
+Returns a JSON array of Match objects. If no matches exist, an empty array `[]` is returned.
+
+```json
+[
+  {
+    "id": "e4c8bc12-7b24-4a56-8201-90a6125028c7",
+    "candidateId": "C100",
+    "jobId": "J200",
+    "recruiterId": "R100",
+    "matchedAt": "2026-03-07T14:30:00.000Z"
+  },
+  {
+    "id": "7b24bc12-e4c8-4a56-8201-90a6125028c7",
+    "candidateId": "C200",
+    "jobId": "J505",
+    "recruiterId": "R100",
+    "matchedAt": "2026-03-07T18:22:00.000Z"
+  }
+]
+```
 ```

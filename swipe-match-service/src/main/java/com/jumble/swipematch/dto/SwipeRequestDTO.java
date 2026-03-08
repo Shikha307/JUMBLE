@@ -8,6 +8,7 @@ import lombok.Data;
 public class SwipeRequestDTO {
     private String candidateId;
     private String jobId;
+    private String recruiterId;
     private UserRole swiperRole;
     private SwipeDirection direction;
 }

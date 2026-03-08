@@ -18,5 +18,7 @@ public class Match {
     private String candidateId;
     @Indexed
     private String jobId;
+    @Indexed
+    private String recruiterId;
     private Instant matchedAt;
 }
