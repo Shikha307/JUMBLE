@@ -124,7 +124,7 @@ export default function RecruiterHome() {
   const currentCandidate = candidates[currentIndex];
 
   return (
-    <div className="recruiter-page dashboard-layout">
+    <div className="recruiter-page dashboard-layout recruiter-theme">
       <Navbar />
 
       <main className="recruiter-home-layout">
