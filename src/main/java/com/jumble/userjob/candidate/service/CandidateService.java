@@ -30,7 +30,20 @@ public class CandidateService {
         return candidateRepository.findById(id);
     }
 
-    public Candidate updateUser(String id, Candidate user) {
-        return candidateRepository.save(user);
+    public Candidate updateCandidate(String id, Candidate updates) {
+        Candidate existing = candidateRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Candidate not found with id: " + id));
+
+        if (updates.getName() != null)              existing.setName(updates.getName());
+        if (updates.getEmail() != null)             existing.setEmail(updates.getEmail());
+        if (updates.getSkills() != null)            existing.setSkills(updates.getSkills());
+        if (updates.getCountry() != null)           existing.setCountry(updates.getCountry());
+        if (updates.getUniversity() != null)        existing.setUniversity(updates.getUniversity());
+        if (updates.getPassword() != null)          existing.setPassword(updates.getPassword());
+        if (updates.getResumeFilename() != null)    existing.setResumeFilename(updates.getResumeFilename());
+        if (updates.getResumeContentType() != null) existing.setResumeContentType(updates.getResumeContentType());
+        if (updates.getResumeData() != null)        existing.setResumeData(updates.getResumeData());
+
+        return candidateRepository.save(existing);
     }
 }

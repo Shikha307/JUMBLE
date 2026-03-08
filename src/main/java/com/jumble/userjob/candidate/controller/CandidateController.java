@@ -68,9 +68,8 @@ public class CandidateController {
     }
 
     @PostMapping("/update/{id}")
-    public ResponseEntity<Candidate> updateUser(@PathVariable String id, @RequestBody Candidate user) {
-        return userService.updateUser(id, user)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+    public ResponseEntity<Candidate> updateCandidate(@PathVariable String id, @RequestBody Candidate user) {
+        Candidate updated = userService.updateCandidate(id, user);
+        return ResponseEntity.ok(updated);
     }
 }
