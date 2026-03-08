@@ -1,41 +1,5 @@
 [
   {
-    "recruiterId": "R1",
-    "roleName": "Test Job",
-    "description": "Test desc",
-    "skillsNeeded": [
-      "Java"
-    ],
-    "_class": "com.jumble.userjob.job.model.Job",
-    "id": "69acfae40bb735b8163c5b25",
-    "matchScore": 56.92
-  },
-  {
-    "recruiterId": "R1",
-    "roleName": "Senior Java Developer",
-    "description": "Looking for Senior Java Developer",
-    "skillsNeeded": [
-      "Java",
-      "Springboot",
-      "SQL"
-    ],
-    "_class": "com.jumble.userjob.job.model.Job",
-    "id": "69acfb110bb735b8163c5b26",
-    "matchScore": 33.56
-  },
-  {
-    "recruiterId": "69acaae932e1b554400f220d",
-    "roleName": "ML Engineer",
-    "description": "Looking for an expert ML Engineer.",
-    "skillsNeeded": [
-      "java",
-      "spring boot"
-    ],
-    "_class": "com.jumble.userjob.job.model.Job",
-    "id": "69acc5e37eba71d2aaaa208d",
-    "matchScore": 31.44
-  },
-  {
     "recruiterId": "69acfcfede8bc04c38f4c252",
     "roleName": "cyber intern",
     "description": "security ",
@@ -46,54 +10,7 @@
     ],
     "_class": "com.jumble.userjob.job.model.Job",
     "id": "69ad15b36c934748729e68c3",
-    "matchScore": 25.08
-  },
-  {
-    "recruiterId": "69acaae932e1b554400f220d",
-    "roleName": "Senior Java Developer",
-    "description": "Looking for an expert Spring Boot developer to build skynet APIs.",
-    "skillsNeeded": [
-      "java",
-      "spring boot"
-    ],
-    "_class": "com.jumble.userjob.job.model.Job",
-    "id": "69acab6d32e1b554400f220e",
-    "matchScore": 24.91
-  },
-  {
-    "recruiterId": "69ad4085e2f5646291887c17",
-    "roleName": "jjxwj",
-    "description": "cwjbehc",
-    "skillsNeeded": [
-      "cwjbcjew"
-    ],
-    "_class": "com.jumble.userjob.job.model.Job",
-    "id": "69ad9e467133625b04797144",
-    "matchScore": 22.08
-  },
-  {
-    "recruiterId": "69ad3b55c7d5f2c747b8aa44",
-    "roleName": "Senior Kubernetes Engineer",
-    "description": "Kubenetes chahiye. Padh ke aao.",
-    "skillsNeeded": [
-      "Java",
-      "Springboot",
-      "SQL"
-    ],
-    "_class": "com.jumble.userjob.job.model.Job",
-    "id": "69ad3bc3c7d5f2c747b8aa45",
-    "matchScore": 21.73
-  },
-  {
-    "recruiterId": "69ad4085e2f5646291887c17",
-    "roleName": "network intern",
-    "description": "2sss2",
-    "skillsNeeded": [
-      "swdwdwdq"
-    ],
-    "_class": "com.jumble.userjob.job.model.Job",
-    "id": "69ad40a0e2f5646291887c18",
-    "matchScore": 20.08
+    "matchScore": 35.99
   },
   {
     "recruiterId": "69ad71c728c2428ca7507e67",
@@ -107,58 +24,7 @@
     ],
     "_class": "com.jumble.userjob.job.model.Job",
     "id": "69ad720f28c2428ca7507e68",
-    "matchScore": 19.94
-  },
-  {
-    "recruiterId": "R1",
-    "roleName": "network intern",
-    "description": "managing networks",
-    "skillsNeeded": [
-      "java",
-      "C",
-      "network systems"
-    ],
-    "_class": "com.jumble.userjob.job.model.Job",
-    "id": "69acfd2ede8bc04c38f4c253",
-    "matchScore": 17.78
-  },
-  {
-    "recruiterId": "69ad4085e2f5646291887c17",
-    "roleName": "operating security",
-    "description": "operating system using any os",
-    "skillsNeeded": [
-      "operating system",
-      "java",
-      "c"
-    ],
-    "_class": "com.jumble.userjob.job.model.Job",
-    "id": "69ad4af018f9f1541a270772",
-    "matchScore": 17.5
-  },
-  {
-    "recruiterId": "69acfcfede8bc04c38f4c252",
-    "roleName": "abc",
-    "description": "qsjiwhdiwhd",
-    "skillsNeeded": [
-      "kjdkwadbqj"
-    ],
-    "_class": "com.jumble.userjob.job.model.Job",
-    "id": "69ad14a289e52b7eba77c417",
-    "matchScore": 16.68
-  },
-  {
-    "recruiterId": "69adb21d28c2428ca7507e69",
-    "roleName": "Software Developer Intern 2026",
-    "description": "Your Role And Responsibilities\n\nWe are looking for Software Developer Interns to join our engineering teams. As an intern, you will work alongside experienced IBM developers to design, build, and test software that powers our cloud, AI, and hybrid\u2011platform solutions. This role is designed for students who are passionate about coding\u2014regardless of which programming language they started with. You will gain hands-on experience in real-world projects, learn modern development practices, and collaborate in an Agile environment where your ideas can make an immediate impact.\n\nWhat You\u2019ll Do\n\n Support the design, development, testing, and debugging of software in front-end, back-end, or full\u2011stack environments.\n Work with a variety of programming languages depending on the project (examples: Python, Java, JavaScript, TypeScript, C++, Go, Rust, Swift, Kotlin, or others).\n Help build user interfaces using frameworks like React or contribute to back-end services and APIs.\n Use Git and other version\u2011control and collaboration tools.\n Work with cloud and container technologies such as Docker, Kubernetes, and REST APIs.\n Participate in Agile ceremonies, code reviews, and technical discussions.\n Explore emerging technologies, including AI/ML, automation, and cloud-native development.\n\nPreferred Education\n\nBachelor's Degree\n\nRequired Technical And Professional Expertise\n\n To be eligible, candidates must be currently enrolled in a Bachelor\u2019s, Master\u2019s, MBA, or PhD program, with an expected graduation date between December 2026 and May 2029.\n Coursework or project experience in software development using any programming language.\n Familiarity with fundamental concepts such as data structures, basic algorithms, or debugging.\n Exposure to front-end or back-end technologies (React, Node.js, Python, Java, SQL, etc.).\n Experience using Git or similar version control tools.\n Interest in cloud computing, containers, or modern deployment practices.\n Strong analytical thinking, problem\u2011solving, and communication skills.\n Ability to collaborate and learn quickly in a team environment.\n\nPreferred Technical And Professional Experience\n\n Experience with cloud services (IBM Cloud, AWS, Azure, or GCP).\n Familiarity with REST APIs and databases (relational or NoSQL).\n Exposure to CI/CD pipelines or automation tools.\n Personal or open-source projects that demonstrate creativity and initiative.\n Understanding of Agile development methods.",
-    "skillsNeeded": [
-      "Java",
-      "Python",
-      "React",
-      "Angular"
-    ],
-    "_class": "com.jumble.userjob.job.model.Job",
-    "id": "69adb2d528c2428ca7507e6a",
-    "matchScore": 14.95
+    "matchScore": 30.88
   },
   {
     "recruiterId": "R1",
@@ -171,19 +37,33 @@
     ],
     "_class": "com.jumble.userjob.job.model.Job",
     "id": "69acc074a425d47c979142e6",
-    "matchScore": 12.59
+    "matchScore": 30.7
   },
   {
     "recruiterId": "R1",
-    "roleName": "Senior Kubernetes Engineer",
-    "description": "Looking for senior kubernetes engineer.",
+    "roleName": "Senior Java Developer",
+    "description": "Looking for Senior Java Developer",
     "skillsNeeded": [
-      "Kubernetes",
-      "Docker."
+      "Java",
+      "Springboot",
+      "SQL"
     ],
     "_class": "com.jumble.userjob.job.model.Job",
-    "id": "69ad09f00bb735b8163c5b28",
-    "matchScore": 8.78
+    "id": "69acfb110bb735b8163c5b26",
+    "matchScore": 29.95
+  },
+  {
+    "recruiterId": "69ad3b55c7d5f2c747b8aa44",
+    "roleName": "Senior Kubernetes Engineer",
+    "description": "Kubenetes chahiye. Padh ke aao.",
+    "skillsNeeded": [
+      "Java",
+      "Springboot",
+      "SQL"
+    ],
+    "_class": "com.jumble.userjob.job.model.Job",
+    "id": "69ad3bc3c7d5f2c747b8aa45",
+    "matchScore": 29.77
   },
   {
     "recruiterId": "R1",
@@ -197,7 +77,101 @@
     ],
     "_class": "com.jumble.userjob.job.model.Job",
     "id": "69ad09660bb735b8163c5b27",
-    "matchScore": 5.68
+    "matchScore": 29.39
+  },
+  {
+    "recruiterId": "69acaae932e1b554400f220d",
+    "roleName": "Senior Java Developer",
+    "description": "Looking for an expert Spring Boot developer to build skynet APIs.",
+    "skillsNeeded": [
+      "java",
+      "spring boot"
+    ],
+    "_class": "com.jumble.userjob.job.model.Job",
+    "id": "69acab6d32e1b554400f220e",
+    "matchScore": 25.91
+  },
+  {
+    "recruiterId": "69acaae932e1b554400f220d",
+    "roleName": "ML Engineer",
+    "description": "Looking for an expert ML Engineer.",
+    "skillsNeeded": [
+      "java",
+      "spring boot"
+    ],
+    "_class": "com.jumble.userjob.job.model.Job",
+    "id": "69acc5e37eba71d2aaaa208d",
+    "matchScore": 25.29
+  },
+  {
+    "recruiterId": "R1",
+    "roleName": "Senior Kubernetes Engineer",
+    "description": "Looking for senior kubernetes engineer.",
+    "skillsNeeded": [
+      "Kubernetes",
+      "Docker."
+    ],
+    "_class": "com.jumble.userjob.job.model.Job",
+    "id": "69ad09f00bb735b8163c5b28",
+    "matchScore": 24.69
+  },
+  {
+    "recruiterId": "69adb21d28c2428ca7507e69",
+    "roleName": "Software Developer Intern 2026",
+    "description": "Your Role And Responsibilities\n\nWe are looking for Software Developer Interns to join our engineering teams. As an intern, you will work alongside experienced IBM developers to design, build, and test software that powers our cloud, AI, and hybrid\u2011platform solutions. This role is designed for students who are passionate about coding\u2014regardless of which programming language they started with. You will gain hands-on experience in real-world projects, learn modern development practices, and collaborate in an Agile environment where your ideas can make an immediate impact.\n\nWhat You\u2019ll Do\n\n Support the design, development, testing, and debugging of software in front-end, back-end, or full\u2011stack environments.\n Work with a variety of programming languages depending on the project (examples: Python, Java, JavaScript, TypeScript, C++, Go, Rust, Swift, Kotlin, or others).\n Help build user interfaces using frameworks like React or contribute to back-end services and APIs.\n Use Git and other version\u2011control and collaboration tools.\n Work with cloud and container technologies such as Docker, Kubernetes, and REST APIs.\n Participate in Agile ceremonies, code reviews, and technical discussions.\n Explore emerging technologies, including AI/ML, automation, and cloud-native development.\n\nPreferred Education\n\nBachelor's Degree\n\nRequired Technical And Professional Expertise\n\n To be eligible, candidates must be currently enrolled in a Bachelor\u2019s, Master\u2019s, MBA, or PhD program, with an expected graduation date between December 2026 and May 2029.\n Coursework or project experience in software development using any programming language.\n Familiarity with fundamental concepts such as data structures, basic algorithms, or debugging.\n Exposure to front-end or back-end technologies (React, Node.js, Python, Java, SQL, etc.).\n Experience using Git or similar version control tools.\n Interest in cloud computing, containers, or modern deployment practices.\n Strong analytical thinking, problem\u2011solving, and communication skills.\n Ability to collaborate and learn quickly in a team environment.\n\nPreferred Technical And Professional Experience\n\n Experience with cloud services (IBM Cloud, AWS, Azure, or GCP).\n Familiarity with REST APIs and databases (relational or NoSQL).\n Exposure to CI/CD pipelines or automation tools.\n Personal or open-source projects that demonstrate creativity and initiative.\n Understanding of Agile development methods.",
+    "skillsNeeded": [
+      "Java",
+      "Python",
+      "React",
+      "Angular"
+    ],
+    "_class": "com.jumble.userjob.job.model.Job",
+    "id": "69adb2d528c2428ca7507e6a",
+    "matchScore": 23.6
+  },
+  {
+    "recruiterId": "69acfcfede8bc04c38f4c252",
+    "roleName": "abc",
+    "description": "qsjiwhdiwhd",
+    "skillsNeeded": [
+      "kjdkwadbqj"
+    ],
+    "_class": "com.jumble.userjob.job.model.Job",
+    "id": "69ad14a289e52b7eba77c417",
+    "matchScore": 23.31
+  },
+  {
+    "recruiterId": "69ad4085e2f5646291887c17",
+    "roleName": "jjxwj",
+    "description": "cwjbehc",
+    "skillsNeeded": [
+      "cwjbcjew"
+    ],
+    "_class": "com.jumble.userjob.job.model.Job",
+    "id": "69ad9e467133625b04797144",
+    "matchScore": 22.5
+  },
+  {
+    "recruiterId": "R1",
+    "roleName": "Test Job",
+    "description": "Test desc",
+    "skillsNeeded": [
+      "Java"
+    ],
+    "_class": "com.jumble.userjob.job.model.Job",
+    "id": "69acfae40bb735b8163c5b25",
+    "matchScore": 18.02
+  },
+  {
+    "recruiterId": "69ad4085e2f5646291887c17",
+    "roleName": "network intern",
+    "description": "2sss2",
+    "skillsNeeded": [
+      "swdwdwdq"
+    ],
+    "_class": "com.jumble.userjob.job.model.Job",
+    "id": "69ad40a0e2f5646291887c18",
+    "matchScore": 15.01
   },
   {
     "recruiterId": "R1",
@@ -210,6 +184,32 @@
     ],
     "_class": "com.jumble.userjob.job.model.Job",
     "id": "69acc1a4a425d47c979142e7",
-    "matchScore": 3.08
+    "matchScore": 12.74
+  },
+  {
+    "recruiterId": "R1",
+    "roleName": "network intern",
+    "description": "managing networks",
+    "skillsNeeded": [
+      "java",
+      "C",
+      "network systems"
+    ],
+    "_class": "com.jumble.userjob.job.model.Job",
+    "id": "69acfd2ede8bc04c38f4c253",
+    "matchScore": 9.65
+  },
+  {
+    "recruiterId": "69ad4085e2f5646291887c17",
+    "roleName": "operating security",
+    "description": "operating system using any os",
+    "skillsNeeded": [
+      "operating system",
+      "java",
+      "c"
+    ],
+    "_class": "com.jumble.userjob.job.model.Job",
+    "id": "69ad4af018f9f1541a270772",
+    "matchScore": 5.75
   }
 ]
