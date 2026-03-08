@@ -1,11 +1,12 @@
 import { useState, useRef, useEffect } from 'react';
-import { User, LogOut, Heart, Briefcase, PlusCircle, Settings } from 'lucide-react';
+import { User, LogOut, Heart, Briefcase, PlusCircle, Settings, Home } from 'lucide-react';
 import { useNavigate, Link } from 'react-router-dom';
 
 function Navbar({ role, name }) {
   const navigate = useNavigate();
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const dropdownRef = useRef(null);
+  const [matchCount, setMatchCount] = useState(0);
 
   const handleLogout = () => {
     localStorage.removeItem('token');
@@ -14,6 +15,7 @@ function Navbar({ role, name }) {
     window.location.href = '/login';
   };
 
+  // Close dropdown if clicked outside
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
@@ -24,25 +26,78 @@ function Navbar({ role, name }) {
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
+  // Fetch match count for badge (both candidate and recruiter)
+  useEffect(() => {
+    const id = localStorage.getItem('id');
+    const token = localStorage.getItem('token');
+    if (!id || !role) return;
+    const endpoint = role === 'recruiter'
+      ? `http://localhost:8082/api/v1/matches/recruiter/${id}`
+      : `http://localhost:8082/api/v1/matches/candidate/${id}`;
+    fetch(endpoint, {
+      headers: token ? { 'Authorization': `Bearer ${token}` } : {}
+    })
+      .then(r => r.ok ? r.json() : [])
+      .then(data => setMatchCount(Array.isArray(data) ? data.length : 0))
+      .catch(() => {});
+  }, [role]);
+
   return (
-    <nav className="navbar">
-      <div className="navbar-left">
-        <Link 
-          to="/dashboard"
-          reloadDocument 
-          className="brand-name" 
-          style={{ textDecoration: 'none' }}
+    <nav className="navbar" style={{ display: 'grid', gridTemplateColumns: '1fr auto 1fr', alignItems: 'center' }}>
+      {/* Left: Home button */}
+      <div className="navbar-left" style={{ display: 'flex', alignItems: 'center' }}>
+        <Link
+          to={role === 'recruiter' ? '/recruiter' : '/dashboard'}
+          reloadDocument
+          className="nav-action-btn subtle"
+          title="Home"
+          style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', textDecoration: 'none' }}
+        >
+          <Home size={18} />
+          <span style={{ fontSize: '0.85rem' }}>Home</span>
+        </Link>
+      </div>
+
+      {/* Center: JUMBLE logo */}
+      <div style={{ textAlign: 'center' }}>
+        <Link
+          to={role === 'recruiter' ? '/recruiter' : '/dashboard'}
+          reloadDocument
+          className="brand-name"
+          style={{ textDecoration: 'none', fontSize: '1.8rem', letterSpacing: '0.05em' }}
         >
           JUMBLE
         </Link>
       </div>
 
-      <div className="navbar-right">
+      <div className="navbar-right" style={{ justifyContent: 'flex-end' }}>
 
         {/* Candidate Nav Links */}
         {role === 'candidate' && (
-          <Link to="/matches" className="nav-action-btn subtle">
+          <Link to="/matches" className="nav-action-btn subtle" style={{ position: 'relative' }}>
             <Heart size={20} />
+            {matchCount > 0 && (
+              <span style={{
+                position: 'absolute',
+                top: '-6px',
+                right: '-6px',
+                background: '#e0245e',
+                color: '#fff',
+                borderRadius: '50%',
+                fontSize: '0.65rem',
+                fontWeight: '700',
+                minWidth: '16px',
+                height: '16px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                padding: '0 3px',
+                lineHeight: 1,
+                pointerEvents: 'none'
+              }}>
+                {matchCount}
+              </span>
+            )}
             <span>Matches</span>
           </Link>
         )}
@@ -50,8 +105,30 @@ function Navbar({ role, name }) {
         {/* Recruiter Nav Links */}
         {role === 'recruiter' && (
           <>
-            <Link to="/matches" className="nav-action-btn subtle">
+            <Link to="/matches" className="nav-action-btn subtle" style={{ position: 'relative' }}>
               <Heart size={20} />
+              {matchCount > 0 && (
+                <span style={{
+                  position: 'absolute',
+                  top: '-6px',
+                  right: '-6px',
+                  background: '#e0245e',
+                  color: '#fff',
+                  borderRadius: '50%',
+                  fontSize: '0.65rem',
+                  fontWeight: '700',
+                  minWidth: '16px',
+                  height: '16px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  padding: '0 3px',
+                  lineHeight: 1,
+                  pointerEvents: 'none'
+                }}>
+                  {matchCount}
+                </span>
+              )}
               <span>Matches</span>
             </Link>
             <Link to="/my-jobs" className="nav-action-btn subtle">
