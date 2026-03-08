@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Navbar from '../Navbar';
-import { User, Briefcase, Users, Mail, FileText } from 'lucide-react';
+import { User, Briefcase, Users, Mail, FileText, Linkedin } from 'lucide-react';
 
 export default function Matches({ userRole }) {
   const [matches, setMatches] = useState([]);
@@ -110,11 +110,19 @@ export default function Matches({ userRole }) {
                       </div>
                     )}
 
-                    {match.candidateDetails.resumeFilename && (
-                      <a href={`http://localhost:8081/api/candidates/${match.candidateId}/resume`} target="_blank" rel="noreferrer" className="nav-action-btn subtle" style={{ display: 'inline-flex', marginTop: '1rem', padding: '0.4rem 0.8rem', fontSize: '0.85rem' }}>
-                        <FileText size={14} /> View Resume
-                      </a>
-                    )}
+                    <div style={{ display: 'flex', gap: '0.8rem', marginTop: '1rem', flexWrap: 'wrap' }}>
+                      {match.candidateDetails.resumeFilename && (
+                        <a href={`http://localhost:8081/api/candidates/${match.candidateId}/resume`} target="_blank" rel="noreferrer" className="nav-action-btn subtle" style={{ padding: '0.4rem 0.8rem', fontSize: '0.85rem' }}>
+                          <FileText size={14} /> View Resume
+                        </a>
+                      )}
+                      
+                      {match.candidateDetails.socialLinks?.linkedin && (
+                        <a href={match.candidateDetails.socialLinks.linkedin.startsWith('http') ? match.candidateDetails.socialLinks.linkedin : `https://${match.candidateDetails.socialLinks.linkedin}`} target="_blank" rel="noreferrer" className="nav-action-btn subtle" style={{ padding: '0.4rem 0.8rem', fontSize: '0.85rem', color: '#0a66c2', backgroundColor: 'rgba(10, 102, 194, 0.1)' }}>
+                          <Linkedin size={14} /> LinkedIn
+                        </a>
+                      )}
+                    </div>
                   </div>
                 ) : role === 'candidate' && match.jobDetails ? (
                   <div style={{ marginBottom: '1.2rem', flex: 1 }}>
