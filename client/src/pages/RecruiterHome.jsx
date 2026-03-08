@@ -1,48 +1,19 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import CandidateCard from '../components/CandidateCard';
 import Navbar from '../components/Navbar';
-
-const DUMMY_CANDIDATES = [
-  {
-    id: 1,
-    name: "Alex Johnson",
-    skills: ["React", "Node.js", "TypeScript", "Tailwind"],
-    linkedin: "https://linkedin.com/in/alexj",
-    email: "alex.j@example.com",
-    resumeUrl: "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf"
-  },
-  {
-    id: 2,
-    name: "Samantha Lee",
-    skills: ["Python", "Django", "PostgreSQL", "Docker"],
-    linkedin: "https://linkedin.com/in/samanthalee",
-    email: "sam.lee@example.com",
-    resumeUrl: "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf"
-  },
-  {
-    id: 3,
-    name: "David Kim",
-    skills: ["Java", "Spring Boot", "AWS", "Microservices"],
-    linkedin: "https://linkedin.com/in/davidkim",
-    email: "david.kim@example.com",
-    resumeUrl: "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf"
-  },
-  {
-    id: 4,
-    name: "Emily Chen",
-    skills: ["Figma", "UI/UX", "CSS", "React"],
-    linkedin: "https://linkedin.com/in/emilyc",
-    email: "emily.c@example.com",
-    resumeUrl: "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf"
-  }
-];
+import { Briefcase } from 'lucide-react';
 
 export default function RecruiterHome() {
   const [candidates, setCandidates] = useState([]);
+  const [jobs, setJobs] = useState([]);
+  const [selectedJob, setSelectedJob] = useState(null);
+  
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [loading, setLoading] = useState(true);
+  const [loadingCandidates, setLoadingCandidates] = useState(true);
+  const [loadingJobs, setLoadingJobs] = useState(true);
 
-  React.useEffect(() => {
+  // Fetch Candidates (simulated pool for now, or actual candidates)
+  useEffect(() => {
     const fetchCandidates = async () => {
       try {
         const token = localStorage.getItem('token');
@@ -51,7 +22,6 @@ export default function RecruiterHome() {
         });
         if (res.ok) {
           const data = await res.json();
-          // The backend might return candidate data in a different shape, mapping it to what CandidateCard expects (or similar)
           const mappedData = data.map(c => ({
             id: c.userId || c.id,
             name: `${c.firstName || ''} ${c.lastName || ''}`.trim() || c.name,
@@ -61,26 +31,54 @@ export default function RecruiterHome() {
             resumeUrl: c.resumeUrl || ''
           }));
           setCandidates(mappedData);
-        } else {
-          console.error('Failed to fetch candidates', await res.text());
         }
       } catch (err) {
         console.error('Error fetching candidates:', err);
       } finally {
-        setLoading(false);
+        setLoadingCandidates(false);
       }
     };
     fetchCandidates();
   }, []);
 
+  // Fetch Jobs belonging to the recruiter
+  useEffect(() => {
+    const fetchJobs = async () => {
+      try {
+        const token = localStorage.getItem('token');
+        const recruiterId = localStorage.getItem('id');
+        
+        const res = await fetch(`http://localhost:8081/api/recruiters/${recruiterId}/jobs`, {
+          headers: token ? { 'Authorization': `Bearer ${token}` } : {}
+        });
+        
+        if (res.ok) {
+          const data = await res.json();
+          setJobs(data);
+          if (data.length > 0) {
+            setSelectedJob(data[0]);
+          }
+        }
+      } catch (err) {
+        console.error('Error fetching jobs:', err);
+      } finally {
+        setLoadingJobs(false);
+      }
+    };
+    fetchJobs();
+  }, []);
+
   const handleAction = async (candidateId, actionType) => {
-    // actionType comes in as 'LIKED' or 'PASSED' from the UI components. Map to 'RIGHT' or 'LEFT'
+    if (!selectedJob) {
+      alert("Please select a job first before swiping.");
+      return;
+    }
+
     const direction = actionType === 'LIKED' ? 'RIGHT' : 'LEFT';
-    
     const payload = {
       candidateId: candidateId.toString(),
-      jobId: "J1", // Hardcoded job for now
-      recruiterId: "R1", // Hardcoded recruiter
+      jobId: selectedJob.id.toString(), // Use the selected job dynamically!
+      recruiterId: localStorage.getItem('id') || "R1",
       swiperRole: "RECRUITER",
       direction: direction
     };
@@ -88,49 +86,84 @@ export default function RecruiterHome() {
     try {
       const response = await fetch('http://localhost:8080/api/v1/swipes', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload)
       });
-      
       if (!response.ok) {
         console.error("Failed to record swipe in backend");
       }
     } catch (error) {
       console.error("Error recording swipe:", error);
     }
-
-    // Optimistically skip to next candidate regardless of backend success to keep UI fluid
     setCurrentIndex(prevIndex => prevIndex + 1);
   };
 
   const currentCandidate = candidates[currentIndex];
 
   return (
-    <div className="recruiter-page">
+    <div className="recruiter-page dashboard-layout">
       <Navbar />
 
-      <div className="candidates-list">
-        {loading ? (
-          <div className="loading-state">
-            <h2>Loading candidates...</h2>
+      <main className="recruiter-home-layout">
+        
+        {/* SIDEBAR FOR JOBS */}
+        <aside className="jobs-sidebar">
+          <div className="sidebar-header">
+            <h3>Your Job Postings</h3>
           </div>
-        ) : currentCandidate ? (
-          <div className="list-card-wrapper active-card">
-            <CandidateCard 
-              candidate={currentCandidate} 
-              onLike={(id) => handleAction(id, 'LIKED')}
-              onPass={(id) => handleAction(id, 'PASSED')}
-            />
+          <div className="sidebar-list">
+            {loadingJobs ? (
+              <p style={{ padding: '1rem', color: 'var(--text-light)' }}>Loading jobs...</p>
+            ) : jobs.length === 0 ? (
+              <p style={{ padding: '1rem', color: 'var(--text-light)' }}>
+                No active jobs. <a href="/create-job" style={{color: 'var(--primary)'}}>Create one first!</a>
+              </p>
+            ) : (
+              jobs.map(job => (
+                <div 
+                  key={job.id} 
+                  className={`sidebar-job-item ${selectedJob?.id === job.id ? 'selected' : ''}`}
+                  onClick={() => {
+                    setSelectedJob(job);
+                    setCurrentIndex(0); // Reset candidate list!
+                  }}
+                >
+                  <Briefcase size={16} />
+                  <span>{job.roleName}</span>
+                </div>
+              ))
+            )}
           </div>
-        ) : (
-          <div className="no-more-profiles">
-            <h2>No more candidates!</h2>
-            <p>You have reviewed all available profiles. Check back later for new talent.</p>
-          </div>
-        )}
-      </div>
+        </aside>
+
+        {/* SWIPER CONTAINER */}
+        <div className="candidates-list-container">
+          {!selectedJob ? (
+            <div className="welcome-card active-card" style={{ maxWidth: 500, margin: '2rem auto' }}>
+              <h2>No Job Selected</h2>
+              <p>Please click on a job from the sidebar to start swiping on candidates.</p>
+            </div>
+          ) : loadingCandidates ? (
+            <div className="loading-state">
+              <h2>Loading candidates...</h2>
+            </div>
+          ) : currentCandidate ? (
+            <div className="list-card-wrapper active-card">
+              <CandidateCard 
+                candidate={currentCandidate} 
+                onLike={(id) => handleAction(id, 'LIKED')}
+                onPass={(id) => handleAction(id, 'PASSED')}
+              />
+            </div>
+          ) : (
+            <div className="no-more-profiles">
+              <h2>No more candidates!</h2>
+              <p>You have reviewed all available profiles for <strong>{selectedJob.roleName}</strong>.</p>
+            </div>
+          )}
+        </div>
+
+      </main>
     </div>
   );
 }
