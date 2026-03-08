@@ -308,11 +308,7 @@ export default function Matches({ userRole }) {
                   e.currentTarget.style.borderColor = '#f1f5f9';
                 }}
               >
-                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1.25rem' }}>
-                  <div style={{ background: '#f0fdf4', color: '#16a34a', padding: '0.3rem 0.75rem', borderRadius: '99px', fontSize: '0.75rem', fontWeight: 700, display: 'flex', alignItems: 'center', gap: '0.3rem' }}>
-                    <div style={{ width: '6px', height: '6px', background: '#16a34a', borderRadius: '50%' }}></div>
-                    CONFIRMED
-                  </div>
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end', marginBottom: '1.25rem' }}>
                   {role === 'recruiter' && (
                     <span style={{ fontSize: '0.75rem', color: '#94a3b8', fontWeight: 500 }}>Click to view</span>
                   )}
