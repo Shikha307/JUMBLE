@@ -26,13 +26,17 @@ public class CandidateController {
             @RequestParam("name") String name,
             @RequestParam("email") String email,
             @RequestParam("skills") List<String> skills,
-            @RequestParam("resume") MultipartFile resumeFile) {
+            @RequestParam("resume") MultipartFile resumeFile,
+            @RequestParam("country") String country,
+            @RequestParam("University") String university) {
 
         try {
             Candidate user = new Candidate();
             user.setName(name);
             user.setEmail(email);
             user.setSkills(skills);
+            user.setCountry(country);
+            user.setUniversity(university);
 
             Candidate savedUser = userService.createUser(user, resumeFile);
             return new ResponseEntity<>(savedUser, HttpStatus.CREATED);
@@ -58,6 +62,13 @@ public class CandidateController {
                                 "attachment; filename=\"" + candidate.getResumeFilename() + "\"")
                         .header(org.springframework.http.HttpHeaders.CONTENT_TYPE, candidate.getResumeContentType())
                         .body(candidate.getResumeData()))
+                .orElse(ResponseEntity.notFound().build());
+    }
+
+    @PostMapping("/update/{id}")
+    public ResponseEntity<Candidate> updateUser(@PathVariable String id, @RequestBody Candidate user) {
+        return userService.updateUser(id, user)
+                .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
 }
