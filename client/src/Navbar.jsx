@@ -38,7 +38,16 @@ function Navbar({ role, name }) {
       headers: token ? { 'Authorization': `Bearer ${token}` } : {}
     })
       .then(r => r.ok ? r.json() : [])
-      .then(data => setMatchCount(Array.isArray(data) ? data.length : 0))
+      .then(data => {
+        if (!Array.isArray(data)) { setMatchCount(0); return; }
+        if (role === 'recruiter') {
+          // Deduplicate by candidateId, same as Matches.jsx does
+          const uniqueCandidates = new Set(data.map(m => m.candidateId));
+          setMatchCount(uniqueCandidates.size);
+        } else {
+          setMatchCount(data.length);
+        }
+      })
       .catch(() => { });
   }, [role]);
 

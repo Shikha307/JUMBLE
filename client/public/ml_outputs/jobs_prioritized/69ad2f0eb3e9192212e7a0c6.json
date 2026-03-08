@@ -36,6 +36,17 @@
     "matchScore": 31.43
   },
   {
+    "recruiterId": "69ad4085e2f5646291887c17",
+    "roleName": "jjxwj",
+    "description": "cwjbehc",
+    "skillsNeeded": [
+      "cwjbcjew"
+    ],
+    "_class": "com.jumble.userjob.job.model.Job",
+    "id": "69ad9e467133625b04797144",
+    "matchScore": 25.83
+  },
+  {
     "recruiterId": "69acfcfede8bc04c38f4c252",
     "roleName": "cyber intern",
     "description": "security ",
@@ -134,6 +145,20 @@
     "_class": "com.jumble.userjob.job.model.Job",
     "id": "69acfd2ede8bc04c38f4c253",
     "matchScore": 17.46
+  },
+  {
+    "recruiterId": "69adb21d28c2428ca7507e69",
+    "roleName": "Software Developer Intern 2026",
+    "description": "Your Role And Responsibilities\n\nWe are looking for Software Developer Interns to join our engineering teams. As an intern, you will work alongside experienced IBM developers to design, build, and test software that powers our cloud, AI, and hybrid\u2011platform solutions. This role is designed for students who are passionate about coding\u2014regardless of which programming language they started with. You will gain hands-on experience in real-world projects, learn modern development practices, and collaborate in an Agile environment where your ideas can make an immediate impact.\n\nWhat You\u2019ll Do\n\n Support the design, development, testing, and debugging of software in front-end, back-end, or full\u2011stack environments.\n Work with a variety of programming languages depending on the project (examples: Python, Java, JavaScript, TypeScript, C++, Go, Rust, Swift, Kotlin, or others).\n Help build user interfaces using frameworks like React or contribute to back-end services and APIs.\n Use Git and other version\u2011control and collaboration tools.\n Work with cloud and container technologies such as Docker, Kubernetes, and REST APIs.\n Participate in Agile ceremonies, code reviews, and technical discussions.\n Explore emerging technologies, including AI/ML, automation, and cloud-native development.\n\nPreferred Education\n\nBachelor's Degree\n\nRequired Technical And Professional Expertise\n\n To be eligible, candidates must be currently enrolled in a Bachelor\u2019s, Master\u2019s, MBA, or PhD program, with an expected graduation date between December 2026 and May 2029.\n Coursework or project experience in software development using any programming language.\n Familiarity with fundamental concepts such as data structures, basic algorithms, or debugging.\n Exposure to front-end or back-end technologies (React, Node.js, Python, Java, SQL, etc.).\n Experience using Git or similar version control tools.\n Interest in cloud computing, containers, or modern deployment practices.\n Strong analytical thinking, problem\u2011solving, and communication skills.\n Ability to collaborate and learn quickly in a team environment.\n\nPreferred Technical And Professional Experience\n\n Experience with cloud services (IBM Cloud, AWS, Azure, or GCP).\n Familiarity with REST APIs and databases (relational or NoSQL).\n Exposure to CI/CD pipelines or automation tools.\n Personal or open-source projects that demonstrate creativity and initiative.\n Understanding of Agile development methods.",
+    "skillsNeeded": [
+      "Java",
+      "Python",
+      "React",
+      "Angular"
+    ],
+    "_class": "com.jumble.userjob.job.model.Job",
+    "id": "69adb2d528c2428ca7507e6a",
+    "matchScore": 14.19
   },
   {
     "recruiterId": "R1",
