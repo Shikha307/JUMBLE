@@ -180,6 +180,146 @@ function CandidateModal({ match, onClose }) {
   );
 }
 
+function JobModal({ match, onClose }) {
+  const [details, setDetails] = useState(match.jobDetails);
+  const [loading, setLoading] = useState(!match.jobDetails);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    if (!details) {
+      const fetchDetails = async () => {
+        try {
+          const token = localStorage.getItem('token');
+          const headers = token ? { 'Authorization': `Bearer ${token}` } : {};
+          const res = await fetch(`http://localhost:8081/api/jobs/${match.jobId}`, { headers });
+          if (res.ok) {
+            const data = await res.json();
+            setDetails(data);
+          } else {
+            setError('Failed to load job details');
+          }
+        } catch (err) {
+          setError('Error connecting to job service');
+        } finally {
+          setLoading(false);
+        }
+      };
+      fetchDetails();
+    }
+  }, [match.jobId, details]);
+
+  return (
+    <div
+      onClick={onClose}
+      style={{
+        position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.65)',
+        display: 'flex', alignItems: 'center', justifyContent: 'center',
+        zIndex: 9999, backdropFilter: 'blur(4px)'
+      }}
+    >
+      <div
+        onClick={e => e.stopPropagation()}
+        style={{
+          background: '#fff', borderRadius: '24px', padding: '2.5rem',
+          width: '90%', maxWidth: '540px', maxHeight: '90vh', overflowY: 'auto',
+          boxShadow: '0 25px 50px -12px rgba(0,0,0,0.25)', position: 'relative'
+        }}
+      >
+        <button
+          onClick={onClose}
+          style={{
+            position: 'absolute', top: '1.5rem', right: '1.5rem',
+            background: '#f8fafc', border: 'none', borderRadius: '50%',
+            width: '36px', height: '36px', cursor: 'pointer',
+            display: 'flex', alignItems: 'center', justifyContent: 'center',
+            transition: 'background 0.2s'
+          }}
+          onMouseEnter={e => e.currentTarget.style.background = '#f1f5f9'}
+          onMouseLeave={e => e.currentTarget.style.background = '#f8fafc'}
+        >
+          <X size={20} color="#64748b" />
+        </button>
+
+        {loading ? (
+          <div style={{ textAlign: 'center', padding: '2rem' }}>
+            <div className="spinner" style={{ margin: '0 auto 1rem' }}></div>
+            <p style={{ color: '#64748b' }}>Loading job details...</p>
+          </div>
+        ) : error ? (
+          <div style={{ textAlign: 'center', padding: '2rem' }}>
+            <p style={{ color: '#ef4444' }}>{error}</p>
+            <button className="btn-primary" onClick={onClose} style={{ marginTop: '1rem' }}>Close</button>
+          </div>
+        ) : details ? (
+          <>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '1.25rem', marginBottom: '2rem' }}>
+              <div style={{
+                width: '72px', height: '72px', borderRadius: '22px',
+                background: 'linear-gradient(135deg, #f43f5e, #fb7185)',
+                display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0,
+                boxShadow: '0 10px 15px -3px rgba(244, 63, 94, 0.3)'
+              }}>
+                <Briefcase size={36} color="white" />
+              </div>
+              <div>
+                <h2 style={{ margin: 0, fontSize: '1.75rem', color: '#1e293b', fontWeight: 800 }}>
+                  {details.roleName}
+                </h2>
+                <span style={{
+                  display: 'inline-block', marginTop: '0.4rem', fontSize: '0.8rem',
+                  background: '#fff1f2', color: '#e11d48',
+                  padding: '0.25rem 0.75rem', borderRadius: '99px', fontWeight: 700
+                }}>
+                  You're Matched! 🚀
+                </span>
+              </div>
+            </div>
+
+            <div style={{ marginBottom: '2rem' }}>
+              <h4 style={{ margin: '0 0 0.8rem', fontSize: '0.85rem', textTransform: 'uppercase', letterSpacing: '0.05em', color: '#94a3b8', fontWeight: 700 }}>Job Description</h4>
+              <p style={{ margin: 0, color: '#475569', lineHeight: 1.6, fontSize: '0.95rem' }}>
+                {details.description || "No description provided."}
+              </p>
+            </div>
+
+            {details.requirements && (
+              <div style={{ marginBottom: '2rem' }}>
+                <h4 style={{ margin: '0 0 0.8rem', fontSize: '0.85rem', textTransform: 'uppercase', letterSpacing: '0.05em', color: '#94a3b8', fontWeight: 700 }}>Requirements</h4>
+                <p style={{ margin: 0, color: '#475569', lineHeight: 1.6, fontSize: '0.95rem' }}>
+                  {details.requirements}
+                </p>
+              </div>
+            )}
+
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem', marginBottom: '2rem' }}>
+              <div style={{ padding: '1rem', background: '#f8fafc', borderRadius: '16px', border: '1px solid #e2e8f0' }}>
+                <h4 style={{ margin: '0 0 0.4rem', fontSize: '0.75rem', textTransform: 'uppercase', color: '#94a3b8', fontWeight: 700 }}>Job ID</h4>
+                <p style={{ margin: 0, fontWeight: 600, color: '#1e293b' }}>{details.jobId}</p>
+              </div>
+              {details.location && (
+                <div style={{ padding: '1rem', background: '#f8fafc', borderRadius: '16px', border: '1px solid #e2e8f0' }}>
+                  <h4 style={{ margin: '0 0 0.4rem', fontSize: '0.75rem', textTransform: 'uppercase', color: '#94a3b8', fontWeight: 700 }}>Location</h4>
+                  <p style={{ margin: 0, fontWeight: 600, color: '#1e293b' }}>{details.location}</p>
+                </div>
+              )}
+            </div>
+
+            <div style={{ borderTop: '1px solid #f1f5f9', paddingTop: '1.5rem', textAlign: 'center' }}>
+              <button 
+                onClick={onClose}
+                className="btn-primary"
+                style={{ padding: '0.8rem 2rem', borderRadius: '12px', background: '#f43f5e', color: 'white', fontWeight: 600, cursor: 'pointer', border: 'none' }}
+              >
+                Close Details
+              </button>
+            </div>
+          </>
+        ) : null}
+      </div>
+    </div>
+  );
+}
+
 // ─── Main Matches Page ─────────────────────────────────────────────────────────
 export default function Matches({ userRole }) {
   const [matches, setMatches] = useState([]);
@@ -255,6 +395,9 @@ export default function Matches({ userRole }) {
       {/* MODAL PORTAL (Recruiter Only) */}
       {selectedMatch && role === 'recruiter' && (
         <CandidateModal match={selectedMatch} onClose={() => setSelectedMatch(null)} />
+      )}
+      {selectedMatch && role === 'candidate' && (
+        <JobModal match={selectedMatch} onClose={() => setSelectedMatch(null)} />
       )}
 
       <main className="dashboard-content" style={{ display: 'block', maxWidth: '1200px', margin: '0 auto', width: '100%' }}>
