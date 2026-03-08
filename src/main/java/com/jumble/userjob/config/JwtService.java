@@ -16,8 +16,9 @@ import java.util.function.Function;
 @Service
 public class JwtService {
 
-    // Using a securely generated key for HS256 (in production this should be in properties)
-    private static final Key signingKey = Keys.secretKeyFor(SignatureAlgorithm.HS256);
+    // Using a fixed key for development to ensure tokens persist across restarts
+    private static final String SECRET_KEY = "adhfaskjdfhaksjdfhaskjdfhaskjdfhaksjdfhaksjdfhaksjdfhaksjdf";
+    private static final Key signingKey = Keys.hmacShaKeyFor(SECRET_KEY.getBytes());
 
     public String extractUsername(String token) {
         return extractClaim(token, Claims::getSubject);
