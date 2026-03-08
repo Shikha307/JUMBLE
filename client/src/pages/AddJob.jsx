@@ -7,21 +7,8 @@ export default function AddJob() {
   const [formData, setFormData] = useState({
     roleName: '',
     description: '',
-    country: '',
     skillsNeeded: ''
   });
-  const [countries, setCountries] = useState([]);
-
-  // Fetch countries on mount
-  React.useEffect(() => {
-    fetch('https://restcountries.com/v3.1/all?fields=name')
-      .then(res => res.json())
-      .then(data => {
-        const sorted = data.map(c => c.name.common).sort();
-        setCountries(sorted);
-      })
-      .catch(err => console.error('Failed to fetch countries', err));
-  }, []);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -32,7 +19,6 @@ export default function AddJob() {
     const payload = {
       roleName: formData.roleName,
       description: formData.description,
-      country: formData.country,
       skillsNeeded: formData.skillsNeeded.split(',').map(s => s.trim()).filter(s => s),
       recruiterId: localStorage.getItem('id') // Retrieved from login/registration
     };
@@ -91,23 +77,6 @@ export default function AddJob() {
                 rows="5"
                 required
               ></textarea>
-            </div>
-
-            <div className="input-group">
-              <label htmlFor="country">Country</label>
-              <select
-                id="country"
-                name="country"
-                value={formData.country}
-                onChange={handleChange}
-                required
-                className="form-select" // Using a class for potential styling
-              >
-                <option value="">Select a country</option>
-                {countries.map(c => (
-                  <option key={c} value={c}>{c}</option>
-                ))}
-              </select>
             </div>
 
             <div className="input-group">

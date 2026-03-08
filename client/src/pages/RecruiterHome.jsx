@@ -150,11 +150,36 @@ export default function RecruiterHome() {
         
         {/* SIDEBAR FOR FILTERS */}
         <aside className="jobs-sidebar">
-          <div className="sidebar-header">
+          <div className="sidebar-header filters-header">
             <h3>Filters</h3>
           </div>
           
           <div className="sidebar-list">
+            <div className="sidebar-filter-group">
+              <label>Filter by Job Posting</label>
+              {loadingJobs ? (
+                <p style={{ padding: '0.5rem 0', color: 'var(--text-light)', fontSize: '0.9rem' }}>Loading jobs...</p>
+              ) : jobs.length === 0 ? (
+                <p style={{ padding: '0.5rem 0', color: 'var(--text-light)', fontSize: '0.9rem' }}>
+                  No active jobs. <a href="/create-job" style={{color: 'var(--primary)'}}>Create one first!</a>
+                </p>
+              ) : (
+                <select 
+                  value={selectedJob?.id || ''} 
+                  onChange={(e) => {
+                    const job = jobs.find(j => j.id.toString() === e.target.value);
+                    setSelectedJob(job);
+                    setCurrentIndex(0);
+                  }}
+                  className="sidebar-select"
+                >
+                  {jobs.map(job => (
+                    <option key={job.id} value={job.id}>{job.roleName}</option>
+                  ))}
+                </select>
+              )}
+            </div>
+
             <div className="sidebar-filter-group">
               <label>Filter by Country</label>
               <select 
@@ -170,40 +195,6 @@ export default function RecruiterHome() {
                   <option key={c} value={c}>{c}</option>
                 ))}
               </select>
-            </div>
-
-            <div className="sidebar-filter-group">
-              <label>Filter by Job Posting</label>
-              {loadingJobs ? (
-                <p style={{ padding: '0.5rem 0', color: 'var(--text-light)', fontSize: '0.9rem' }}>Loading jobs...</p>
-              ) : jobs.length === 0 ? (
-                <p style={{ padding: '0.5rem 0', color: 'var(--text-light)', fontSize: '0.9rem' }}>
-                  No active jobs. <a href="/create-job" style={{color: 'var(--primary)'}}>Create one first!</a>
-                </p>
-              ) : (
-                <div className="sidebar-job-list">
-                  {jobs
-                    .filter(job => !selectedCountry || job.country === selectedCountry)
-                    .map(job => (
-                      <div 
-                        key={job.id} 
-                        className={`sidebar-job-item ${selectedJob?.id === job.id ? 'selected' : ''}`}
-                        onClick={() => {
-                          setSelectedJob(job);
-                          setCurrentIndex(0);
-                        }}
-                      >
-                        <Briefcase size={14} />
-                        <span>{job.roleName}</span>
-                      </div>
-                    ))}
-                  {jobs.length > 0 && jobs.filter(job => !selectedCountry || job.country === selectedCountry).length === 0 && (
-                    <p style={{ padding: '0.5rem 0', color: 'var(--text-light)', fontSize: '0.85rem', fontStyle: 'italic' }}>
-                      No jobs in {selectedCountry}.
-                    </p>
-                  )}
-                </div>
-              )}
             </div>
           </div>
         </aside>

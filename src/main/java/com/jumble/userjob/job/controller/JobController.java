@@ -50,14 +50,4 @@ public class JobController {
         jobService.deleteJob(id);
         return ResponseEntity.noContent().build();
     }
-
-    @PutMapping("/{id}")
-    public ResponseEntity<Job> updateJob(@PathVariable String id, @RequestBody Job job) {
-        try {
-            Job updatedJob = jobService.updateJob(id, job);
-            return ResponseEntity.ok(updatedJob);
-        } catch (RuntimeException e) {
-            return ResponseEntity.notFound().build();
-        }
-    }
 }

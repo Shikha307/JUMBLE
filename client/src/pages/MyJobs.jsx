@@ -6,18 +6,6 @@ export default function MyJobs() {
   const [jobs, setJobs] = useState([]);
   const [editingId, setEditingId] = useState(null);
   const [editFormData, setEditFormData] = useState({});
-  const [countries, setCountries] = useState([]);
-
-  // Fetch countries on mount
-  useEffect(() => {
-    fetch('https://restcountries.com/v3.1/all?fields=name')
-      .then(res => res.json())
-      .then(data => {
-        const sorted = data.map(c => c.name.common).sort();
-        setCountries(sorted);
-      })
-      .catch(err => console.error('Failed to fetch countries', err));
-  }, []);
 
   useEffect(() => {
     const fetchJobs = async () => {
@@ -58,38 +46,16 @@ export default function MyJobs() {
     setEditFormData({ ...editFormData, [e.target.name]: e.target.value });
   };
 
-  const handleSaveClick = async (id) => {
+  const handleSaveClick = (id) => {
     const finalData = {
       ...editFormData,
       skillsNeeded: typeof editFormData.skillsNeeded === 'string' 
         ? editFormData.skillsNeeded.split(',').map(s => s.trim()).filter(s => s) 
         : editFormData.skillsNeeded
     };
-
-    try {
-      const token = localStorage.getItem('token');
-      const response = await fetch(`http://localhost:8081/api/jobs/${id}`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`
-        },
-        body: JSON.stringify(finalData)
-      });
-
-      if (response.ok) {
-        const updatedJob = await response.json();
-        const updatedJobs = jobs.map(job => (job.id === id ? updatedJob : job));
-        setJobs(updatedJobs);
-        setEditingId(null);
-        alert("Job updated successfully!");
-      } else {
-        alert("Failed to update job.");
-      }
-    } catch (error) {
-      console.error("Error updating job:", error);
-      alert("Error updating job.");
-    }
+    const updatedJobs = jobs.map(job => (job.id === id ? finalData : job));
+    setJobs(updatedJobs);
+    setEditingId(null);
   };
 
   return (
@@ -115,15 +81,6 @@ export default function MyJobs() {
                     <textarea name="description" value={editFormData.description || ''} onChange={handleEditChange} rows="4"></textarea>
                   </div>
                   <div className="input-group">
-                    <label>Country</label>
-                    <select name="country" value={editFormData.country || ''} onChange={handleEditChange} className="form-select">
-                      <option value="">Select a country</option>
-                      {countries.map(c => (
-                        <option key={c} value={c}>{c}</option>
-                      ))}
-                    </select>
-                  </div>
-                  <div className="input-group">
                     <label>Skills Needed (comma-separated)</label>
                     <input type="text" name="skillsNeeded" value={editFormData.skillsNeeded || ''} onChange={handleEditChange} />
                   </div>
@@ -145,24 +102,10 @@ export default function MyJobs() {
                     </button>
                   </div>
                   <div className="job-meta">
-                    <div className="job-tags" style={{ display: 'flex', gap: '0.8rem', alignItems: 'center', marginBottom: '0.8rem' }}>
-                      {job.country && (
-                        <span className="job-location-tag" style={{ 
-                          fontSize: '0.85rem', 
-                          color: 'var(--primary)', 
-                          background: 'var(--primary-light)', 
-                          padding: '0.2rem 0.6rem', 
-                          borderRadius: '4px',
-                          fontWeight: '600'
-                        }}>
-                          📍 {job.country}
-                        </span>
-                      )}
-                      <div className="skills-container" style={{ margin: 0 }}>
-                        {job.skillsNeeded && job.skillsNeeded.map((skill, index) => (
-                          <span key={index} className="skill-chip">{skill}</span>
-                        ))}
-                      </div>
+                    <div className="skills-container">
+                      {job.skillsNeeded && job.skillsNeeded.map((skill, index) => (
+                        <span key={index} className="skill-chip">{skill}</span>
+                      ))}
                     </div>
                   </div>
                   <p className="job-desc-text">{job.description}</p>
