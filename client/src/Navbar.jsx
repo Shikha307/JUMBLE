@@ -28,7 +28,7 @@ function Navbar({ role, name }) {
     <nav className="navbar">
       <div className="navbar-left">
         <Link 
-          to={role === 'recruiter' ? '/recruiter' : '/dashboard'} 
+          to="/dashboard"
           reloadDocument 
           className="brand-name" 
           style={{ textDecoration: 'none' }}
@@ -58,7 +58,7 @@ function Navbar({ role, name }) {
               <Briefcase size={20} />
               <span>My Jobs</span>
             </Link>
-            <Link to="/create-job" className="nav-action-btn subtle">
+            <Link to="/add-job" className="nav-action-btn subtle">
               <PlusCircle size={20} />
               <span>Add Job</span>
             </Link>

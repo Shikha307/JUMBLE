@@ -1,3 +1,4 @@
+import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate, Link } from 'react-router-dom';
 import Login from './Login';
 import RoleSelect from './RoleSelect';
@@ -19,9 +20,36 @@ function App() {
   const userName = localStorage.getItem('name') || '';
 
   // ─── Recruiter gate ─────────────────────────────────────────────────
-  // Set to true once the recruiter has created at least one job posting.
-  // In production this will come from an API call (e.g. GET /jobs?mine=true).
-  const hasJobPostings = false; // ← toggle to true to see candidate swipe view
+  const [hasJobPostings, setHasJobPostings] = useState(false);
+  const [checkingJobs, setCheckingJobs] = useState(false);
+
+  useEffect(() => {
+    if (isAuthenticated && userRole === 'recruiter') {
+      const fetchJobs = async () => {
+        setCheckingJobs(true);
+        try {
+          const recruiterId = localStorage.getItem('id');
+          const res = await fetch(`http://localhost:8081/api/recruiters/${recruiterId}/jobs`, {
+            headers: { 'Authorization': `Bearer ${token}` }
+          });
+          if (res.ok) {
+            const data = await res.json();
+            setHasJobPostings(data.length > 0);
+          }
+        } catch (err) {
+          console.error('Error fetching jobs for recruiter:', err);
+        } finally {
+          setCheckingJobs(false);
+        }
+      };
+      
+      fetchJobs();
+    }
+  }, [isAuthenticated, userRole, token]);
+
+  if (checkingJobs) {
+    return <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh', color: 'white' }}><h2>Loading Dashboard...</h2></div>;
+  }
 
   return (
     <Router>
@@ -54,7 +82,7 @@ function App() {
               ? userRole === 'candidate'
                 ? <CandidateDashboard userName={userName} />
                 : hasJobPostings
-                  ? <Navigate to="/recruiter-candidates" />
+                  ? <Navigate to="/recruiter" />
                   : <RecruiterDashboard userName={userName} />
               : <Navigate to="/login" />
           }

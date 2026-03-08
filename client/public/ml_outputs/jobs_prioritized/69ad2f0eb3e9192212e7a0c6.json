@@ -1,15 +1,14 @@
 [
   {
-    "recruiterId": "69acaae932e1b554400f220d",
-    "roleName": "ML Engineer",
-    "description": "Looking for an expert ML Engineer.",
+    "recruiterId": "R1",
+    "roleName": "Test Job",
+    "description": "Test desc",
     "skillsNeeded": [
-      "java",
-      "spring boot"
+      "Java"
     ],
     "_class": "com.jumble.userjob.job.model.Job",
-    "id": "69acc5e37eba71d2aaaa208d",
-    "matchScore": 65.05
+    "id": "69acfae40bb735b8163c5b25",
+    "matchScore": 55.64
   },
   {
     "recruiterId": "R1",
@@ -22,69 +21,19 @@
     ],
     "_class": "com.jumble.userjob.job.model.Job",
     "id": "69acfb110bb735b8163c5b26",
-    "matchScore": 61.01
-  },
-  {
-    "recruiterId": "69ad3b55c7d5f2c747b8aa44",
-    "roleName": "Senior Kubernetes Engineer",
-    "description": "Kubenetes chahiye. Padh ke aao.",
-    "skillsNeeded": [
-      "Java",
-      "Springboot",
-      "SQL"
-    ],
-    "_class": "com.jumble.userjob.job.model.Job",
-    "id": "69ad3bc3c7d5f2c747b8aa45",
-    "matchScore": 60.05
+    "matchScore": 33.58
   },
   {
     "recruiterId": "69acaae932e1b554400f220d",
-    "roleName": "Senior Java Developer",
-    "description": "Looking for an expert Spring Boot developer to build skynet APIs.",
+    "roleName": "ML Engineer",
+    "description": "Looking for an expert ML Engineer.",
     "skillsNeeded": [
       "java",
       "spring boot"
     ],
     "_class": "com.jumble.userjob.job.model.Job",
-    "id": "69acab6d32e1b554400f220e",
-    "matchScore": 52.13
-  },
-  {
-    "recruiterId": "R1",
-    "roleName": "Test Job",
-    "description": "Test desc",
-    "skillsNeeded": [
-      "Java"
-    ],
-    "_class": "com.jumble.userjob.job.model.Job",
-    "id": "69acfae40bb735b8163c5b25",
-    "matchScore": 41.48
-  },
-  {
-    "recruiterId": "69ad4085e2f5646291887c17",
-    "roleName": "operating security",
-    "description": "operating system using any os",
-    "skillsNeeded": [
-      "operating system",
-      "java",
-      "c"
-    ],
-    "_class": "com.jumble.userjob.job.model.Job",
-    "id": "69ad4af018f9f1541a270772",
-    "matchScore": 36.12
-  },
-  {
-    "recruiterId": "R1",
-    "roleName": "network intern",
-    "description": "managing networks",
-    "skillsNeeded": [
-      "java",
-      "C",
-      "network systems"
-    ],
-    "_class": "com.jumble.userjob.job.model.Job",
-    "id": "69acfd2ede8bc04c38f4c253",
-    "matchScore": 35.8
+    "id": "69acc5e37eba71d2aaaa208d",
+    "matchScore": 31.43
   },
   {
     "recruiterId": "69acfcfede8bc04c38f4c252",
@@ -97,7 +46,32 @@
     ],
     "_class": "com.jumble.userjob.job.model.Job",
     "id": "69ad15b36c934748729e68c3",
-    "matchScore": 30.93
+    "matchScore": 25.82
+  },
+  {
+    "recruiterId": "69acaae932e1b554400f220d",
+    "roleName": "Senior Java Developer",
+    "description": "Looking for an expert Spring Boot developer to build skynet APIs.",
+    "skillsNeeded": [
+      "java",
+      "spring boot"
+    ],
+    "_class": "com.jumble.userjob.job.model.Job",
+    "id": "69acab6d32e1b554400f220e",
+    "matchScore": 24.96
+  },
+  {
+    "recruiterId": "69ad3b55c7d5f2c747b8aa44",
+    "roleName": "Senior Kubernetes Engineer",
+    "description": "Kubenetes chahiye. Padh ke aao.",
+    "skillsNeeded": [
+      "Java",
+      "Springboot",
+      "SQL"
+    ],
+    "_class": "com.jumble.userjob.job.model.Job",
+    "id": "69ad3bc3c7d5f2c747b8aa45",
+    "matchScore": 22.43
   },
   {
     "recruiterId": "69ad4085e2f5646291887c17",
@@ -108,7 +82,7 @@
     ],
     "_class": "com.jumble.userjob.job.model.Job",
     "id": "69ad40a0e2f5646291887c18",
-    "matchScore": 28.9
+    "matchScore": 21.51
   },
   {
     "recruiterId": "69acfcfede8bc04c38f4c252",
@@ -119,19 +93,33 @@
     ],
     "_class": "com.jumble.userjob.job.model.Job",
     "id": "69ad14a289e52b7eba77c417",
-    "matchScore": 25.94
+    "matchScore": 21.04
+  },
+  {
+    "recruiterId": "69ad4085e2f5646291887c17",
+    "roleName": "operating security",
+    "description": "operating system using any os",
+    "skillsNeeded": [
+      "operating system",
+      "java",
+      "c"
+    ],
+    "_class": "com.jumble.userjob.job.model.Job",
+    "id": "69ad4af018f9f1541a270772",
+    "matchScore": 17.82
   },
   {
     "recruiterId": "R1",
-    "roleName": "Senior Kubernetes Engineer",
-    "description": "Looking for senior kubernetes engineer.",
+    "roleName": "network intern",
+    "description": "managing networks",
     "skillsNeeded": [
-      "Kubernetes",
-      "Docker."
+      "java",
+      "C",
+      "network systems"
     ],
     "_class": "com.jumble.userjob.job.model.Job",
-    "id": "69ad09f00bb735b8163c5b28",
-    "matchScore": 25.4
+    "id": "69acfd2ede8bc04c38f4c253",
+    "matchScore": 17.46
   },
   {
     "recruiterId": "R1",
@@ -144,7 +132,19 @@
     ],
     "_class": "com.jumble.userjob.job.model.Job",
     "id": "69acc074a425d47c979142e6",
-    "matchScore": 23.4
+    "matchScore": 13.55
+  },
+  {
+    "recruiterId": "R1",
+    "roleName": "Senior Kubernetes Engineer",
+    "description": "Looking for senior kubernetes engineer.",
+    "skillsNeeded": [
+      "Kubernetes",
+      "Docker."
+    ],
+    "_class": "com.jumble.userjob.job.model.Job",
+    "id": "69ad09f00bb735b8163c5b28",
+    "matchScore": 9.46
   },
   {
     "recruiterId": "R1",
@@ -158,7 +158,7 @@
     ],
     "_class": "com.jumble.userjob.job.model.Job",
     "id": "69ad09660bb735b8163c5b27",
-    "matchScore": 22.05
+    "matchScore": 6.4
   },
   {
     "recruiterId": "R1",
@@ -171,6 +171,6 @@
     ],
     "_class": "com.jumble.userjob.job.model.Job",
     "id": "69acc1a4a425d47c979142e7",
-    "matchScore": 20.58
+    "matchScore": 2.92
   }
 ]
