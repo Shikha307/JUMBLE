@@ -162,7 +162,7 @@ function CandidateModal({ match, onClose }) {
                   <Mail size={18} /> Email
                 </a>
               )}
-              {details.linkedin && (
+              {details.linkedin ? (
                 <a
                   href={details.linkedin.startsWith('http') ? details.linkedin : `https://${details.linkedin}`}
                   target="_blank" rel="noreferrer"
@@ -185,6 +185,18 @@ function CandidateModal({ match, onClose }) {
                 >
                   <Linkedin size={20} style={{ strokeWidth: 2.5 }} /> LinkedIn Profile
                 </a>
+              ) : (
+                <div
+                  className="nav-action-btn subtle"
+                  style={{ 
+                    padding: '0.6rem 1.25rem', fontSize: '0.9rem', 
+                    display: 'flex', alignItems: 'center', gap: '0.5rem', 
+                    borderRadius: '12px', color: '#94a3b8', background: '#f8fafc',
+                    cursor: 'default', border: '1px solid #e2e8f0'
+                  }}
+                >
+                  <Linkedin size={20} style={{ opacity: 0.5 }} /> LinkedIn: Not Provided
+                </div>
               )}
             </div>
           </>
@@ -309,8 +321,8 @@ function JobModal({ match, onClose }) {
               <div style={{ padding: '1.25rem', background: '#f8fafc', borderRadius: '16px', border: '1px solid #e2e8f0' }}>
                 <h4 style={{ margin: '0 0 0.8rem', fontSize: '0.8rem', textTransform: 'uppercase', color: '#94a3b8', fontWeight: 700, letterSpacing: '0.05em' }}>Skills Required</h4>
                 <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.6rem' }}>
-                  {details.skills && details.skills.length > 0 ? (
-                    details.skills.map(skill => (
+                  {details.skillsNeeded && details.skillsNeeded.length > 0 ? (
+                    details.skillsNeeded.map(skill => (
                       <span key={skill} style={{ 
                         padding: '0.4rem 0.8rem', fontSize: '0.85rem', background: 'white', 
                         border: '1px solid #e2e8f0', borderRadius: '8px', color: '#334155', fontWeight: 600 
