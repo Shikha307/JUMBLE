@@ -28,9 +28,8 @@ public class CandidateController {
             @RequestParam("skills") List<String> skills,
             @RequestParam("resume") MultipartFile resumeFile,
             @RequestParam("country") String country,
-            @RequestParam("University") String university) {
-            @RequestParam("password") String password,
-            @RequestParam("resume") MultipartFile resumeFile) {
+            @RequestParam("University") String university,
+            @RequestParam("password") String password) {
 
         try {
             Candidate user = new Candidate();
