@@ -10,4 +10,5 @@ import java.util.List;
 public interface MatchRepository extends CrudRepository<Match, String> {
     List<Match> findByCandidateId(String candidateId);
     List<Match> findByJobId(String jobId);
+    List<Match> findByRecruiterId(String recruiterId);
 }

@@ -21,6 +21,8 @@ public class Candidate {
     private String resumeContentType;
     private String country;
     private String university;
+    @com.fasterxml.jackson.annotation.JsonIgnore
+    private String password;
 
     @com.fasterxml.jackson.annotation.JsonIgnore
     private byte[] resumeData;
