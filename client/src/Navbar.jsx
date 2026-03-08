@@ -26,13 +26,15 @@ function Navbar({ role, name }) {
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
-  // Fetch match count for candidate badge
+  // Fetch match count for badge (both candidate and recruiter)
   useEffect(() => {
-    if (role !== 'candidate') return;
     const id = localStorage.getItem('id');
     const token = localStorage.getItem('token');
-    if (!id) return;
-    fetch(`http://localhost:8082/api/v1/matches/candidate/${id}`, {
+    if (!id || !role) return;
+    const endpoint = role === 'recruiter'
+      ? `http://localhost:8082/api/v1/matches/recruiter/${id}`
+      : `http://localhost:8082/api/v1/matches/candidate/${id}`;
+    fetch(endpoint, {
       headers: token ? { 'Authorization': `Bearer ${token}` } : {}
     })
       .then(r => r.ok ? r.json() : [])
@@ -103,8 +105,30 @@ function Navbar({ role, name }) {
         {/* Recruiter Nav Links */}
         {role === 'recruiter' && (
           <>
-            <Link to="/matches" className="nav-action-btn subtle">
+            <Link to="/matches" className="nav-action-btn subtle" style={{ position: 'relative' }}>
               <Heart size={20} />
+              {matchCount > 0 && (
+                <span style={{
+                  position: 'absolute',
+                  top: '-6px',
+                  right: '-6px',
+                  background: '#e0245e',
+                  color: '#fff',
+                  borderRadius: '50%',
+                  fontSize: '0.65rem',
+                  fontWeight: '700',
+                  minWidth: '16px',
+                  height: '16px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  padding: '0 3px',
+                  lineHeight: 1,
+                  pointerEvents: 'none'
+                }}>
+                  {matchCount}
+                </span>
+              )}
               <span>Matches</span>
             </Link>
             <Link to="/my-jobs" className="nav-action-btn subtle">
