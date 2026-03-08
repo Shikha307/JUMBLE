@@ -11,131 +11,129 @@ function CandidateModal({ match, onClose }) {
     <div
       onClick={onClose}
       style={{
-        position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.45)',
+        position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.65)',
         display: 'flex', alignItems: 'center', justifyContent: 'center',
-        zIndex: 1000, backdropFilter: 'blur(4px)'
+        zIndex: 9999, backdropFilter: 'blur(4px)'
       }}
     >
       <div
         onClick={e => e.stopPropagation()}
         style={{
-          background: '#fff', borderRadius: '20px', padding: '2.5rem',
-          width: '100%', maxWidth: '520px', maxHeight: '85vh', overflowY: 'auto',
-          boxShadow: '0 20px 60px rgba(0,0,0,0.15)', position: 'relative'
+          background: '#fff', borderRadius: '24px', padding: '2.5rem',
+          width: '90%', maxWidth: '540px', maxHeight: '90vh', overflowY: 'auto',
+          boxShadow: '0 25px 50px -12px rgba(0,0,0,0.25)', position: 'relative'
         }}
       >
-        {/* Close button */}
         <button
           onClick={onClose}
           style={{
-            position: 'absolute', top: '1.2rem', right: '1.2rem',
-            background: '#f5f5f5', border: 'none', borderRadius: '50%',
-            width: '32px', height: '32px', cursor: 'pointer',
-            display: 'flex', alignItems: 'center', justifyContent: 'center'
+            position: 'absolute', top: '1.5rem', right: '1.5rem',
+            background: '#f8fafc', border: 'none', borderRadius: '50%',
+            width: '36px', height: '36px', cursor: 'pointer',
+            display: 'flex', alignItems: 'center', justifyContent: 'center',
+            transition: 'background 0.2s'
           }}
+          onMouseEnter={e => e.currentTarget.style.background = '#f1f5f9'}
+          onMouseLeave={e => e.currentTarget.style.background = '#f8fafc'}
         >
-          <X size={16} />
+          <X size={20} color="#64748b" />
         </button>
 
-        {/* Avatar + name */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginBottom: '1.5rem' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '1.25rem', marginBottom: '2rem' }}>
           <div style={{
-            width: '60px', height: '60px', borderRadius: '50%',
-            background: 'linear-gradient(135deg, var(--primary), #ff8fab)',
-            display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0
+            width: '72px', height: '72px', borderRadius: '22px',
+            background: 'linear-gradient(135deg, #f43f5e, #fb7185)',
+            display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0,
+            boxShadow: '0 10px 15px -3px rgba(244, 63, 94, 0.3)'
           }}>
-            <User size={28} color="white" />
+            <User size={36} color="white" />
           </div>
           <div>
-            <h2 style={{ margin: 0, fontSize: '1.5rem', color: 'var(--text-dark)', fontWeight: 700 }}>
+            <h2 style={{ margin: 0, fontSize: '1.75rem', color: '#1e293b', fontWeight: 800 }}>
               {c.name}
             </h2>
             <span style={{
-              display: 'inline-block', marginTop: '0.3rem', fontSize: '0.75rem',
-              background: 'rgba(249,78,112,0.1)', color: 'var(--primary)',
-              padding: '0.2rem 0.6rem', borderRadius: '99px', fontWeight: 600
+              display: 'inline-block', marginTop: '0.4rem', fontSize: '0.8rem',
+              background: '#fff1f2', color: '#e11d48',
+              padding: '0.25rem 0.75rem', borderRadius: '99px', fontWeight: 700
             }}>
-              Matched Candidate 🎉
+              Mutual Match 🎉
             </span>
           </div>
         </div>
 
-        {/* Contact details */}
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '0.6rem', marginBottom: '1.5rem' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '0.75rem', marginBottom: '2rem' }}>
           {c.email && (
-            <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', color: 'var(--text-light)', fontSize: '0.9rem' }}>
-              <Mail size={15} color="var(--primary)" />
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', color: '#475569', fontSize: '0.95rem' }}>
+              <Mail size={18} color="#f43f5e" />
               <span>{c.email}</span>
             </div>
           )}
           {c.phone && (
-            <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', color: 'var(--text-light)', fontSize: '0.9rem' }}>
-              <Phone size={15} color="var(--primary)" />
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', color: '#475569', fontSize: '0.95rem' }}>
+              <Phone size={18} color="#f43f5e" />
               <span>{c.phone}</span>
             </div>
           )}
-          {c.location && (
-            <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', color: 'var(--text-light)', fontSize: '0.9rem' }}>
-              <MapPin size={15} color="var(--primary)" />
-              <span>{c.location}</span>
+          {(c.country || c.university) && (
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', color: '#475569', fontSize: '0.95rem' }}>
+              <MapPin size={18} color="#f43f5e" />
+              <span>{[c.university, c.country].filter(Boolean).join(', ')}</span>
             </div>
           )}
         </div>
 
-        {/* Skills */}
         {c.skills && c.skills.length > 0 && (
-          <div style={{ marginBottom: '1.5rem' }}>
-            <h4 style={{ margin: '0 0 0.6rem', fontSize: '0.8rem', textTransform: 'uppercase', letterSpacing: '0.5px', color: 'var(--text-light)', fontWeight: 700 }}>Skills</h4>
-            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.4rem' }}>
+          <div style={{ marginBottom: '2rem' }}>
+            <h4 style={{ margin: '0 0 0.8rem', fontSize: '0.85rem', textTransform: 'uppercase', letterSpacing: '0.05em', color: '#94a3b8', fontWeight: 700 }}>Candidate Skills</h4>
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem' }}>
               {c.skills.map(skill => (
-                <span key={skill} className="skill-pill" style={{ padding: '0.25rem 0.7rem', fontSize: '0.82rem' }}>{skill}</span>
+                <span key={skill} className="skill-pill" style={{ padding: '0.4rem 0.9rem', fontSize: '0.85rem', background: '#f1f5f9', color: '#334155', borderRadius: '10px', fontWeight: 600 }}>{skill}</span>
               ))}
             </div>
           </div>
         )}
 
-        {/* Matched job */}
         {match.jobDetails && (
-          <div style={{ marginBottom: '1.5rem', padding: '1rem', background: '#fafafa', borderRadius: '12px', border: '1px solid #f0f0f0' }}>
-            <h4 style={{ margin: '0 0 0.4rem', fontSize: '0.8rem', textTransform: 'uppercase', letterSpacing: '0.5px', color: 'var(--text-light)', fontWeight: 700 }}>Matched For</h4>
-            <p style={{ margin: 0, fontWeight: 600, color: 'var(--text-dark)' }}>{match.jobDetails.roleName}</p>
+          <div style={{ marginBottom: '2rem', padding: '1.25rem', background: '#f8fafc', borderRadius: '16px', border: '1px solid #e2e8f0' }}>
+            <h4 style={{ margin: '0 0 0.5rem', fontSize: '0.85rem', textTransform: 'uppercase', letterSpacing: '0.05em', color: '#94a3b8', fontWeight: 700 }}>Matched For Position</h4>
+            <p style={{ margin: 0, fontWeight: 700, color: '#1e293b', fontSize: '1.1rem' }}>{match.jobDetails.roleName}</p>
             {match.jobDetails.description && (
-              <p style={{ margin: '0.4rem 0 0', fontSize: '0.85rem', color: 'var(--text-light)' }}>
-                {match.jobDetails.description.substring(0, 120)}...
+              <p style={{ margin: '0.5rem 0 0', fontSize: '0.9rem', color: '#64748b', lineHeight: 1.5 }}>
+                {match.jobDetails.description}
               </p>
             )}
           </div>
         )}
 
-        {/* Action buttons */}
-        <div style={{ display: 'flex', gap: '0.8rem', flexWrap: 'wrap' }}>
+        <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap', borderTop: '1px solid #f1f5f9', paddingTop: '1.5rem' }}>
           {c.resumeFilename && (
             <a
               href={`http://localhost:8081/api/candidates/${match.candidateId}/resume`}
               target="_blank" rel="noreferrer"
               className="nav-action-btn subtle"
-              style={{ padding: '0.5rem 1rem', fontSize: '0.88rem', textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '0.4rem' }}
+              style={{ padding: '0.6rem 1.25rem', fontSize: '0.9rem', textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '0.5rem', borderRadius: '12px' }}
             >
-              <FileText size={15} /> View Resume
+              <FileText size={18} /> Resume
             </a>
           )}
-          {c.socialLinks?.linkedin && (
+          {c.linkedin && (
             <a
-              href={c.socialLinks.linkedin.startsWith('http') ? c.socialLinks.linkedin : `https://${c.socialLinks.linkedin}`}
+              href={c.linkedin.startsWith('http') ? c.linkedin : `https://${c.linkedin}`}
               target="_blank" rel="noreferrer"
               className="nav-action-btn subtle"
-              style={{ padding: '0.5rem 1rem', fontSize: '0.88rem', textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '0.4rem', color: '#0a66c2', background: 'rgba(10,102,194,0.08)' }}
+              style={{ padding: '0.6rem 1.25rem', fontSize: '0.9rem', textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '0.5rem', color: '#0077b5', background: 'rgba(0,119,181,0.08)', borderRadius: '12px' }}
             >
-              <Linkedin size={15} /> LinkedIn
+              <Linkedin size={18} /> LinkedIn
             </a>
           )}
           {c.email && (
             <a
               href={`mailto:${c.email}`}
               className="btn-primary"
-              style={{ padding: '0.5rem 1.2rem', fontSize: '0.88rem', textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '0.4rem', borderRadius: '8px' }}
+              style={{ padding: '0.6rem 1.5rem', fontSize: '0.9rem', textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '0.5rem', borderRadius: '12px', background: '#f43f5e', color: 'white', fontWeight: 600 }}
             >
-              <Mail size={15} /> Contact
+              <Mail size={18} /> Contact
             </a>
           )}
         </div>
@@ -156,6 +154,9 @@ export default function Matches({ userRole }) {
       try {
         const id = localStorage.getItem('id');
         const role = userRole || localStorage.getItem('role') || 'candidate';
+        const token = localStorage.getItem('token');
+        
+        const authenticatedHeaders = token ? { 'Authorization': `Bearer ${token}` } : {};
 
         let endpoint = '';
         if (role === 'recruiter') {
@@ -164,20 +165,18 @@ export default function Matches({ userRole }) {
           endpoint = `http://localhost:8082/api/v1/matches/candidate/${id}`;
         }
 
-        const response = await fetch(endpoint);
+        const response = await fetch(endpoint, { headers: authenticatedHeaders });
         if (response.ok) {
           const rawMatches = await response.json();
-          const token = localStorage.getItem('token');
 
           const hydratedMatches = await Promise.all(
             rawMatches.map(async (match) => {
               let candidateDetails = null;
               let jobDetails = null;
-              const headers = token ? { 'Authorization': `Bearer ${token}` } : {};
 
               if (role === 'recruiter') {
                 try {
-                  const candRes = await fetch(`http://localhost:8081/api/candidates/${match.candidateId}`, { headers });
+                  const candRes = await fetch(`http://localhost:8081/api/candidates/${match.candidateId}`, { headers: authenticatedHeaders });
                   if (candRes.ok) candidateDetails = await candRes.json();
                 } catch (e) {
                   console.error('Error fetching candidate details', e);
@@ -185,7 +184,7 @@ export default function Matches({ userRole }) {
               }
 
               try {
-                const jobRes = await fetch(`http://localhost:8081/api/jobs/${match.jobId}`, { headers });
+                const jobRes = await fetch(`http://localhost:8081/api/jobs/${match.jobId}`, { headers: authenticatedHeaders });
                 if (jobRes.ok) jobDetails = await jobRes.json();
               } catch (e) {
                 console.error('Error fetching job details', e);
@@ -197,7 +196,7 @@ export default function Matches({ userRole }) {
 
           setMatches(hydratedMatches);
         } else {
-          console.error('Failed to fetch matches');
+          console.error('Failed to fetch matches', response.status);
         }
       } catch (error) {
         console.error('Error fetching matches:', error);
@@ -214,101 +213,120 @@ export default function Matches({ userRole }) {
     <div className="dashboard-layout bg-dots">
       <Navbar role={role} name={userName} />
 
-      {/* Candidate detail modal (recruiter only) */}
+      {/* MODAL PORTAL (Recruiter Only) */}
       {selectedMatch && role === 'recruiter' && (
         <CandidateModal match={selectedMatch} onClose={() => setSelectedMatch(null)} />
       )}
 
       <main className="dashboard-content" style={{ display: 'block', maxWidth: '1200px', margin: '0 auto', width: '100%' }}>
-        <div style={{ padding: '0 1rem', marginBottom: '2.5rem', borderBottom: '1px solid var(--input-border)', paddingBottom: '1.5rem' }}>
-          <h1 style={{ fontSize: '2.5rem', color: 'var(--text-dark)', marginBottom: '0.4rem', fontWeight: '800', letterSpacing: '-0.5px' }}>Your Matches</h1>
-          <p style={{ color: 'var(--text-light)', fontSize: '1.1rem' }}>
-            {role === 'recruiter'
-              ? 'Click a candidate card to view their full profile.'
-              : 'Jobs where the recruiter specifically wants to advance with you.'}
-          </p>
+        <div style={{ padding: '0 1rem', marginBottom: '2.5rem', borderBottom: '1px solid var(--input-border)', paddingBottom: '1.5rem', display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end' }}>
+          <div>
+            <h1 style={{ fontSize: '2.5rem', color: 'var(--text-dark)', marginBottom: '0.4rem', fontWeight: '800', letterSpacing: '-0.5px' }}>Your Matches</h1>
+            <p style={{ color: 'var(--text-light)', fontSize: '1.1rem' }}>
+              {role === 'recruiter'
+                ? 'Review confirmed matches for your open positions.'
+                : 'Jobs where the recruiter specifically wants to advance with you.'}
+            </p>
+          </div>
+          {role === 'recruiter' && matches.length > 0 && (
+            <span style={{ fontSize: '0.9rem', color: 'var(--primary)', fontWeight: 600, background: 'rgba(249,78,112,0.1)', padding: '0.5rem 1rem', borderRadius: '12px' }}>
+              {matches.length} {matches.length === 1 ? 'Match' : 'Matches'} Found
+            </span>
+          )}
         </div>
 
         <div className="matches-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))', gap: '2rem', padding: '0 1rem' }}>
           {isLoading ? (
-            <div className="welcome-card" style={{ gridColumn: '1 / -1', textAlign: 'center' }}>
-              <p>Loading your matches...</p>
+            <div className="welcome-card" style={{ gridColumn: '1 / -1', textAlign: 'center', padding: '4rem' }}>
+              <div className="spinner" style={{ margin: '0 auto 1rem' }}></div>
+              <p>Fetching your latest matches...</p>
             </div>
           ) : matches.length > 0 ? (
             matches.map((match) => (
               <div
                 key={match.id || Math.random()}
                 className="job-card"
-                onClick={role === 'recruiter' && match.candidateDetails ? () => setSelectedMatch(match) : undefined}
+                onClick={role === 'recruiter' ? () => setSelectedMatch(match) : undefined}
                 style={{
-                  padding: '1.8rem', background: 'white', borderRadius: '16px',
-                  boxShadow: '0 4px 20px rgba(0,0,0,0.05)', display: 'flex', flexDirection: 'column',
-                  cursor: role === 'recruiter' && match.candidateDetails ? 'pointer' : 'default',
-                  transition: 'transform 0.15s, box-shadow 0.15s',
+                  padding: '1.8rem', background: 'white', borderRadius: '20px',
+                  boxShadow: '0 4px 20px rgba(0,0,0,0.04)', display: 'flex', flexDirection: 'column',
+                  cursor: role === 'recruiter' ? 'pointer' : 'default',
+                  transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+                  border: '1px solid #f1f5f9',
+                  position: 'relative',
+                  overflow: 'hidden'
                 }}
                 onMouseEnter={e => {
                   if (role === 'recruiter') {
-                    e.currentTarget.style.transform = 'translateY(-3px)';
-                    e.currentTarget.style.boxShadow = '0 8px 30px rgba(0,0,0,0.1)';
+                    e.currentTarget.style.transform = 'translateY(-6px)';
+                    e.currentTarget.style.boxShadow = '0 12px 30px rgba(0,0,0,0.08)';
+                    e.currentTarget.style.borderColor = 'rgba(244, 63, 94, 0.3)';
                   }
                 }}
                 onMouseLeave={e => {
                   e.currentTarget.style.transform = 'translateY(0)';
-                  e.currentTarget.style.boxShadow = '0 4px 20px rgba(0,0,0,0.05)';
+                  e.currentTarget.style.boxShadow = '0 4px 20px rgba(0,0,0,0.04)';
+                  e.currentTarget.style.borderColor = '#f1f5f9';
                 }}
               >
-                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderBottom: '1px solid #eee', paddingBottom: '0.8rem', marginBottom: '1rem' }}>
-                  <h3 style={{ color: 'var(--primary)', margin: 0 }}>Match Confirmed! 🎉</h3>
-                  {role === 'recruiter' && match.candidateDetails && (
-                    <span style={{ fontSize: '0.75rem', color: 'var(--text-light)' }}>Click to view</span>
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1.25rem' }}>
+                  <div style={{ background: '#f0fdf4', color: '#16a34a', padding: '0.3rem 0.75rem', borderRadius: '99px', fontSize: '0.75rem', fontWeight: 700, display: 'flex', alignItems: 'center', gap: '0.3rem' }}>
+                    <div style={{ width: '6px', height: '6px', background: '#16a34a', borderRadius: '50%' }}></div>
+                    CONFIRMED
+                  </div>
+                  {role === 'recruiter' && (
+                    <span style={{ fontSize: '0.75rem', color: '#94a3b8', fontWeight: 500 }}>Click to expand</span>
                   )}
                 </div>
 
                 {role === 'recruiter' && match.candidateDetails ? (
-                  <div style={{ marginBottom: '1.2rem', flex: 1 }}>
-                    <h4 style={{ fontSize: '1.3rem', marginBottom: '0.3rem', color: 'var(--text-dark)' }}>{match.candidateDetails.name}</h4>
-                    <p style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', fontSize: '0.9rem', color: 'var(--text-light)', marginBottom: '0.5rem' }}>
-                      <Mail size={14} /> {match.candidateDetails.email}
+                  <div style={{ marginBottom: '1.5rem', flex: 1 }}>
+                    <h4 style={{ fontSize: '1.4rem', marginBottom: '0.35rem', color: '#1e293b', fontWeight: 700 }}>{match.candidateDetails.name}</h4>
+                    <p style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.9rem', color: '#64748b', marginBottom: '1rem' }}>
+                      <Mail size={16} /> {match.candidateDetails.email}
                     </p>
                     {match.candidateDetails.skills && match.candidateDetails.skills.length > 0 && (
-                      <div className="skills-container" style={{ marginTop: '1rem' }}>
-                        {match.candidateDetails.skills.slice(0, 4).map(skill => (
-                          <span key={skill} className="skill-pill" style={{ padding: '0.2rem 0.6rem', fontSize: '0.8rem' }}>{skill}</span>
+                      <div className="skills-container" style={{ marginTop: '0.5rem', gap: '0.4rem' }}>
+                        {match.candidateDetails.skills.slice(0, 3).map(skill => (
+                          <span key={skill} className="skill-pill" style={{ padding: '0.3rem 0.6rem', fontSize: '0.75rem', background: '#f8fafc', border: '1px solid #e2e8f0' }}>{skill}</span>
                         ))}
-                        {match.candidateDetails.skills.length > 4 && (
-                          <span className="skill-pill" style={{ padding: '0.2rem 0.6rem', fontSize: '0.8rem', opacity: 0.6 }}>+{match.candidateDetails.skills.length - 4} more</span>
+                        {match.candidateDetails.skills.length > 3 && (
+                          <span style={{ fontSize: '0.75rem', color: '#94a3b8', marginLeft: '0.2rem' }}>+{match.candidateDetails.skills.length - 3} more</span>
                         )}
                       </div>
                     )}
                   </div>
                 ) : role === 'candidate' && match.jobDetails ? (
-                  <div style={{ marginBottom: '1.2rem', flex: 1 }}>
-                    <h4 style={{ fontSize: '1.3rem', marginBottom: '0.3rem', color: 'var(--text-dark)' }}>{match.jobDetails.roleName || match.jobId}</h4>
-                    <p style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', fontSize: '0.9rem', color: 'var(--primary)', fontWeight: 600, marginBottom: '0.5rem' }}>
-                      <Briefcase size={14} /> Full-time Role
+                  <div style={{ marginBottom: '1.5rem', flex: 1 }}>
+                    <h4 style={{ fontSize: '1.4rem', marginBottom: '0.35rem', color: '#1e293b', fontWeight: 700 }}>{match.jobDetails.roleName}</h4>
+                    <p style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.9rem', color: '#f43f5e', fontWeight: 700, marginBottom: '0.75rem' }}>
+                      <Briefcase size={16} /> Full-time Role
                     </p>
-                    <p style={{ fontSize: '0.9rem', color: 'var(--text-dark)', marginTop: '0.5rem' }}>
-                      {match.jobDetails.description ? `${match.jobDetails.description.substring(0, 100)}...` : 'No description available.'}
+                    <p style={{ fontSize: '0.95rem', color: '#475569', lineHeight: 1.5 }}>
+                      {match.jobDetails.description ? `${match.jobDetails.description.substring(0, 85)}...` : 'No description provided.'}
                     </p>
                   </div>
                 ) : (
-                  <div style={{ marginBottom: '1rem', flex: 1 }}>
-                    <div className="match-detail" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.5rem' }}>
-                      <User size={18} />
-                      <span><strong>Candidate ID:</strong> {match.candidateId}</span>
+                  <div style={{ marginBottom: '1.5rem', flex: 1 }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', padding: '1rem', background: '#f8fafc', borderRadius: '12px' }}>
+                      <User size={24} color="#94a3b8" />
+                      <div>
+                         <span style={{ display: 'block', fontSize: '0.7rem', color: '#94a3b8', fontWeight: 600 }}>CANDIDATE ID</span>
+                         <span style={{ fontWeight: 600, color: '#475569', fontSize: '0.85rem' }}>{match.candidateId.substring(0, 12)}...</span>
+                      </div>
                     </div>
                   </div>
                 )}
 
-                <div style={{ marginTop: 'auto', paddingTop: '1rem', borderTop: '1px solid #f0f0f0' }}>
-                  <div className="match-detail" style={{ display: 'flex', alignItems: 'flex-start', gap: '0.6rem' }}>
-                    <div style={{ background: 'rgba(249, 78, 112, 0.1)', padding: '0.5rem', borderRadius: '8px', color: 'var(--primary)' }}>
-                      <Briefcase size={16} />
+                <div style={{ marginTop: 'auto', paddingTop: '1.25rem', borderTop: '1px solid #f1f5f9' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+                    <div style={{ background: '#fff1f2', padding: '0.6rem', borderRadius: '10px', color: '#f43f5e' }}>
+                      <Briefcase size={18} />
                     </div>
                     <div>
-                      <span style={{ display: 'block', fontSize: '0.75rem', textTransform: 'uppercase', letterSpacing: '0.5px', color: 'var(--text-light)', fontWeight: 700 }}>MATCHED ROLE</span>
-                      <span style={{ fontWeight: 600, color: 'var(--text-dark)', fontSize: '0.95rem' }}>
-                        {match.jobDetails ? match.jobDetails.roleName : match.jobId}
+                      <span style={{ display: 'block', fontSize: '0.7rem', textTransform: 'uppercase', color: '#94a3b8', fontWeight: 700, letterSpacing: '0.05em' }}>Matched For</span>
+                      <span style={{ fontWeight: 700, color: '#1e293b', fontSize: '0.95rem' }}>
+                        {match.jobDetails ? match.jobDetails.roleName : 'Position ' + match.jobId.substring(0, 8)}
                       </span>
                     </div>
                   </div>
@@ -317,9 +335,10 @@ export default function Matches({ userRole }) {
               </div>
             ))
           ) : (
-            <div className="welcome-card" style={{ gridColumn: '1 / -1', textAlign: 'center' }}>
-              <Users size={48} style={{ color: 'var(--text-light)', margin: '0 auto 1rem' }} />
-              <p>No mutual matches found yet. Keep swiping!</p>
+            <div className="welcome-card" style={{ gridColumn: '1 / -1', textAlign: 'center', padding: '5rem 2rem', background: 'transparent', border: '2px dashed #e2e8f0' }}>
+              <Users size={64} color="#cbd5e1" style={{ margin: '0 auto 1.5rem' }} />
+              <h3 style={{ color: '#64748b', fontSize: '1.25rem', marginBottom: '0.5rem' }}>No matches yet</h3>
+              <p style={{ color: '#94a3b8' }}>Keep swiping to find potential matches!</p>
             </div>
           )}
         </div>
