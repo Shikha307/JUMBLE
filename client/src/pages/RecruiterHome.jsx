@@ -11,7 +11,7 @@ export default function RecruiterHome() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [loadingCandidates, setLoadingCandidates] = useState(true);
   const [loadingJobs, setLoadingJobs] = useState(true);
-  
+
   const [countries, setCountries] = useState([]);
   const [selectedCountry, setSelectedCountry] = useState('');
 
@@ -23,11 +23,11 @@ export default function RecruiterHome() {
       setLoadingCandidates(true);
       try {
         const token = localStorage.getItem('token');
-        let url = `http://localhost:8082/api/v1/swipes/jobs/${selectedJob.id}/unswiped-candidates`;
+        let url = `http://localhost:8080/api/v1/swipes/jobs/${selectedJob.id}/unswiped-candidates`;
         if (selectedCountry) {
           url += `?country=${encodeURIComponent(selectedCountry)}`;
         }
-        
+
         const res = await fetch(url, {
           headers: token ? { 'Authorization': `Bearer ${token}` } : {}
         });
@@ -153,7 +153,7 @@ export default function RecruiterHome() {
           <div className="sidebar-header filters-header">
             <h3>Filters</h3>
           </div>
-          
+
           <div className="sidebar-list">
             <div className="sidebar-filter-group">
               <label>Filter by Job Posting</label>
@@ -161,11 +161,11 @@ export default function RecruiterHome() {
                 <p style={{ padding: '0.5rem 0', color: 'var(--text-light)', fontSize: '0.9rem' }}>Loading jobs...</p>
               ) : jobs.length === 0 ? (
                 <p style={{ padding: '0.5rem 0', color: 'var(--text-light)', fontSize: '0.9rem' }}>
-                  No active jobs. <a href="/create-job" style={{color: 'var(--primary)'}}>Create one first!</a>
+                  No active jobs. <a href="/create-job" style={{ color: 'var(--primary)' }}>Create one first!</a>
                 </p>
               ) : (
-                <select 
-                  value={selectedJob?.id || ''} 
+                <select
+                  value={selectedJob?.id || ''}
                   onChange={(e) => {
                     const job = jobs.find(j => j.id.toString() === e.target.value);
                     setSelectedJob(job);
@@ -182,8 +182,8 @@ export default function RecruiterHome() {
 
             <div className="sidebar-filter-group">
               <label>Filter by Country</label>
-              <select 
-                value={selectedCountry} 
+              <select
+                value={selectedCountry}
                 onChange={(e) => {
                   setSelectedCountry(e.target.value);
                   setCurrentIndex(0);
@@ -219,10 +219,10 @@ export default function RecruiterHome() {
                 </h2>
                 <div className="accent-line"></div>
               </div>
-              
+
               <div className="active-card">
-                <CandidateCard 
-                  candidate={currentCandidate} 
+                <CandidateCard
+                  candidate={currentCandidate}
                   onLike={(id) => handleAction(id, 'LIKED')}
                   onPass={(id) => handleAction(id, 'PASSED')}
                 />
