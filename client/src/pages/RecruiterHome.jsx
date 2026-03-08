@@ -182,19 +182,26 @@ export default function RecruiterHome() {
                 </p>
               ) : (
                 <div className="sidebar-job-list">
-                  {jobs.map(job => (
-                    <div 
-                      key={job.id} 
-                      className={`sidebar-job-item ${selectedJob?.id === job.id ? 'selected' : ''}`}
-                      onClick={() => {
-                        setSelectedJob(job);
-                        setCurrentIndex(0);
-                      }}
-                    >
-                      <Briefcase size={14} />
-                      <span>{job.roleName}</span>
-                    </div>
-                  ))}
+                  {jobs
+                    .filter(job => !selectedCountry || job.country === selectedCountry)
+                    .map(job => (
+                      <div 
+                        key={job.id} 
+                        className={`sidebar-job-item ${selectedJob?.id === job.id ? 'selected' : ''}`}
+                        onClick={() => {
+                          setSelectedJob(job);
+                          setCurrentIndex(0);
+                        }}
+                      >
+                        <Briefcase size={14} />
+                        <span>{job.roleName}</span>
+                      </div>
+                    ))}
+                  {jobs.length > 0 && jobs.filter(job => !selectedCountry || job.country === selectedCountry).length === 0 && (
+                    <p style={{ padding: '0.5rem 0', color: 'var(--text-light)', fontSize: '0.85rem', fontStyle: 'italic' }}>
+                      No jobs in {selectedCountry}.
+                    </p>
+                  )}
                 </div>
               )}
             </div>

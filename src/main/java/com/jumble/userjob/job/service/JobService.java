@@ -40,4 +40,14 @@ public class JobService {
     public void deleteJob(String id) {
         jobRepository.deleteById(id);
     }
+
+    public Job updateJob(String id, Job jobDetails) {
+        return jobRepository.findById(id).map(existingJob -> {
+            existingJob.setRoleName(jobDetails.getRoleName());
+            existingJob.setDescription(jobDetails.getDescription());
+            existingJob.setCountry(jobDetails.getCountry());
+            existingJob.setSkillsNeeded(jobDetails.getSkillsNeeded());
+            return jobRepository.save(existingJob);
+        }).orElseThrow(() -> new RuntimeException("Job not found with id " + id));
+    }
 }
