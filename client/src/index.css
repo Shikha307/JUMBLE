@@ -799,6 +799,95 @@ body {
   border: 2px solid #fed7d7;
 }
 
+/* RECRUITER HOME LAYOUT WITH SIDEBAR */
+.recruiter-home-layout {
+  display: flex;
+  flex: 1;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  gap: 2rem;
+  padding: 2rem;
+}
+
+.jobs-sidebar {
+  width: 280px;
+  background: var(--surface);
+  backdrop-filter: blur(10px);
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+  display: flex;
+  flex-direction: column;
+  height: 650px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+}
+
+.sidebar-header {
+  padding: 1.5rem;
+  border-bottom: 1px solid var(--input-border);
+  background: rgba(255, 255, 255, 0.5);
+}
+
+.sidebar-header h3 {
+  font-size: 1.1rem;
+  color: var(--text-dark);
+  font-weight: 700;
+}
+
+.sidebar-list {
+  flex: 1;
+  overflow-y: auto;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.sidebar-job-item {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  padding: 1rem;
+  border-radius: 12px;
+  cursor: pointer;
+  background: transparent;
+  color: var(--text-dark);
+  font-weight: 500;
+  transition: all 0.2s ease;
+  border: 1px solid transparent;
+}
+
+.sidebar-job-item:hover {
+  background: rgba(0, 0, 0, 0.03);
+}
+
+.sidebar-job-item.selected {
+  background: rgba(249, 78, 112, 0.1);
+  color: var(--primary);
+  border-color: rgba(249, 78, 112, 0.2);
+  font-weight: 600;
+}
+
+.candidates-list-container {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@media (max-width: 900px) {
+  .recruiter-home-layout {
+    flex-direction: column;
+  }
+  
+  .jobs-sidebar {
+    width: 100%;
+    height: auto;
+    max-height: 250px;
+  }
+}
+
 .pass-btn:hover {
   background: #fff5f5;
   box-shadow: 0 15px 25px rgba(229, 62, 62, 0.2);
