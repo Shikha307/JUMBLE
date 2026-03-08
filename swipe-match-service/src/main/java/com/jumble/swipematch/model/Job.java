@@ -17,6 +17,5 @@ public class Job {
     private String recruiterId;
     private String roleName;
     private String description;
-    private String country;
     private List<String> skillsNeeded;
 }
