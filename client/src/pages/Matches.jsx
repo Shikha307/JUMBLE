@@ -4,8 +4,32 @@ import { User, Briefcase, Users, Mail, FileText, Linkedin, X, Phone, MapPin } fr
 
 // ─── Candidate Detail Modal ────────────────────────────────────────────────────
 function CandidateModal({ match, onClose }) {
-  const c = match.candidateDetails;
-  if (!c) return null;
+  const [details, setDetails] = useState(match.candidateDetails);
+  const [loading, setLoading] = useState(!match.candidateDetails);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    if (!details) {
+      const fetchDetails = async () => {
+        try {
+          const token = localStorage.getItem('token');
+          const headers = token ? { 'Authorization': `Bearer ${token}` } : {};
+          const res = await fetch(`http://localhost:8081/api/candidates/${match.candidateId}`, { headers });
+          if (res.ok) {
+            const data = await res.json();
+            setDetails(data);
+          } else {
+            setError('Failed to load candidate details');
+          }
+        } catch (err) {
+          setError('Error connecting to candidate service');
+        } finally {
+          setLoading(false);
+        }
+      };
+      fetchDetails();
+    }
+  }, [match.candidateId, details]);
 
   return (
     <div
@@ -39,104 +63,118 @@ function CandidateModal({ match, onClose }) {
           <X size={20} color="#64748b" />
         </button>
 
-        <div style={{ display: 'flex', alignItems: 'center', gap: '1.25rem', marginBottom: '2rem' }}>
-          <div style={{
-            width: '72px', height: '72px', borderRadius: '22px',
-            background: 'linear-gradient(135deg, #f43f5e, #fb7185)',
-            display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0,
-            boxShadow: '0 10px 15px -3px rgba(244, 63, 94, 0.3)'
-          }}>
-            <User size={36} color="white" />
+        {loading ? (
+          <div style={{ textAlign: 'center', padding: '2rem' }}>
+            <div className="spinner" style={{ margin: '0 auto 1rem' }}></div>
+            <p style={{ color: '#64748b' }}>Loading candidate profile...</p>
           </div>
-          <div>
-            <h2 style={{ margin: 0, fontSize: '1.75rem', color: '#1e293b', fontWeight: 800 }}>
-              {c.name}
-            </h2>
-            <span style={{
-              display: 'inline-block', marginTop: '0.4rem', fontSize: '0.8rem',
-              background: '#fff1f2', color: '#e11d48',
-              padding: '0.25rem 0.75rem', borderRadius: '99px', fontWeight: 700
-            }}>
-              Mutual Match 🎉
-            </span>
+        ) : error ? (
+          <div style={{ textAlign: 'center', padding: '2rem' }}>
+            <p style={{ color: '#ef4444' }}>{error}</p>
+            <button className="btn-primary" onClick={onClose} style={{ marginTop: '1rem' }}>Close</button>
           </div>
-        </div>
+        ) : details ? (
+          <>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '1.25rem', marginBottom: '2rem' }}>
+              <div style={{
+                width: '72px', height: '72px', borderRadius: '22px',
+                background: 'linear-gradient(135deg, #f43f5e, #fb7185)',
+                display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0,
+                boxShadow: '0 10px 15px -3px rgba(244, 63, 94, 0.3)'
+              }}>
+                <User size={36} color="white" />
+              </div>
+              <div>
+                <h2 style={{ margin: 0, fontSize: '1.75rem', color: '#1e293b', fontWeight: 800 }}>
+                  {details.name}
+                </h2>
+                <span style={{
+                  display: 'inline-block', marginTop: '0.4rem', fontSize: '0.8rem',
+                  background: '#fff1f2', color: '#e11d48',
+                  padding: '0.25rem 0.75rem', borderRadius: '99px', fontWeight: 700
+                }}>
+                  Mutual Match 🎉
+                </span>
+              </div>
+            </div>
 
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '0.75rem', marginBottom: '2rem' }}>
-          {c.email && (
-            <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', color: '#475569', fontSize: '0.95rem' }}>
-              <Mail size={18} color="#f43f5e" />
-              <span>{c.email}</span>
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '0.75rem', marginBottom: '2rem' }}>
+              {details.email && (
+                <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', color: '#475569', fontSize: '0.95rem' }}>
+                  <Mail size={18} color="#f43f5e" />
+                  <span>{details.email}</span>
+                </div>
+              )}
+              {details.phone && (
+                <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', color: '#475569', fontSize: '0.95rem' }}>
+                  <Phone size={18} color="#f43f5e" />
+                  <span>{details.phone}</span>
+                </div>
+              )}
+              {(details.country || details.university) && (
+                <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', color: '#475569', fontSize: '0.95rem' }}>
+                  <MapPin size={18} color="#f43f5e" />
+                  <span>{[details.university, details.country].filter(Boolean).join(', ')}</span>
+                </div>
+              )}
             </div>
-          )}
-          {c.phone && (
-            <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', color: '#475569', fontSize: '0.95rem' }}>
-              <Phone size={18} color="#f43f5e" />
-              <span>{c.phone}</span>
-            </div>
-          )}
-          {(c.country || c.university) && (
-            <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', color: '#475569', fontSize: '0.95rem' }}>
-              <MapPin size={18} color="#f43f5e" />
-              <span>{[c.university, c.country].filter(Boolean).join(', ')}</span>
-            </div>
-          )}
-        </div>
 
-        {c.skills && c.skills.length > 0 && (
-          <div style={{ marginBottom: '2rem' }}>
-            <h4 style={{ margin: '0 0 0.8rem', fontSize: '0.85rem', textTransform: 'uppercase', letterSpacing: '0.05em', color: '#94a3b8', fontWeight: 700 }}>Candidate Skills</h4>
-            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem' }}>
-              {c.skills.map(skill => (
-                <span key={skill} className="skill-pill" style={{ padding: '0.4rem 0.9rem', fontSize: '0.85rem', background: '#f1f5f9', color: '#334155', borderRadius: '10px', fontWeight: 600 }}>{skill}</span>
-              ))}
-            </div>
-          </div>
-        )}
-
-        {match.jobDetails && (
-          <div style={{ marginBottom: '2rem', padding: '1.25rem', background: '#f8fafc', borderRadius: '16px', border: '1px solid #e2e8f0' }}>
-            <h4 style={{ margin: '0 0 0.5rem', fontSize: '0.85rem', textTransform: 'uppercase', letterSpacing: '0.05em', color: '#94a3b8', fontWeight: 700 }}>Matched For Position</h4>
-            <p style={{ margin: 0, fontWeight: 700, color: '#1e293b', fontSize: '1.1rem' }}>{match.jobDetails.roleName}</p>
-            {match.jobDetails.description && (
-              <p style={{ margin: '0.5rem 0 0', fontSize: '0.9rem', color: '#64748b', lineHeight: 1.5 }}>
-                {match.jobDetails.description}
-              </p>
+            {details.skills && details.skills.length > 0 && (
+              <div style={{ marginBottom: '2rem' }}>
+                <h4 style={{ margin: '0 0 0.8rem', fontSize: '0.85rem', textTransform: 'uppercase', letterSpacing: '0.05em', color: '#94a3b8', fontWeight: 700 }}>Candidate Skills</h4>
+                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem' }}>
+                  {details.skills.map(skill => (
+                    <span key={skill} className="skill-pill" style={{ padding: '0.4rem 0.9rem', fontSize: '0.85rem', background: '#f1f5f9', color: '#334155', borderRadius: '10px', fontWeight: 600 }}>{skill}</span>
+                  ))}
+                </div>
+              </div>
             )}
-          </div>
-        )}
 
-        <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap', borderTop: '1px solid #f1f5f9', paddingTop: '1.5rem' }}>
-          {c.resumeFilename && (
-            <a
-              href={`http://localhost:8081/api/candidates/${match.candidateId}/resume`}
-              target="_blank" rel="noreferrer"
-              className="nav-action-btn subtle"
-              style={{ padding: '0.6rem 1.25rem', fontSize: '0.9rem', textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '0.5rem', borderRadius: '12px' }}
-            >
-              <FileText size={18} /> Resume
-            </a>
-          )}
-          {c.linkedin && (
-            <a
-              href={c.linkedin.startsWith('http') ? c.linkedin : `https://${c.linkedin}`}
-              target="_blank" rel="noreferrer"
-              className="nav-action-btn subtle"
-              style={{ padding: '0.6rem 1.25rem', fontSize: '0.9rem', textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '0.5rem', color: '#0077b5', background: 'rgba(0,119,181,0.08)', borderRadius: '12px' }}
-            >
-              <Linkedin size={18} /> LinkedIn
-            </a>
-          )}
-          {c.email && (
-            <a
-              href={`mailto:${c.email}`}
-              className="btn-primary"
-              style={{ padding: '0.6rem 1.5rem', fontSize: '0.9rem', textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '0.5rem', borderRadius: '12px', background: '#f43f5e', color: 'white', fontWeight: 600 }}
-            >
-              <Mail size={18} /> Contact
-            </a>
-          )}
-        </div>
+            {match.jobDetails && (
+              <div style={{ marginBottom: '2rem', padding: '1.25rem', background: '#f8fafc', borderRadius: '16px', border: '1px solid #e2e8f0' }}>
+                <h4 style={{ margin: '0 0 0.5rem', fontSize: '0.85rem', textTransform: 'uppercase', letterSpacing: '0.05em', color: '#94a3b8', fontWeight: 700 }}>Matched For Position</h4>
+                <p style={{ margin: 0, fontWeight: 700, color: '#1e293b', fontSize: '1.1rem' }}>{match.jobDetails.roleName}</p>
+                {match.jobDetails.description && (
+                  <p style={{ margin: '0.5rem 0 0', fontSize: '0.9rem', color: '#64748b', lineHeight: 1.5 }}>
+                    {match.jobDetails.description}
+                  </p>
+                )}
+              </div>
+            )}
+
+            <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap', borderTop: '1px solid #f1f5f9', paddingTop: '1.5rem' }}>
+              {details.resumeFilename && (
+                <a
+                  href={`http://localhost:8081/api/candidates/${match.candidateId}/resume`}
+                  target="_blank" rel="noreferrer"
+                  className="nav-action-btn subtle"
+                  style={{ padding: '0.6rem 1.25rem', fontSize: '0.9rem', textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '0.5rem', borderRadius: '12px' }}
+                >
+                  <FileText size={18} /> Resume
+                </a>
+              )}
+              {details.linkedin && (
+                <a
+                  href={details.linkedin.startsWith('http') ? details.linkedin : `https://${details.linkedin}`}
+                  target="_blank" rel="noreferrer"
+                  className="nav-action-btn subtle"
+                  style={{ padding: '0.6rem 1.25rem', fontSize: '0.9rem', textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '0.5rem', color: '#0077b5', background: 'rgba(0,119,181,0.08)', borderRadius: '12px' }}
+                >
+                  <Linkedin size={18} /> LinkedIn
+                </a>
+              )}
+              {details.email && (
+                <a
+                  href={`mailto:${details.email}`}
+                  className="btn-primary"
+                  style={{ padding: '0.6rem 1.5rem', fontSize: '0.9rem', textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '0.5rem', borderRadius: '12px', background: '#f43f5e', color: 'white', fontWeight: 600 }}
+                >
+                  <Mail size={18} /> Contact
+                </a>
+              )}
+            </div>
+          </>
+        ) : null}
       </div>
     </div>
   );
@@ -153,9 +191,10 @@ export default function Matches({ userRole }) {
     const fetchMatches = async () => {
       try {
         const id = localStorage.getItem('id');
-        const role = userRole || localStorage.getItem('role') || 'candidate';
+        const roleFromStorage = localStorage.getItem('role') || 'candidate';
+        const role = (userRole || roleFromStorage).toLowerCase();
         const token = localStorage.getItem('token');
-        
+
         const authenticatedHeaders = token ? { 'Authorization': `Bearer ${token}` } : {};
 
         let endpoint = '';
@@ -207,7 +246,7 @@ export default function Matches({ userRole }) {
     fetchMatches();
   }, [userRole]);
 
-  const role = userRole || localStorage.getItem('role') || 'candidate';
+  const role = (userRole || localStorage.getItem('role') || 'candidate').toLowerCase();
 
   return (
     <div className="dashboard-layout bg-dots">
@@ -275,7 +314,7 @@ export default function Matches({ userRole }) {
                     CONFIRMED
                   </div>
                   {role === 'recruiter' && (
-                    <span style={{ fontSize: '0.75rem', color: '#94a3b8', fontWeight: 500 }}>Click to expand</span>
+                    <span style={{ fontSize: '0.75rem', color: '#94a3b8', fontWeight: 500 }}>Click to view</span>
                   )}
                 </div>
 
@@ -311,8 +350,8 @@ export default function Matches({ userRole }) {
                     <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', padding: '1rem', background: '#f8fafc', borderRadius: '12px' }}>
                       <User size={24} color="#94a3b8" />
                       <div>
-                         <span style={{ display: 'block', fontSize: '0.7rem', color: '#94a3b8', fontWeight: 600 }}>CANDIDATE ID</span>
-                         <span style={{ fontWeight: 600, color: '#475569', fontSize: '0.85rem' }}>{match.candidateId.substring(0, 12)}...</span>
+                        <span style={{ display: 'block', fontSize: '0.7rem', color: '#94a3b8', fontWeight: 600 }}>CANDIDATE ID</span>
+                        <span style={{ fontWeight: 600, color: '#475569', fontSize: '0.85rem' }}>{match.candidateId.substring(0, 12)}...</span>
                       </div>
                     </div>
                   </div>
