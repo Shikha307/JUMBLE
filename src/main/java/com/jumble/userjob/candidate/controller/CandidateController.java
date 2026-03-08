@@ -26,6 +26,7 @@ public class CandidateController {
             @RequestParam("name") String name,
             @RequestParam("email") String email,
             @RequestParam("skills") List<String> skills,
+            @RequestParam("password") String password,
             @RequestParam("resume") MultipartFile resumeFile) {
 
         try {
@@ -33,6 +34,7 @@ public class CandidateController {
             user.setName(name);
             user.setEmail(email);
             user.setSkills(skills);
+            user.setPassword(password);
 
             Candidate savedUser = userService.createUser(user, resumeFile);
             return new ResponseEntity<>(savedUser, HttpStatus.CREATED);
