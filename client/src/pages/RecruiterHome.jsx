@@ -12,12 +12,15 @@ export default function RecruiterHome() {
   const [loadingCandidates, setLoadingCandidates] = useState(true);
   const [loadingJobs, setLoadingJobs] = useState(true);
 
-  // Fetch Candidates (simulated pool for now, or actual candidates)
+  // Fetch Unswiped Candidates for the selected job
   useEffect(() => {
+    if (!selectedJob) return;
+
     const fetchCandidates = async () => {
+      setLoadingCandidates(true);
       try {
         const token = localStorage.getItem('token');
-        const res = await fetch('http://localhost:8080/api/candidates/all', {
+        const res = await fetch(`http://localhost:8082/api/v1/swipes/jobs/${selectedJob.id}/unswiped-candidates`, {
           headers: token ? { 'Authorization': `Bearer ${token}` } : {}
         });
         if (res.ok) {
@@ -26,7 +29,7 @@ export default function RecruiterHome() {
             id: c.userId || c.id,
             name: `${c.firstName || ''} ${c.lastName || ''}`.trim() || c.name,
             skills: c.skills || [],
-            linkedin: c.socialLinks?.linkedin || '',
+            linkedin: c.socialLinks?.linkedin || c.linkedin || '',
             email: c.email || '',
             resumeUrl: c.resumeUrl || ''
           }));
@@ -39,7 +42,7 @@ export default function RecruiterHome() {
       }
     };
     fetchCandidates();
-  }, []);
+  }, [selectedJob]);
 
   // Fetch Jobs belonging to the recruiter
   useEffect(() => {
@@ -84,7 +87,7 @@ export default function RecruiterHome() {
     };
 
     try {
-      const response = await fetch('http://localhost:8080/api/v1/swipes', {
+      const response = await fetch('http://localhost:8082/api/v1/swipes', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload)
