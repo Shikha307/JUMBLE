@@ -171,7 +171,14 @@ export default function RecruiterHome() {
               <h2>Loading candidates...</h2>
             </div>
           ) : currentCandidate ? (
-            <div className="list-card-wrapper active-card">
+            <div className="list-card-wrapper active-card" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+              <div className="suggested-header">
+                <h2>
+                  <Briefcase size={24} style={{ color: 'var(--primary)' }} />
+                  Suggested Candidates
+                </h2>
+                <div className="accent-line"></div>
+              </div>
               <CandidateCard 
                 candidate={currentCandidate} 
                 onLike={(id) => handleAction(id, 'LIKED')}

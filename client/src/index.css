@@ -1056,3 +1056,29 @@ body {
 .match-icon {
   color: #10b981;
 }
+
+/* Suggested Candidates Header */
+.suggested-header {
+  margin-bottom: 1.5rem;
+  text-align: center;
+  animation: fadeUp 0.6s ease;
+}
+
+.suggested-header h2 {
+  font-size: 1.5rem;
+  color: var(--text-dark);
+  font-weight: 800;
+  letter-spacing: -0.5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+}
+
+.suggested-header .accent-line {
+  width: 40px;
+  height: 4px;
+  background: var(--primary);
+  border-radius: 2px;
+  margin: 0.5rem auto 0;
+}
