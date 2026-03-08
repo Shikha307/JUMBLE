@@ -167,9 +167,9 @@ function CandidateModal({ match, onClose }) {
                   href={details.linkedin.startsWith('http') ? details.linkedin : `https://${details.linkedin}`}
                   target="_blank" rel="noreferrer"
                   className="btn-primary"
-                  style={{ 
-                    padding: '0.6rem 1.5rem', fontSize: '0.9rem', textDecoration: 'none', 
-                    display: 'flex', alignItems: 'center', gap: '0.5rem', 
+                  style={{
+                    padding: '0.6rem 1.5rem', fontSize: '0.9rem', textDecoration: 'none',
+                    display: 'flex', alignItems: 'center', gap: '0.5rem',
                     color: 'white', background: '#0077b5', borderRadius: '12px',
                     fontWeight: 700, boxShadow: '0 4px 6px -1px rgba(0, 119, 181, 0.2)',
                     transition: 'all 0.2s'
@@ -183,19 +183,19 @@ function CandidateModal({ match, onClose }) {
                     e.currentTarget.style.transform = 'translateY(0)';
                   }}
                 >
-                  <Linkedin size={20} style={{ strokeWidth: 2.5 }} /> LinkedIn Profile
+                  <Linkedin size={20} strokeWidth={2.5} /> LinkedIn Profile
                 </a>
               ) : (
                 <div
                   className="nav-action-btn subtle"
-                  style={{ 
-                    padding: '0.6rem 1.25rem', fontSize: '0.9rem', 
-                    display: 'flex', alignItems: 'center', gap: '0.5rem', 
+                  style={{
+                    padding: '0.6rem 1.25rem', fontSize: '0.9rem',
+                    display: 'flex', alignItems: 'center', gap: '0.5rem',
                     borderRadius: '12px', color: '#94a3b8', background: '#f8fafc',
                     cursor: 'default', border: '1px solid #e2e8f0'
                   }}
                 >
-                  <Linkedin size={20} style={{ opacity: 0.5 }} /> LinkedIn: Not Provided
+                  <Linkedin size={20} strokeWidth={1.5} style={{ opacity: 0.5 }} /> LinkedIn: Not Provided
                 </div>
               )}
             </div>
@@ -296,7 +296,7 @@ function JobModal({ match, onClose }) {
                   background: '#fff1f2', color: '#e11d48',
                   padding: '0.25rem 0.75rem', borderRadius: '99px', fontWeight: 700
                 }}>
-                  You're Matched! 🚀
+                  You've Matched!
                 </span>
               </div>
             </div>
@@ -323,9 +323,9 @@ function JobModal({ match, onClose }) {
                 <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.6rem' }}>
                   {details.skillsNeeded && details.skillsNeeded.length > 0 ? (
                     details.skillsNeeded.map(skill => (
-                      <span key={skill} style={{ 
-                        padding: '0.4rem 0.8rem', fontSize: '0.85rem', background: 'white', 
-                        border: '1px solid #e2e8f0', borderRadius: '8px', color: '#334155', fontWeight: 600 
+                      <span key={skill} style={{
+                        padding: '0.4rem 0.8rem', fontSize: '0.85rem', background: 'white',
+                        border: '1px solid #e2e8f0', borderRadius: '8px', color: '#334155', fontWeight: 600
                       }}>{skill}</span>
                     ))
                   ) : (
@@ -342,7 +342,7 @@ function JobModal({ match, onClose }) {
             </div>
 
             <div style={{ borderTop: '1px solid #f1f5f9', paddingTop: '1.5rem', textAlign: 'center' }}>
-              <button 
+              <button
                 onClick={onClose}
                 className="btn-primary"
                 style={{ padding: '0.8rem 2rem', borderRadius: '12px', background: '#f43f5e', color: 'white', fontWeight: 600, cursor: 'pointer', border: 'none' }}
