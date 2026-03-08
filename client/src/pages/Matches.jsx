@@ -15,9 +15,9 @@ export default function Matches({ userRole }) {
         
         let endpoint = '';
         if (role === 'recruiter') {
-          endpoint = `http://localhost:8080/api/v1/matches/recruiter/${id}`;
+          endpoint = `http://localhost:8082/api/v1/matches/recruiter/${id}`;
         } else {
-          endpoint = `http://localhost:8080/api/v1/matches/candidate/${id}`;
+          endpoint = `http://localhost:8082/api/v1/matches/candidate/${id}`;
         }
         
         const response = await fetch(endpoint);
