@@ -19,4 +19,16 @@ public class SwipeController {
         swipeService.processSwipe(request);
         return ResponseEntity.ok("Swipe recorded successfully");
     }
+
+    /**
+     * GET /api/v1/swipes/jobs/{jobId}/unswiped-candidates
+     * Returns a list of *unswiped* Candidates that the recruiter hasn't seen yet
+     * for
+     * this job.
+     */
+    @GetMapping("/jobs/{jobId}/unswiped-candidates")
+    public ResponseEntity<java.util.List<com.jumble.swipematch.model.Candidate>> getUnswipedCandidates(
+            @PathVariable String jobId) {
+        return ResponseEntity.ok(swipeService.getUnswipedCandidatesForJob(jobId));
+    }
 }
