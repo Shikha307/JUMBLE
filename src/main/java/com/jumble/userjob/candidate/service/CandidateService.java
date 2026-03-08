@@ -8,6 +8,7 @@ import com.jumble.userjob.candidate.model.Candidate;
 import com.jumble.userjob.candidate.repository.CandidateRepository;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -32,5 +33,9 @@ public class CandidateService {
 
     public Candidate updateUser(String id, Candidate user) {
         return candidateRepository.save(user);
+    }
+
+    public List<Candidate> getAllCandidates() {
+        return candidateRepository.findAll();
     }
 }
