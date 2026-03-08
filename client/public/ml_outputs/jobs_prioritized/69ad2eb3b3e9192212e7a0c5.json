@@ -1,88 +1,14 @@
 [
   {
-    "recruiterId": "69acfcfede8bc04c38f4c252",
-    "roleName": "abc",
-    "description": "qsjiwhdiwhd",
-    "skillsNeeded": [
-      "kjdkwadbqj"
-    ],
-    "_class": "com.jumble.userjob.job.model.Job",
-    "id": "69ad14a289e52b7eba77c417",
-    "matchScore": 50.2
-  },
-  {
-    "recruiterId": "69acfcfede8bc04c38f4c252",
-    "roleName": "cyber intern",
-    "description": "security ",
-    "skillsNeeded": [
-      "c",
-      "java",
-      "python"
-    ],
-    "_class": "com.jumble.userjob.job.model.Job",
-    "id": "69ad15b36c934748729e68c3",
-    "matchScore": 24.1
-  },
-  {
-    "recruiterId": "69acaae932e1b554400f220d",
-    "roleName": "ML Engineer",
-    "description": "Looking for an expert ML Engineer.",
-    "skillsNeeded": [
-      "java",
-      "spring boot"
-    ],
-    "_class": "com.jumble.userjob.job.model.Job",
-    "id": "69acc5e37eba71d2aaaa208d",
-    "matchScore": 20.64
-  },
-  {
-    "recruiterId": "69ad4085e2f5646291887c17",
-    "roleName": "network intern",
-    "description": "2sss2",
-    "skillsNeeded": [
-      "swdwdwdq"
-    ],
-    "_class": "com.jumble.userjob.job.model.Job",
-    "id": "69ad40a0e2f5646291887c18",
-    "matchScore": 19.37
-  },
-  {
-    "recruiterId": "69ad3b55c7d5f2c747b8aa44",
-    "roleName": "Senior Kubernetes Engineer",
-    "description": "Kubenetes chahiye. Padh ke aao.",
-    "skillsNeeded": [
-      "Java",
-      "Springboot",
-      "SQL"
-    ],
-    "_class": "com.jumble.userjob.job.model.Job",
-    "id": "69ad3bc3c7d5f2c747b8aa45",
-    "matchScore": 18.2
-  },
-  {
     "recruiterId": "R1",
-    "roleName": "ml intern",
-    "description": "build any application",
+    "roleName": "Test Job",
+    "description": "Test desc",
     "skillsNeeded": [
-      "ML",
-      "AI",
-      "NLP"
+      "Java"
     ],
     "_class": "com.jumble.userjob.job.model.Job",
-    "id": "69acc1a4a425d47c979142e7",
-    "matchScore": 17.48
-  },
-  {
-    "recruiterId": "69acaae932e1b554400f220d",
-    "roleName": "Senior Java Developer",
-    "description": "Looking for an expert Spring Boot developer to build skynet APIs.",
-    "skillsNeeded": [
-      "java",
-      "spring boot"
-    ],
-    "_class": "com.jumble.userjob.job.model.Job",
-    "id": "69acab6d32e1b554400f220e",
-    "matchScore": 16.08
+    "id": "69acfae40bb735b8163c5b25",
+    "matchScore": 56.72
   },
   {
     "recruiterId": "R1",
@@ -95,18 +21,92 @@
     ],
     "_class": "com.jumble.userjob.job.model.Job",
     "id": "69acfb110bb735b8163c5b26",
-    "matchScore": 15.72
+    "matchScore": 33.53
+  },
+  {
+    "recruiterId": "69acaae932e1b554400f220d",
+    "roleName": "ML Engineer",
+    "description": "Looking for an expert ML Engineer.",
+    "skillsNeeded": [
+      "java",
+      "spring boot"
+    ],
+    "_class": "com.jumble.userjob.job.model.Job",
+    "id": "69acc5e37eba71d2aaaa208d",
+    "matchScore": 31.47
+  },
+  {
+    "recruiterId": "69acfcfede8bc04c38f4c252",
+    "roleName": "cyber intern",
+    "description": "security ",
+    "skillsNeeded": [
+      "c",
+      "java",
+      "python"
+    ],
+    "_class": "com.jumble.userjob.job.model.Job",
+    "id": "69ad15b36c934748729e68c3",
+    "matchScore": 25.53
+  },
+  {
+    "recruiterId": "69acaae932e1b554400f220d",
+    "roleName": "Senior Java Developer",
+    "description": "Looking for an expert Spring Boot developer to build skynet APIs.",
+    "skillsNeeded": [
+      "java",
+      "spring boot"
+    ],
+    "_class": "com.jumble.userjob.job.model.Job",
+    "id": "69acab6d32e1b554400f220e",
+    "matchScore": 24.94
+  },
+  {
+    "recruiterId": "69ad3b55c7d5f2c747b8aa44",
+    "roleName": "Senior Kubernetes Engineer",
+    "description": "Kubenetes chahiye. Padh ke aao.",
+    "skillsNeeded": [
+      "Java",
+      "Springboot",
+      "SQL"
+    ],
+    "_class": "com.jumble.userjob.job.model.Job",
+    "id": "69ad3bc3c7d5f2c747b8aa45",
+    "matchScore": 21.98
+  },
+  {
+    "recruiterId": "69ad4085e2f5646291887c17",
+    "roleName": "network intern",
+    "description": "2sss2",
+    "skillsNeeded": [
+      "swdwdwdq"
+    ],
+    "_class": "com.jumble.userjob.job.model.Job",
+    "id": "69ad40a0e2f5646291887c18",
+    "matchScore": 20.73
+  },
+  {
+    "recruiterId": "69acfcfede8bc04c38f4c252",
+    "roleName": "abc",
+    "description": "qsjiwhdiwhd",
+    "skillsNeeded": [
+      "kjdkwadbqj"
+    ],
+    "_class": "com.jumble.userjob.job.model.Job",
+    "id": "69ad14a289e52b7eba77c417",
+    "matchScore": 18.26
   },
   {
     "recruiterId": "R1",
-    "roleName": "Test Job",
-    "description": "Test desc",
+    "roleName": "network intern",
+    "description": "managing networks",
     "skillsNeeded": [
-      "Java"
+      "java",
+      "C",
+      "network systems"
     ],
     "_class": "com.jumble.userjob.job.model.Job",
-    "id": "69acfae40bb735b8163c5b25",
-    "matchScore": 12.54
+    "id": "69acfd2ede8bc04c38f4c253",
+    "matchScore": 17.72
   },
   {
     "recruiterId": "69ad4085e2f5646291887c17",
@@ -119,7 +119,20 @@
     ],
     "_class": "com.jumble.userjob.job.model.Job",
     "id": "69ad4af018f9f1541a270772",
-    "matchScore": 12.23
+    "matchScore": 17.6
+  },
+  {
+    "recruiterId": "R1",
+    "roleName": "Software intern",
+    "description": "build a full stack application using any tech stack",
+    "skillsNeeded": [
+      "python",
+      "java",
+      "C++"
+    ],
+    "_class": "com.jumble.userjob.job.model.Job",
+    "id": "69acc074a425d47c979142e6",
+    "matchScore": 12.98
   },
   {
     "recruiterId": "R1",
@@ -131,7 +144,7 @@
     ],
     "_class": "com.jumble.userjob.job.model.Job",
     "id": "69ad09f00bb735b8163c5b28",
-    "matchScore": 9.5
+    "matchScore": 8.76
   },
   {
     "recruiterId": "R1",
@@ -145,32 +158,19 @@
     ],
     "_class": "com.jumble.userjob.job.model.Job",
     "id": "69ad09660bb735b8163c5b27",
-    "matchScore": 9.46
+    "matchScore": 5.67
   },
   {
     "recruiterId": "R1",
-    "roleName": "Software intern",
-    "description": "build a full stack application using any tech stack",
+    "roleName": "ml intern",
+    "description": "build any application",
     "skillsNeeded": [
-      "python",
-      "java",
-      "C++"
+      "ML",
+      "AI",
+      "NLP"
     ],
     "_class": "com.jumble.userjob.job.model.Job",
-    "id": "69acc074a425d47c979142e6",
-    "matchScore": 8.44
-  },
-  {
-    "recruiterId": "R1",
-    "roleName": "network intern",
-    "description": "managing networks",
-    "skillsNeeded": [
-      "java",
-      "C",
-      "network systems"
-    ],
-    "_class": "com.jumble.userjob.job.model.Job",
-    "id": "69acfd2ede8bc04c38f4c253",
-    "matchScore": 6.52
+    "id": "69acc1a4a425d47c979142e7",
+    "matchScore": 2.93
   }
 ]

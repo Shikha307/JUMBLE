@@ -1,30 +1,16 @@
 [
   {
     "recruiterId": "R1",
-    "roleName": "Senior ML Engineer",
-    "description": "Looking for ML Engineer who has knowledge of Flutter, Python, Tensorflow, Keras.",
+    "roleName": "Software intern",
+    "description": "build a full stack application using any tech stack",
     "skillsNeeded": [
-      "Python",
-      "Keras",
-      "Tensorflow",
-      "ML"
+      "python",
+      "java",
+      "C++"
     ],
     "_class": "com.jumble.userjob.job.model.Job",
-    "id": "69ad09660bb735b8163c5b27",
-    "matchScore": 54.46
-  },
-  {
-    "recruiterId": "R1",
-    "roleName": "ml intern",
-    "description": "build any application",
-    "skillsNeeded": [
-      "ML",
-      "AI",
-      "NLP"
-    ],
-    "_class": "com.jumble.userjob.job.model.Job",
-    "id": "69acc1a4a425d47c979142e7",
-    "matchScore": 32.01
+    "id": "69acc074a425d47c979142e6",
+    "matchScore": 43.35
   },
   {
     "recruiterId": "69acfcfede8bc04c38f4c252",
@@ -37,43 +23,45 @@
     ],
     "_class": "com.jumble.userjob.job.model.Job",
     "id": "69ad15b36c934748729e68c3",
-    "matchScore": 28.06
+    "matchScore": 42.95
   },
   {
     "recruiterId": "R1",
-    "roleName": "Software intern",
-    "description": "build a full stack application using any tech stack",
+    "roleName": "Senior ML Engineer",
+    "description": "Looking for ML Engineer who has knowledge of Flutter, Python, Tensorflow, Keras.",
     "skillsNeeded": [
-      "python",
-      "java",
-      "C++"
+      "Python",
+      "Keras",
+      "Tensorflow",
+      "ML"
     ],
     "_class": "com.jumble.userjob.job.model.Job",
-    "id": "69acc074a425d47c979142e6",
-    "matchScore": 26.63
-  },
-  {
-    "recruiterId": "69ad4085e2f5646291887c17",
-    "roleName": "network intern",
-    "description": "2sss2",
-    "skillsNeeded": [
-      "swdwdwdq"
-    ],
-    "_class": "com.jumble.userjob.job.model.Job",
-    "id": "69ad40a0e2f5646291887c18",
-    "matchScore": 18.77
+    "id": "69ad09660bb735b8163c5b27",
+    "matchScore": 32.77
   },
   {
     "recruiterId": "R1",
-    "roleName": "Senior Kubernetes Engineer",
-    "description": "Looking for senior kubernetes engineer.",
+    "roleName": "ml intern",
+    "description": "build any application",
     "skillsNeeded": [
-      "Kubernetes",
-      "Docker."
+      "ML",
+      "AI",
+      "NLP"
     ],
     "_class": "com.jumble.userjob.job.model.Job",
-    "id": "69ad09f00bb735b8163c5b28",
-    "matchScore": 17.63
+    "id": "69acc1a4a425d47c979142e7",
+    "matchScore": 26.35
+  },
+  {
+    "recruiterId": "69acfcfede8bc04c38f4c252",
+    "roleName": "abc",
+    "description": "qsjiwhdiwhd",
+    "skillsNeeded": [
+      "kjdkwadbqj"
+    ],
+    "_class": "com.jumble.userjob.job.model.Job",
+    "id": "69ad14a289e52b7eba77c417",
+    "matchScore": 22.38
   },
   {
     "recruiterId": "69acaae932e1b554400f220d",
@@ -85,7 +73,30 @@
     ],
     "_class": "com.jumble.userjob.job.model.Job",
     "id": "69acc5e37eba71d2aaaa208d",
-    "matchScore": 16.94
+    "matchScore": 21.68
+  },
+  {
+    "recruiterId": "R1",
+    "roleName": "Senior Kubernetes Engineer",
+    "description": "Looking for senior kubernetes engineer.",
+    "skillsNeeded": [
+      "Kubernetes",
+      "Docker."
+    ],
+    "_class": "com.jumble.userjob.job.model.Job",
+    "id": "69ad09f00bb735b8163c5b28",
+    "matchScore": 15.61
+  },
+  {
+    "recruiterId": "69ad4085e2f5646291887c17",
+    "roleName": "network intern",
+    "description": "2sss2",
+    "skillsNeeded": [
+      "swdwdwdq"
+    ],
+    "_class": "com.jumble.userjob.job.model.Job",
+    "id": "69ad40a0e2f5646291887c18",
+    "matchScore": 14.34
   },
   {
     "recruiterId": "69acaae932e1b554400f220d",
@@ -97,31 +108,7 @@
     ],
     "_class": "com.jumble.userjob.job.model.Job",
     "id": "69acab6d32e1b554400f220e",
-    "matchScore": 12.92
-  },
-  {
-    "recruiterId": "69acfcfede8bc04c38f4c252",
-    "roleName": "abc",
-    "description": "qsjiwhdiwhd",
-    "skillsNeeded": [
-      "kjdkwadbqj"
-    ],
-    "_class": "com.jumble.userjob.job.model.Job",
-    "id": "69ad14a289e52b7eba77c417",
-    "matchScore": 11.94
-  },
-  {
-    "recruiterId": "R1",
-    "roleName": "network intern",
-    "description": "managing networks",
-    "skillsNeeded": [
-      "java",
-      "C",
-      "network systems"
-    ],
-    "_class": "com.jumble.userjob.job.model.Job",
-    "id": "69acfd2ede8bc04c38f4c253",
-    "matchScore": 11.88
+    "matchScore": 13.92
   },
   {
     "recruiterId": "69ad3b55c7d5f2c747b8aa44",
@@ -134,7 +121,7 @@
     ],
     "_class": "com.jumble.userjob.job.model.Job",
     "id": "69ad3bc3c7d5f2c747b8aa45",
-    "matchScore": 3.15
+    "matchScore": 13.4
   },
   {
     "recruiterId": "R1",
@@ -145,20 +132,20 @@
     ],
     "_class": "com.jumble.userjob.job.model.Job",
     "id": "69acfae40bb735b8163c5b25",
-    "matchScore": 0.67
+    "matchScore": 11.28
   },
   {
     "recruiterId": "R1",
-    "roleName": "Senior Java Developer",
-    "description": "Looking for Senior Java Developer",
+    "roleName": "network intern",
+    "description": "managing networks",
     "skillsNeeded": [
-      "Java",
-      "Springboot",
-      "SQL"
+      "java",
+      "C",
+      "network systems"
     ],
     "_class": "com.jumble.userjob.job.model.Job",
-    "id": "69acfb110bb735b8163c5b26",
-    "matchScore": -0.86
+    "id": "69acfd2ede8bc04c38f4c253",
+    "matchScore": 10.63
   },
   {
     "recruiterId": "69ad4085e2f5646291887c17",
@@ -171,6 +158,19 @@
     ],
     "_class": "com.jumble.userjob.job.model.Job",
     "id": "69ad4af018f9f1541a270772",
-    "matchScore": -7.15
+    "matchScore": 9.66
+  },
+  {
+    "recruiterId": "R1",
+    "roleName": "Senior Java Developer",
+    "description": "Looking for Senior Java Developer",
+    "skillsNeeded": [
+      "Java",
+      "Springboot",
+      "SQL"
+    ],
+    "_class": "com.jumble.userjob.job.model.Job",
+    "id": "69acfb110bb735b8163c5b26",
+    "matchScore": 4.47
   }
 ]

@@ -25,6 +25,19 @@
     "matchScore": 61.01
   },
   {
+    "recruiterId": "69ad3b55c7d5f2c747b8aa44",
+    "roleName": "Senior Kubernetes Engineer",
+    "description": "Kubenetes chahiye. Padh ke aao.",
+    "skillsNeeded": [
+      "Java",
+      "Springboot",
+      "SQL"
+    ],
+    "_class": "com.jumble.userjob.job.model.Job",
+    "id": "69ad3bc3c7d5f2c747b8aa45",
+    "matchScore": 60.05
+  },
+  {
     "recruiterId": "69acaae932e1b554400f220d",
     "roleName": "Senior Java Developer",
     "description": "Looking for an expert Spring Boot developer to build skynet APIs.",
@@ -48,6 +61,19 @@
     "matchScore": 41.48
   },
   {
+    "recruiterId": "69ad4085e2f5646291887c17",
+    "roleName": "operating security",
+    "description": "operating system using any os",
+    "skillsNeeded": [
+      "operating system",
+      "java",
+      "c"
+    ],
+    "_class": "com.jumble.userjob.job.model.Job",
+    "id": "69ad4af018f9f1541a270772",
+    "matchScore": 36.12
+  },
+  {
     "recruiterId": "R1",
     "roleName": "network intern",
     "description": "managing networks",
@@ -59,6 +85,30 @@
     "_class": "com.jumble.userjob.job.model.Job",
     "id": "69acfd2ede8bc04c38f4c253",
     "matchScore": 35.8
+  },
+  {
+    "recruiterId": "69acfcfede8bc04c38f4c252",
+    "roleName": "cyber intern",
+    "description": "security ",
+    "skillsNeeded": [
+      "c",
+      "java",
+      "python"
+    ],
+    "_class": "com.jumble.userjob.job.model.Job",
+    "id": "69ad15b36c934748729e68c3",
+    "matchScore": 30.93
+  },
+  {
+    "recruiterId": "69ad4085e2f5646291887c17",
+    "roleName": "network intern",
+    "description": "2sss2",
+    "skillsNeeded": [
+      "swdwdwdq"
+    ],
+    "_class": "com.jumble.userjob.job.model.Job",
+    "id": "69ad40a0e2f5646291887c18",
+    "matchScore": 28.9
   },
   {
     "recruiterId": "69acfcfede8bc04c38f4c252",
