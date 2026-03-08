@@ -32,14 +32,14 @@ function Navbar({ role, name }) {
     const token = localStorage.getItem('token');
     if (!id || !role) return;
     const endpoint = role === 'recruiter'
-      ? `http://localhost:8082/api/v1/matches/recruiter/${id}`
-      : `http://localhost:8082/api/v1/matches/candidate/${id}`;
+      ? `http://localhost:8080/api/v1/matches/recruiter/${id}`
+      : `http://localhost:8080/api/v1/matches/candidate/${id}`;
     fetch(endpoint, {
       headers: token ? { 'Authorization': `Bearer ${token}` } : {}
     })
       .then(r => r.ok ? r.json() : [])
       .then(data => setMatchCount(Array.isArray(data) ? data.length : 0))
-      .catch(() => {});
+      .catch(() => { });
   }, [role]);
 
   return (

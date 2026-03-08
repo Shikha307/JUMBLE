@@ -26,12 +26,12 @@ export default function Navbar() {
     const id = localStorage.getItem('id');
     const token = localStorage.getItem('token');
     if (!id) return;
-    fetch(`http://localhost:8082/api/v1/matches/recruiter/${id}`, {
+    fetch(`http://localhost:8080/api/v1/matches/recruiter/${id}`, {
       headers: token ? { 'Authorization': `Bearer ${token}` } : {}
     })
       .then(r => r.ok ? r.json() : [])
       .then(data => setMatchCount(Array.isArray(data) ? data.length : 0))
-      .catch(() => {});
+      .catch(() => { });
   }, []);
 
   const handleSignOut = () => {
