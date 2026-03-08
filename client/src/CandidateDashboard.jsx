@@ -12,12 +12,13 @@ function CandidateDashboard({ userName }) {
   const [error, setError] = useState(null);
   const [swipeStatus, setSwipeStatus] = useState(null); // feedback message
 
-  // Fetch real jobs from the main service on mount
+  // Fetch only jobs the candidate hasn't swiped on yet
   useEffect(() => {
     const fetchJobs = async () => {
       try {
         const token = localStorage.getItem('token');
-        const res = await fetch('http://localhost:8081/api/jobs/all', {
+        const candidateId = localStorage.getItem('id');
+        const res = await fetch(`http://localhost:8082/api/v1/swipes/candidates/${candidateId}/unswiped-jobs`, {
           headers: token ? { 'Authorization': `Bearer ${token}` } : {}
         });
         if (res.ok) {
