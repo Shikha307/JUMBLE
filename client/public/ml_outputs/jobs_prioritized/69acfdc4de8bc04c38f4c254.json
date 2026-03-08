@@ -1,0 +1,115 @@
+[
+  {
+    "recruiterId": "69acaae932e1b554400f220d",
+    "roleName": "ML Engineer",
+    "description": "Looking for an expert ML Engineer.",
+    "skillsNeeded": [
+      "java",
+      "spring boot"
+    ],
+    "_class": "com.jumble.userjob.job.model.Job",
+    "id": "69acc5e37eba71d2aaaa208d",
+    "matchScore": 20.64
+  },
+  {
+    "recruiterId": "R1",
+    "roleName": "ml intern",
+    "description": "build any application",
+    "skillsNeeded": [
+      "ML",
+      "AI",
+      "NLP"
+    ],
+    "_class": "com.jumble.userjob.job.model.Job",
+    "id": "69acc1a4a425d47c979142e7",
+    "matchScore": 17.48
+  },
+  {
+    "recruiterId": "69acaae932e1b554400f220d",
+    "roleName": "Senior Java Developer",
+    "description": "Looking for an expert Spring Boot developer to build skynet APIs.",
+    "skillsNeeded": [
+      "java",
+      "spring boot"
+    ],
+    "_class": "com.jumble.userjob.job.model.Job",
+    "id": "69acab6d32e1b554400f220e",
+    "matchScore": 16.08
+  },
+  {
+    "recruiterId": "R1",
+    "roleName": "Senior Java Developer",
+    "description": "Looking for Senior Java Developer",
+    "skillsNeeded": [
+      "Java",
+      "Springboot",
+      "SQL"
+    ],
+    "_class": "com.jumble.userjob.job.model.Job",
+    "id": "69acfb110bb735b8163c5b26",
+    "matchScore": 15.72
+  },
+  {
+    "recruiterId": "R1",
+    "roleName": "Test Job",
+    "description": "Test desc",
+    "skillsNeeded": [
+      "Java"
+    ],
+    "_class": "com.jumble.userjob.job.model.Job",
+    "id": "69acfae40bb735b8163c5b25",
+    "matchScore": 12.54
+  },
+  {
+    "recruiterId": "R1",
+    "roleName": "Senior Kubernetes Engineer",
+    "description": "Looking for senior kubernetes engineer.",
+    "skillsNeeded": [
+      "Kubernetes",
+      "Docker."
+    ],
+    "_class": "com.jumble.userjob.job.model.Job",
+    "id": "69ad09f00bb735b8163c5b28",
+    "matchScore": 9.5
+  },
+  {
+    "recruiterId": "R1",
+    "roleName": "Senior ML Engineer",
+    "description": "Looking for ML Engineer who has knowledge of Flutter, Python, Tensorflow, Keras.",
+    "skillsNeeded": [
+      "Python",
+      "Keras",
+      "Tensorflow",
+      "ML"
+    ],
+    "_class": "com.jumble.userjob.job.model.Job",
+    "id": "69ad09660bb735b8163c5b27",
+    "matchScore": 9.46
+  },
+  {
+    "recruiterId": "R1",
+    "roleName": "Software intern",
+    "description": "build a full stack application using any tech stack",
+    "skillsNeeded": [
+      "python",
+      "java",
+      "C++"
+    ],
+    "_class": "com.jumble.userjob.job.model.Job",
+    "id": "69acc074a425d47c979142e6",
+    "matchScore": 8.44
+  },
+  {
+    "recruiterId": "R1",
+    "roleName": "network intern",
+    "description": "managing networks",
+    "skillsNeeded": [
+      "java",
+      "C",
+      "network systems"
+    ],
+    "_class": "com.jumble.userjob.job.model.Job",
+    "id": "69acfd2ede8bc04c38f4c253",
+    "matchScore": 6.52
+  }
+]
