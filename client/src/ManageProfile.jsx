@@ -78,7 +78,7 @@ function ManageProfile() {
     if (!/[0-9]/.test(value)) return 'Must contain at least one number.';
     if (!/[^A-Za-z0-9]/.test(value)) return 'Must contain at least one special character.';
     for (let i = 0; i < value.length - 1; i++) {
-        if (value[i] === value[i + 1]) return 'No two consecutive identical characters allowed.';
+      if (value[i] === value[i + 1]) return 'No two consecutive identical characters allowed.';
     }
     return '';
   };
@@ -94,14 +94,14 @@ function ManageProfile() {
         skills.forEach(s => formData.append('skills', s));
         if (resumeFile) formData.append('resume', resumeFile);
         else if (!existingResume) {
-            setErrorMsg('Resume is required');
-            setProfileLoading(false);
-            return;
+          setErrorMsg('Resume is required');
+          setProfileLoading(false);
+          return;
         } else {
-            // Need a dummy file if not updating resume but spring requires MultipartFile. 
-            // In a robust implementation, the backend would handle partial updates better.
-            const blob = new Blob(['dummy'], { type: 'application/pdf' });
-            formData.append('resume', blob, existingResume);
+          // Need a dummy file if not updating resume but spring requires MultipartFile. 
+          // In a robust implementation, the backend would handle partial updates better.
+          const blob = new Blob(['dummy'], { type: 'application/pdf' });
+          formData.append('resume', blob, existingResume);
         }
 
         const res = await fetch('http://localhost:8080/api/candidates/me/profile', {
@@ -135,7 +135,7 @@ function ManageProfile() {
   const handlePasswordSubmit = async (e) => {
     e.preventDefault();
     setMessage(''); setErrorMsg('');
-    
+
     if (passParams.newPassword !== passParams.confirmPassword) {
       setErrorMsg("New passwords do not match.");
       return;
@@ -191,7 +191,7 @@ function ManageProfile() {
         {/* --- PROFILE FORM --- */}
         <form className="login-form" onSubmit={handleProfileSubmit} style={{ borderBottom: '1px solid #e2e8f0', paddingBottom: '2rem', marginBottom: '2rem' }}>
           <h2 style={{ fontSize: '1.25rem', marginBottom: '1rem', color: '#2d3748' }}>
-              {role === 'candidate' ? 'Update Skills & Resume' : 'Update Company Info'}
+            {role === 'candidate' ? 'Update Skills & Resume' : 'Update Company Info'}
           </h2>
 
           {role === 'candidate' && (
@@ -256,20 +256,20 @@ function ManageProfile() {
         {/* --- PASSWORD FORM --- */}
         <form className="login-form" onSubmit={handlePasswordSubmit}>
           <h2 style={{ fontSize: '1.25rem', marginBottom: '1rem', color: '#2d3748' }}>Change Password</h2>
-          
+
           <div className="input-group">
             <label>Current Password</label>
-            <input type="password" value={passParams.oldPassword} onChange={e => setPassParams(p => ({...p, oldPassword: e.target.value}))} required />
+            <input type="password" value={passParams.oldPassword} onChange={e => setPassParams(p => ({ ...p, oldPassword: e.target.value }))} required />
           </div>
 
           <div className="input-group">
             <label>New Password</label>
-            <input type="password" placeholder="Min 8 chars, 1 uppercase, 1 special..." value={passParams.newPassword} onChange={e => setPassParams(p => ({...p, newPassword: e.target.value}))} required />
+            <input type="password" placeholder="Min 8 chars, 1 uppercase, 1 special..." value={passParams.newPassword} onChange={e => setPassParams(p => ({ ...p, newPassword: e.target.value }))} required />
           </div>
 
           <div className="input-group">
             <label>Confirm New Password</label>
-            <input type="password" value={passParams.confirmPassword} onChange={e => setPassParams(p => ({...p, confirmPassword: e.target.value}))} required />
+            <input type="password" value={passParams.confirmPassword} onChange={e => setPassParams(p => ({ ...p, confirmPassword: e.target.value }))} required />
           </div>
 
           <button type="submit" className="login-btn" disabled={passwordLoading} style={{ background: '#e53e3e' }}>

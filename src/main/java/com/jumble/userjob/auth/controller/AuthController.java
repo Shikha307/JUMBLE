@@ -49,15 +49,14 @@ public class AuthController {
     public ResponseEntity<AuthResponse> login(@RequestBody LoginRequest request) {
         try {
             authenticationManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword())
-            );
+                    new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword()));
 
             UserDetails userDetails = userDetailsService.loadUserByUsername(request.getEmail());
 
             // Determine role and name based on which repository yields the result
             String role;
             String name;
-            
+
             Optional<Candidate> candidateOpt = candidateRepository.findByEmail(request.getEmail());
             if (candidateOpt.isPresent()) {
                 role = "candidate";
@@ -83,8 +82,7 @@ public class AuthController {
             @RequestParam("email") String email,
             @RequestParam("password") String password,
             @RequestParam("skills") List<String> skills,
-            @RequestParam("resume") MultipartFile resume
-    ) {
+            @RequestParam("resume") MultipartFile resume) {
         if (candidateRepository.findByEmail(email).isPresent() || recruiterRepository.findByEmail(email).isPresent()) {
             return ResponseEntity.status(HttpStatus.CONFLICT).body("Email is already in use.");
         }
@@ -113,7 +111,8 @@ public class AuthController {
 
     @PostMapping("/register/recruiter")
     public ResponseEntity<?> registerRecruiter(@RequestBody RecruiterRegisterRequest request) {
-        if (candidateRepository.findByEmail(request.getEmail()).isPresent() || recruiterRepository.findByEmail(request.getEmail()).isPresent()) {
+        if (candidateRepository.findByEmail(request.getEmail()).isPresent()
+                || recruiterRepository.findByEmail(request.getEmail()).isPresent()) {
             return ResponseEntity.status(HttpStatus.CONFLICT).body("Email is already in use.");
         }
 

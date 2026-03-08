@@ -48,8 +48,7 @@ public class CandidateProfileController {
     public ResponseEntity<?> updateProfile(
             Authentication authentication,
             @RequestParam("skills") List<String> skills,
-            @RequestParam("resume") MultipartFile resume
-    ) {
+            @RequestParam("resume") MultipartFile resume) {
         String email = authentication.getName();
         Optional<Candidate> candidateOpt = candidateRepository.findByEmail(email);
 
