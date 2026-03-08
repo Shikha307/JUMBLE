@@ -5,12 +5,11 @@ import CandidateRegister from './CandidateRegister';
 import RecruiterRegister from './RecruiterRegister';
 import CandidateDashboard from './CandidateDashboard';
 import RecruiterDashboard from './RecruiterDashboard';
-import Matches from './Matches';
+import Matches from './pages/Matches';
 import ManageProfile from './ManageProfile';
 import RecruiterHome from './pages/RecruiterHome';
 import AddJob from './pages/AddJob';
 import MyJobs from './pages/MyJobs';
-import Matches from './pages/Matches';
 import './index.css';
 
 function App() {

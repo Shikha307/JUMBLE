@@ -20,7 +20,7 @@ export default function AddJob() {
       roleName: formData.roleName,
       description: formData.description,
       skillsNeeded: formData.skillsNeeded.split(',').map(s => s.trim()).filter(s => s),
-      recruiterId: 'R1' // Hardcoded for now
+      recruiterId: localStorage.getItem('id') // Retrieved from login/registration
     };
     
     try {

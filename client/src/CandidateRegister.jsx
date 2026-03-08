@@ -146,7 +146,7 @@ function CandidateRegister() {
     formData.append('resume', resumeFile);
 
     try {
-      const response = await fetch('http://localhost:8080/api/auth/register/candidate', {
+      const response = await fetch('http://localhost:8081/api/auth/register/candidate', {
         method: 'POST',
         body: formData
       });
@@ -154,6 +154,7 @@ function CandidateRegister() {
       if (response.ok) {
         const data = await response.json();
         localStorage.setItem('token', data.token);
+        localStorage.setItem('id', data.id);
         localStorage.setItem('role', data.role);
         localStorage.setItem('name', data.name);
         window.location.href = '/dashboard'; // Force refresh to update App state

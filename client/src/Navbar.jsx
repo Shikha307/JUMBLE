@@ -27,7 +27,14 @@ function Navbar({ role, name }) {
   return (
     <nav className="navbar">
       <div className="navbar-left">
-        <Link to="/dashboard" className="brand-name" style={{ textDecoration: 'none' }}>JUMBLE</Link>
+        <Link 
+          to={role === 'recruiter' ? '/recruiter' : '/dashboard'} 
+          reloadDocument 
+          className="brand-name" 
+          style={{ textDecoration: 'none' }}
+        >
+          JUMBLE
+        </Link>
       </div>
 
       <div className="navbar-right">

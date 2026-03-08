@@ -32,7 +32,7 @@ export default function Navbar() {
   return (
     <nav className="navbar">
       <div className="navbar-left">
-        <Link to="/recruiter" className="brand-name" style={{ textDecoration: 'none' }}>
+        <Link to="/recruiter" reloadDocument className="brand-name" style={{ textDecoration: 'none' }}>
           JUMBLE
         </Link>
       </div>

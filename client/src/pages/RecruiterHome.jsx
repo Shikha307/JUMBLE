@@ -38,8 +38,40 @@ const DUMMY_CANDIDATES = [
 ];
 
 export default function RecruiterHome() {
-  const [candidates] = useState(DUMMY_CANDIDATES);
+  const [candidates, setCandidates] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [loading, setLoading] = useState(true);
+
+  React.useEffect(() => {
+    const fetchCandidates = async () => {
+      try {
+        const token = localStorage.getItem('token');
+        const res = await fetch('http://localhost:8081/api/candidates/all', {
+          headers: token ? { 'Authorization': `Bearer ${token}` } : {}
+        });
+        if (res.ok) {
+          const data = await res.json();
+          // The backend might return candidate data in a different shape, mapping it to what CandidateCard expects (or similar)
+          const mappedData = data.map(c => ({
+            id: c.userId || c.id,
+            name: `${c.firstName || ''} ${c.lastName || ''}`.trim() || c.name,
+            skills: c.skills || [],
+            linkedin: c.socialLinks?.linkedin || '',
+            email: c.email || '',
+            resumeUrl: c.resumeUrl || ''
+          }));
+          setCandidates(mappedData);
+        } else {
+          console.error('Failed to fetch candidates', await res.text());
+        }
+      } catch (err) {
+        console.error('Error fetching candidates:', err);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchCandidates();
+  }, []);
 
   const handleAction = async (candidateId, actionType) => {
     // actionType comes in as 'LIKED' or 'PASSED' from the UI components. Map to 'RIGHT' or 'LEFT'
@@ -80,7 +112,11 @@ export default function RecruiterHome() {
       <Navbar />
 
       <div className="candidates-list">
-        {currentCandidate ? (
+        {loading ? (
+          <div className="loading-state">
+            <h2>Loading candidates...</h2>
+          </div>
+        ) : currentCandidate ? (
           <div className="list-card-wrapper active-card">
             <CandidateCard 
               candidate={currentCandidate} 

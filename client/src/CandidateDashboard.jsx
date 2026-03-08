@@ -1,40 +1,63 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Navbar from './Navbar';
 import { X, Heart, Briefcase } from 'lucide-react';
 
-// Simulated database of job postings
-const DUMMY_JOBS = [
-  {
-    id: 1,
-    title: "Senior Frontend Engineer",
-    company: "TechNova Solutions",
-    description: "We are looking for an experienced React developer to lead our frontend architecture. You will be building highly interactive user interfaces and mentoring junior developers.",
-    skills: ["React", "TypeScript", "Tailwind CSS", "Redux"]
-  },
-  {
-    id: 2,
-    title: "Full Stack Developer",
-    company: "CloudSync Inc.",
-    description: "Join our dynamic team to work on scalable cloud applications. You'll be involved in the full development lifecycle, from database design to frontend implementation.",
-    skills: ["Node.js", "Express", "MongoDB", "React"]
-  },
-  {
-    id: 3,
-    title: "UI/UX Designer",
-    company: "Creative Pulse Studio",
-    description: "Seeking a creative mind with a strong portfolio. You will design web and mobile applications focused on intuitive user journeys and stunning visual aesthetics.",
-    skills: ["Figma", "Prototyping", "User Research", "Wireframing"]
-  }
-];
-
 function CandidateDashboard({ userName }) {
-  const [jobs, setJobs] = useState(DUMMY_JOBS);
+  const [jobs, setJobs] = useState([]);
+  const [loading, setLoading] = useState(true);
   const [currentIndex, setCurrentIndex] = useState(0);
 
-  const handleSwipe = (direction) => {
-    // In actual app, an API call would record the "Like" or "Pass"
+  useEffect(() => {
+    const fetchJobs = async () => {
+      try {
+        const token = localStorage.getItem('token');
+        const res = await fetch('http://localhost:8081/api/jobs/all', {
+          headers: token ? { 'Authorization': `Bearer ${token}` } : {}
+        });
+        if (res.ok) {
+          const data = await res.json();
+          setJobs(data);
+        } else {
+          console.error("Failed to fetch jobs");
+        }
+      } catch (err) {
+        console.error("Error fetching jobs:", err);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchJobs();
+  }, []);
+
+  const handleSwipe = async (direction) => {
     const currentJob = jobs[currentIndex];
-    console.log(`Candidate ${direction} job:`, currentJob.title);
+    
+    const candidateId = localStorage.getItem('id');
+    const swipeDir = direction === 'Liked' ? 'RIGHT' : 'LEFT';
+    
+    // In actual app, an API call would record the "Like" or "Pass"
+    const payload = {
+      candidateId: candidateId || "C1",
+      jobId: currentJob.id,
+      recruiterId: currentJob.recruiterId || "R1", 
+      swiperRole: "CANDIDATE",
+      direction: swipeDir
+    };
+
+    try {
+      const response = await fetch('http://localhost:8080/api/v1/swipes', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(payload)
+      });
+      if (!response.ok) {
+        console.error("Failed to record swipe in backend");
+      }
+    } catch (error) {
+      console.error("Error recording swipe:", error);
+    }
     
     // Move to next card
     setCurrentIndex(prev => prev + 1);
@@ -49,7 +72,11 @@ function CandidateDashboard({ userName }) {
       
       <main className="dashboard-content card-stack-container">
         
-        {isFinished ? (
+        {loading ? (
+          <div className="loading-state">
+            <h2>Loading jobs...</h2>
+          </div>
+        ) : isFinished ? (
           <div className="empty-state-card">
             <Briefcase size={64} className="empty-icon" />
             <h2>You're all caught up!</h2>
@@ -58,8 +85,8 @@ function CandidateDashboard({ userName }) {
         ) : (
           <div className="swipe-card fade-in">
             <div className="card-header">
-              <h2 className="job-title">{currentJob.title}</h2>
-              <p className="company-name">{currentJob.company}</p>
+              <h2 className="job-title">{currentJob.roleName || 'Unknown Role'}</h2>
+              <p className="company-name">{currentJob.companyName || 'Looking to hire'}</p>
             </div>
             
             <div className="card-body">
@@ -68,7 +95,7 @@ function CandidateDashboard({ userName }) {
               
               <h3 className="section-title mt-4">Required Skills</h3>
               <div className="skills-container">
-                {currentJob.skills.map((skill, idx) => (
+                {(currentJob.skillsNeeded || []).map((skill, idx) => (
                   <span key={idx} className="skill-pill">{skill}</span>
                 ))}
               </div>
