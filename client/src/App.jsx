@@ -5,7 +5,7 @@ import CandidateRegister from './CandidateRegister';
 import RecruiterRegister from './RecruiterRegister';
 import CandidateDashboard from './CandidateDashboard';
 import RecruiterDashboard from './RecruiterDashboard';
-import Matches from './Matches';
+import Matches from './pages/Matches';
 import ManageProfile from './ManageProfile';
 import RecruiterHome from './pages/RecruiterHome';
 import AddJob from './pages/AddJob';
@@ -46,7 +46,6 @@ function App() {
         <Route path="/recruiter" element={<RecruiterHome />} />
         <Route path="/add-job" element={<AddJob />} />
         <Route path="/my-jobs" element={<MyJobs />} />
-
         {/* Protected dashboard */}
         <Route
           path="/dashboard"

@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Briefcase, LogOut, User, PlusCircle } from 'lucide-react';
+import { Briefcase, LogOut, User, Users, PlusCircle } from 'lucide-react';
 
 export default function Navbar() {
   const navigate = useNavigate();
@@ -32,15 +32,19 @@ export default function Navbar() {
   return (
     <nav className="navbar">
       <div className="navbar-left">
-        <Link to="/recruiter" className="brand-name" style={{ textDecoration: 'none' }}>
+        <Link to="/recruiter" reloadDocument className="brand-name" style={{ textDecoration: 'none' }}>
           JUMBLE
         </Link>
       </div>
         
       <div className="navbar-right">
+        <Link to="/matches" className="nav-action-btn subtle">
+          <Users size={20} />
+          <span className="hide-on-mobile">Matches</span>
+        </Link>
         <Link to="/my-jobs" className="nav-action-btn subtle">
           <Briefcase size={20} />
-          <span>My Jobs</span>
+          <span className="hide-on-mobile">My Jobs</span>
         </Link>
 
         <Link to="/add-job" className="nav-action-btn subtle">
