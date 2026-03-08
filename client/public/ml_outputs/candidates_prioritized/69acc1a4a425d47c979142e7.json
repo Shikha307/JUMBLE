@@ -43,5 +43,20 @@
     "_class": "com.jumble.userjob.candidate.model.Candidate",
     "id": "69acfdc4de8bc04c38f4c254",
     "matchScore": 17.48
+  },
+  {
+    "name": "Test User",
+    "email": "testuser999@test.com",
+    "skills": [
+      "Java"
+    ],
+    "resumeFilename": "resume.pdf",
+    "resumeContentType": "application/pdf",
+    "country": "India",
+    "password": "$2a$10$XG18yS2dHFzBVA3V1.n.lOwdCJCbsglcQPEsEqeZWgDlVYJQ7kKlK",
+    "resumeData": "b'dummy resume content'",
+    "_class": "com.jumble.userjob.candidate.model.Candidate",
+    "id": "69ad1366326a4e54f6b620e8",
+    "matchScore": 1.86
   }
 ]

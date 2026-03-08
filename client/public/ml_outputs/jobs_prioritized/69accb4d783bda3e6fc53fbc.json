@@ -76,6 +76,17 @@
     "matchScore": 12.92
   },
   {
+    "recruiterId": "69acfcfede8bc04c38f4c252",
+    "roleName": "abc",
+    "description": "qsjiwhdiwhd",
+    "skillsNeeded": [
+      "kjdkwadbqj"
+    ],
+    "_class": "com.jumble.userjob.job.model.Job",
+    "id": "69ad14a289e52b7eba77c417",
+    "matchScore": 11.94
+  },
+  {
     "recruiterId": "R1",
     "roleName": "network intern",
     "description": "managing networks",
