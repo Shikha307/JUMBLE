@@ -4,68 +4,81 @@ import com.jumble.swipematch.model.Match;
 import com.jumble.swipematch.model.Swipe;
 import com.jumble.swipematch.model.SwipeDirection;
 import com.jumble.swipematch.model.UserRole;
+import com.jumble.swipematch.model.SwipeRecord;
 import com.jumble.swipematch.repository.MatchRepository;
-import com.jumble.swipematch.repository.SwipeRepository;
+import com.jumble.swipematch.repository.MongoSwipeRecordRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
 import java.time.Instant;
 import java.util.List;
 import java.util.UUID;
+import java.util.Optional;
+import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
 @Slf4j
 public class MatchDetectionService {
     
-    private final SwipeRepository swipeRepository;
+    private final MongoSwipeRecordRepository swipeRecordRepository;
     private final MatchRepository matchRepository;
     
     public void detectMatch(Swipe latestSwipe) {
-        // We only care if the latest swipe is a RIGHT swipe (a "LIKE")
         if (latestSwipe.getDirection() != SwipeDirection.RIGHT) {
             return;
         }
         
-        // Find existing swipes for the same candidate and job
-        List<Swipe> historicalSwipes = swipeRepository.findByCandidateIdAndJobId(
+        Optional<SwipeRecord> recordOpt = swipeRecordRepository.findByCandidateIdAndJobId(
                 latestSwipe.getCandidateId(), 
                 latestSwipe.getJobId()
         );
         
-        // Look for a right swipe from the *other* party
-        UserRole requiredCounterpartyRole = (latestSwipe.getSwiperRole() == UserRole.CANDIDATE) 
-                ? UserRole.RECRUITER 
-                : UserRole.CANDIDATE;
-                
-        boolean mutualRightSwipeExists = historicalSwipes.stream()
-                .anyMatch(s -> s.getSwiperRole() == requiredCounterpartyRole && 
-                               s.getDirection() == SwipeDirection.RIGHT);
-                               
-        if (mutualRightSwipeExists) {
-            // Find the recruiterId from either the latestSwipe or the historical recruiter swipe
-            String recruiterId = latestSwipe.getSwiperRole() == UserRole.RECRUITER 
-                    ? latestSwipe.getRecruiterId() 
-                    : historicalSwipes.stream()
-                            .filter(s -> s.getSwiperRole() == UserRole.RECRUITER)
-                            .findFirst()
-                            .map(Swipe::getRecruiterId)
-                            .orElse(null);
-
-            // A match is found!
-            Match match = Match.builder()
-                    .id(UUID.randomUUID().toString())
-                    .candidateId(latestSwipe.getCandidateId())
-                    .jobId(latestSwipe.getJobId())
-                    .recruiterId(recruiterId)
-                    .matchedAt(Instant.now())
-                    .build();
-                    
-            matchRepository.save(match);
-            log.info("🔥 It's a MATCH! Candidate: {} and Job: {}", match.getCandidateId(), match.getJobId());
+        if (recordOpt.isPresent() && recordOpt.get().isMatched()) {
+            SwipeRecord record = recordOpt.get();
             
-            // Here you could publish a message to a broker (like Kafka) so the Chat service can create a chatroom.
+            // Ensure we don't duplicate a Match if one already exists for this pair
+            List<Match> existingMatches = matchRepository.findByCandidateId(record.getCandidateId());
+            boolean matchAlreadyExists = existingMatches.stream()
+                    .anyMatch(m -> m.getJobId().equals(record.getJobId()));
+                    
+            if (!matchAlreadyExists) {
+                String recruiterId = latestSwipe.getRecruiterId();
+                
+                // If it's the candidate swiping right to trigger the match, the payload might not have 
+                // the recruiterId. Let's fetch it explicitly from the Job Service to be 100% safe.
+                if (recruiterId == null || recruiterId.isEmpty() || recruiterId.equals("R1")) {
+                    try {
+                        RestTemplate restTemplate = new RestTemplate();
+                        String jobUrl = "http://host.docker.internal:8081/api/jobs/" + record.getJobId();
+                        Map<String, Object> jobResponse = restTemplate.getForObject(jobUrl, Map.class);
+                        if (jobResponse != null && jobResponse.containsKey("recruiterId")) {
+                            recruiterId = (String) jobResponse.get("recruiterId");
+                        }
+                    } catch (Exception e) {
+                        log.error("Failed to fetch recruiterId for jobId: " + record.getJobId(), e);
+                    }
+                }
+
+                if (recruiterId == null) {
+                    log.warn("Could not determine recruiterId for matched jobId {}. Skipping Match creation.", record.getJobId());
+                    return;
+                }
+
+                // A match is found!
+                Match match = Match.builder()
+                        .id(UUID.randomUUID().toString())
+                        .candidateId(record.getCandidateId())
+                        .jobId(record.getJobId())
+                        .recruiterId(recruiterId)
+                        .matchedAt(Instant.now())
+                        .build();
+                        
+                matchRepository.save(match);
+                log.info("🔥 It's a MATCH! Candidate: {} and Job: {} (Recruiter: {})", match.getCandidateId(), match.getJobId(), match.getRecruiterId());
+            }
         }
     }
 }
