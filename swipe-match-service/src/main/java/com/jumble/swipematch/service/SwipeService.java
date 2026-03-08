@@ -22,6 +22,7 @@ public class SwipeService {
     private final SwipeRepository swipeRepository;
     private final MatchDetectionService matchDetectionService;
     private final MongoSwipeRecordRepository mongoSwipeRecordRepository;
+    private final com.jumble.swipematch.repository.CandidateRepository candidateRepository;
 
     /**
      * Central method — ALL swipe processing goes through here.
@@ -85,5 +86,20 @@ public class SwipeService {
         mongoSwipeRecordRepository.save(record);
         log.info("MongoDB — swipe_records upserted: candidateId={}, jobId={}, matched={}",
                 candidateId, jobId, record.isMatched());
+    }
+
+    /**
+     * Returns a list of *unswiped* Candidate objects for a specific job.
+     */
+    public java.util.List<com.jumble.swipematch.model.Candidate> getUnswipedCandidatesForJob(String jobId) {
+        java.util.List<String> swipedIds = mongoSwipeRecordRepository.findByJobIdAndRecruiterSwipeIsNotNull(jobId)
+                .stream()
+                .map(SwipeRecord::getCandidateId)
+                .toList();
+
+        return candidateRepository.findAll()
+                .stream()
+                .filter(candidate -> !swipedIds.contains(candidate.getId()))
+                .toList();
     }
 }
