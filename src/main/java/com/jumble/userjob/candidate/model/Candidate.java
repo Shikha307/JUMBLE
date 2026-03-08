@@ -19,6 +19,8 @@ public class Candidate {
     private List<String> skills;
     private String resumeFilename;
     private String resumeContentType;
+    private String country;
+    private String university;
     @com.fasterxml.jackson.annotation.JsonIgnore
     private String password;
 
