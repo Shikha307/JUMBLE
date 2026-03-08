@@ -38,14 +38,20 @@ export default function CandidateCard({ candidate, onLike, onPass }) {
         </a>
       </div>
 
-      <div className="decision-section">
-        <button className="decision-btn pass-btn" onClick={() => onPass(candidate.id)}>
-          <X size={28} />
-          <span>Pass</span>
+      <div className="card-actions">
+        <button 
+          className="action-btn pass-btn" 
+          onClick={() => onPass(candidate.id)}
+          aria-label="Pass Candidate"
+        >
+          <X size={32} />
         </button>
-        <button className="decision-btn like-btn" onClick={() => onLike(candidate.id)}>
-          <Heart size={28} />
-          <span>Like</span>
+        <button 
+          className="action-btn like-btn" 
+          onClick={() => onLike(candidate.id)}
+          aria-label="Like Candidate"
+        >
+          <Heart size={32} />
         </button>
       </div>
     </div>
