@@ -1,5 +1,5 @@
 import { useState, useRef } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { X, Plus, UploadCloud, CheckCircle } from 'lucide-react';
 
 function CandidateRegister() {
@@ -12,7 +12,10 @@ function CandidateRegister() {
   const [skillError, setSkillError] = useState('');
   const [resumeFile, setResumeFile] = useState(null);
   const [resumeError, setResumeError] = useState('');
+  const [apiError, setApiError] = useState('');
+  const [loading, setLoading] = useState(false);
   const fileRef = useRef(null);
+  const navigate = useNavigate();
 
   /* --- Validation Helpers --- */
   const validateField = (name, value) => {
@@ -99,8 +102,9 @@ function CandidateRegister() {
   };
 
   /* --- Submit --- */
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    setApiError('');
     // Validate all fields
     const newErrors = {};
     Object.keys(form).forEach(key => {
@@ -113,8 +117,35 @@ function CandidateRegister() {
     const hasErrors = Object.values(newErrors).some(Boolean) || skills.length === 0 || !resumeFile;
     if (hasErrors) return;
 
-    alert('Candidate registration data ready! (Backend integration pending)');
-    console.log({ ...form, skills, resume: resumeFile.name });
+    setLoading(true);
+    const formData = new FormData();
+    formData.append('name', form.name);
+    formData.append('email', form.email);
+    formData.append('password', form.password);
+    skills.forEach(skill => formData.append('skills', skill));
+    formData.append('resume', resumeFile);
+
+    try {
+      const response = await fetch('http://localhost:8080/api/auth/register/candidate', {
+        method: 'POST',
+        body: formData
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        localStorage.setItem('token', data.token);
+        localStorage.setItem('role', data.role);
+        localStorage.setItem('name', data.name);
+        window.location.href = '/dashboard'; // Force refresh to update App state
+      } else {
+        const text = await response.text();
+        setApiError(text || 'Registration failed');
+      }
+    } catch (err) {
+      setApiError('Unable to connect to the server');
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -126,6 +157,8 @@ function CandidateRegister() {
         </div>
 
         <form className="login-form" onSubmit={handleSubmit} noValidate>
+          {apiError && <p className="error-message" style={{ textAlign: 'center', marginBottom: '1rem', fontSize: '1rem' }}>{apiError}</p>}
+
 
           {/* Name */}
           <div className="input-group">
@@ -216,7 +249,9 @@ function CandidateRegister() {
             {resumeError && <p className="error-message">{resumeError}</p>}
           </div>
 
-          <button type="submit" className="login-btn" style={{ marginTop: '0.5rem' }}>Sign Up</button>
+          <button type="submit" className="login-btn" style={{ marginTop: '0.5rem' }} disabled={loading}>
+            {loading ? 'Signing Up...' : 'Sign Up'}
+          </button>
         </form>
 
         <div className="signup-link" style={{ marginTop: '1.5rem' }}>

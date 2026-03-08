@@ -7,7 +7,12 @@ function Navbar({ role, name }) {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const dropdownRef = useRef(null);
 
-  const handleLogout = () => navigate('/login');
+  const handleLogout = () => {
+    localStorage.removeItem('token');
+    localStorage.removeItem('role');
+    localStorage.removeItem('name');
+    window.location.href = '/login';
+  };
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -72,7 +77,7 @@ function Navbar({ role, name }) {
                 <span className="dropdown-role">{role === 'recruiter' ? 'Recruiter' : 'Candidate'}</span>
               </div>
               <div className="dropdown-divider"></div>
-              <button className="dropdown-item" onClick={() => { setDropdownOpen(false); alert('Manage Profile coming soon!'); }}>
+              <button className="dropdown-item" onClick={() => { setDropdownOpen(false); navigate('/profile'); }}>
                 <Settings size={18} /> Manage Profile
               </button>
               <button className="dropdown-item text-danger" onClick={handleLogout}>

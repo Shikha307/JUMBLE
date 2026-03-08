@@ -1,11 +1,14 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 function RecruiterRegister() {
   const [form, setForm] = useState({
     name: '', email: '', companyName: '', password: '', confirmPassword: ''
   });
   const [errors, setErrors] = useState({});
+  const [apiError, setApiError] = useState('');
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
   const validateField = (name, value) => {
     switch (name) {
@@ -58,8 +61,9 @@ function RecruiterRegister() {
     setErrors(prev => ({ ...prev, [name]: validateField(name, value) }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    setApiError('');
     const newErrors = {};
     Object.keys(form).forEach(key => {
       newErrors[key] = validateField(key, form[key]);
@@ -67,8 +71,34 @@ function RecruiterRegister() {
     setErrors(newErrors);
     if (Object.values(newErrors).some(Boolean)) return;
 
-    alert('Recruiter registration data ready! (Backend integration pending)');
-    console.log(form);
+    setLoading(true);
+    try {
+      const response = await fetch('http://localhost:8080/api/auth/register/recruiter', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: form.name,
+          email: form.email,
+          companyName: form.companyName,
+          password: form.password
+        })
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        localStorage.setItem('token', data.token);
+        localStorage.setItem('role', data.role);
+        localStorage.setItem('name', data.name);
+        window.location.href = '/dashboard';
+      } else {
+        const text = await response.text();
+        setApiError(text || 'Registration failed');
+      }
+    } catch (err) {
+      setApiError('Unable to connect to the server');
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -80,6 +110,8 @@ function RecruiterRegister() {
         </div>
 
         <form className="login-form" onSubmit={handleSubmit} noValidate>
+          {apiError && <p className="error-message" style={{ textAlign: 'center', marginBottom: '1rem', fontSize: '1rem' }}>{apiError}</p>}
+
 
           {/* Name */}
           <div className="input-group">
@@ -121,7 +153,9 @@ function RecruiterRegister() {
             {errors.confirmPassword && <p className="error-message">{errors.confirmPassword}</p>}
           </div>
 
-          <button type="submit" className="login-btn" style={{ marginTop: '0.5rem' }}>Sign Up</button>
+          <button type="submit" className="login-btn" style={{ marginTop: '0.5rem' }} disabled={loading}>
+            {loading ? 'Signing Up...' : 'Sign Up'}
+          </button>
         </form>
 
         <div className="signup-link" style={{ marginTop: '1.5rem' }}>
