@@ -9,4 +9,6 @@ import java.util.List;
 @Repository
 public interface JobRepository extends MongoRepository<Job, String> {
     List<Job> findBySkillsNeededIn(List<String> skills);
+
+    List<Job> findByRecruiterId(String recruiterId);
 }
