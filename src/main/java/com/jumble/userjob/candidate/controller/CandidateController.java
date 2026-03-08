@@ -66,4 +66,9 @@ public class CandidateController {
                         .body(candidate.getResumeData()))
                 .orElse(ResponseEntity.notFound().build());
     }
+
+    @GetMapping("/all")
+    public ResponseEntity<List<Candidate>> getAllCandidates() {
+        return ResponseEntity.ok(userService.getAllCandidates());
+    }
 }
