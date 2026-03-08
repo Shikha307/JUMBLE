@@ -68,7 +68,7 @@ function Navbar({ role, name }) {
         </Link>
       </div>
 
-      <div className="navbar-right">
+      <div className="navbar-right" style={{ justifyContent: 'flex-end' }}>
 
         {/* Candidate Nav Links */}
         {role === 'candidate' && (
