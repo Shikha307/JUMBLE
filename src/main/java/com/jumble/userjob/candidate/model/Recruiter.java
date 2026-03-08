@@ -16,4 +16,6 @@ public class Recruiter {
     private String name;
     private String email;
     private String company;
+    @com.fasterxml.jackson.annotation.JsonIgnore
+    private String password;
 }
