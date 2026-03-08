@@ -130,15 +130,21 @@ function CandidateModal({ match, onClose }) {
               </div>
             )}
 
-            {match.jobDetails && (
-              <div style={{ marginBottom: '2rem', padding: '1.25rem', background: '#f8fafc', borderRadius: '16px', border: '1px solid #e2e8f0' }}>
-                <h4 style={{ margin: '0 0 0.5rem', fontSize: '0.85rem', textTransform: 'uppercase', letterSpacing: '0.05em', color: '#94a3b8', fontWeight: 700 }}>Matched For Position</h4>
-                <p style={{ margin: 0, fontWeight: 700, color: '#1e293b', fontSize: '1.1rem' }}>{match.jobDetails.roleName}</p>
-                {match.jobDetails.description && (
-                  <p style={{ margin: '0.5rem 0 0', fontSize: '0.9rem', color: '#64748b', lineHeight: 1.5 }}>
-                    {match.jobDetails.description}
-                  </p>
-                )}
+            {match.allMatchedJobs && match.allMatchedJobs.length > 0 && (
+              <div style={{ marginBottom: '2rem' }}>
+                <h4 style={{ margin: '0 0 0.8rem', fontSize: '0.85rem', textTransform: 'uppercase', letterSpacing: '0.05em', color: '#94a3b8', fontWeight: 700 }}>Matched For Positions</h4>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+                  {match.allMatchedJobs.map((job, idx) => (
+                    <div key={idx} style={{ padding: '1.25rem', background: '#f8fafc', borderRadius: '16px', border: '1px solid #e2e8f0' }}>
+                      <p style={{ margin: 0, fontWeight: 700, color: '#1e293b', fontSize: '1.1rem' }}>{job.roleName}</p>
+                      {job.description && (
+                        <p style={{ margin: '0.5rem 0 0', fontSize: '0.9rem', color: '#64748b', lineHeight: 1.5 }}>
+                          {job.description}
+                        </p>
+                      )}
+                    </div>
+                  ))}
+                </div>
               </div>
             )}
 
@@ -410,7 +416,23 @@ export default function Matches({ userRole }) {
             })
           );
 
-          setMatches(hydratedMatches);
+          if (role === 'recruiter') {
+            const grouped = hydratedMatches.reduce((acc, current) => {
+              const key = current.candidateId;
+              if (!acc[key]) {
+                acc[key] = {
+                  ...current,
+                  allMatchedJobs: current.jobDetails ? [current.jobDetails] : []
+                };
+              } else if (current.jobDetails) {
+                acc[key].allMatchedJobs.push(current.jobDetails);
+              }
+              return acc;
+            }, {});
+            setMatches(Object.values(grouped));
+          } else {
+            setMatches(hydratedMatches);
+          }
         } else {
           console.error('Failed to fetch matches', response.status);
         }
@@ -534,15 +556,28 @@ export default function Matches({ userRole }) {
                 )}
 
                 <div style={{ marginTop: 'auto', paddingTop: '1.25rem', borderTop: '1px solid #f1f5f9' }}>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-                    <div style={{ background: '#fff1f2', padding: '0.6rem', borderRadius: '10px', color: '#f43f5e' }}>
+                  <div style={{ display: 'flex', alignItems: 'flex-start', gap: '0.75rem' }}>
+                    <div style={{ background: '#fff1f2', padding: '0.6rem', borderRadius: '10px', color: '#f43f5e', flexShrink: 0 }}>
                       <Briefcase size={18} />
                     </div>
                     <div>
-                      <span style={{ display: 'block', fontSize: '0.7rem', textTransform: 'uppercase', color: '#94a3b8', fontWeight: 700, letterSpacing: '0.05em' }}>Matched For</span>
-                      <span style={{ fontWeight: 700, color: '#1e293b', fontSize: '0.95rem' }}>
-                        {match.jobDetails ? match.jobDetails.roleName : 'Position ' + match.jobId.substring(0, 8)}
-                      </span>
+                      <span style={{ display: 'block', fontSize: '0.7rem', textTransform: 'uppercase', color: '#94a3b8', fontWeight: 700, letterSpacing: '0.05em', marginBottom: '0.25rem' }}>Matched For</span>
+                      {role === 'recruiter' && match.allMatchedJobs ? (
+                        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.4rem' }}>
+                          {match.allMatchedJobs.map((job, idx) => (
+                            <span key={idx} style={{ 
+                              fontWeight: 700, color: '#1e293b', fontSize: '0.9rem', 
+                              background: '#f8fafc', padding: '0.2rem 0.5rem', borderRadius: '6px', border: '1px solid #e2e8f0' 
+                            }}>
+                              {job.roleName}
+                            </span>
+                          ))}
+                        </div>
+                      ) : (
+                        <span style={{ fontWeight: 700, color: '#1e293b', fontSize: '0.95rem' }}>
+                          {match.jobDetails ? match.jobDetails.roleName : 'Position ' + match.jobId.substring(0, 8)}
+                        </span>
+                      )}
                     </div>
                   </div>
                 </div>
