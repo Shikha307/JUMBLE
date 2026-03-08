@@ -17,5 +17,6 @@ public class Job {
     private String recruiterId; // Reference to the recruiter who posted
     private String roleName;
     private String description;
+    private String country;
     private List<String> skillsNeeded;
 }
