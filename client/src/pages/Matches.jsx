@@ -7,6 +7,7 @@ function CandidateModal({ match, onClose }) {
   const [details, setDetails] = useState(match.candidateDetails);
   const [loading, setLoading] = useState(!match.candidateDetails);
   const [error, setError] = useState(null);
+  const [resumePdfUrl, setResumePdfUrl] = useState(null);
 
   useEffect(() => {
     if (!details) {
@@ -30,6 +31,26 @@ function CandidateModal({ match, onClose }) {
       fetchDetails();
     }
   }, [match.candidateId, details]);
+
+  const handleViewResume = async (e) => {
+    e.preventDefault();
+    try {
+      const token = localStorage.getItem('token');
+      const res = await fetch(`http://localhost:8081/api/candidates/${match.candidateId}/resume`, {
+        headers: token ? { 'Authorization': `Bearer ${token}` } : {}
+      });
+      if (res.ok) {
+        const blob = await res.blob();
+        const url = window.URL.createObjectURL(new Blob([blob], { type: 'application/pdf' }));
+        setResumePdfUrl(url);
+      } else {
+        alert("Failed to load resume securely.");
+      }
+    } catch (err) {
+      console.error(err);
+      alert("Error fetching resume.");
+    }
+  };
 
   return (
     <div
@@ -150,14 +171,13 @@ function CandidateModal({ match, onClose }) {
 
             <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap', borderTop: '1px solid #f1f5f9', paddingTop: '1.5rem' }}>
               {details.resumeFilename && (
-                <a
-                  href={`http://localhost:8081/api/candidates/${match.candidateId}/resume`}
-                  target="_blank" rel="noreferrer"
+                <button
+                  onClick={handleViewResume}
                   className="nav-action-btn subtle"
-                  style={{ padding: '0.6rem 1.25rem', fontSize: '0.9rem', textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '0.5rem', borderRadius: '12px' }}
+                  style={{ padding: '0.6rem 1.25rem', fontSize: '0.9rem', cursor: 'pointer', border: 'none', background: '#fff1f2', color: '#f43f5e', textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '0.5rem', borderRadius: '12px' }}
                 >
                   <FileText size={18} /> Resume
-                </a>
+                </button>
               )}
               {details.email && (
                 <a
@@ -208,6 +228,21 @@ function CandidateModal({ match, onClose }) {
           </>
         ) : null}
       </div>
+
+      {/* FULL SCREEN PDF VIEWER */}
+      {resumePdfUrl && (
+        <div style={{ position: 'fixed', inset: 0, zIndex: 100000, background: 'rgba(0,0,0,0.85)', display: 'flex', flexDirection: 'column' }}>
+          <div style={{ padding: '1rem 2rem', display: 'flex', justifyContent: 'flex-end', background: '#1e293b' }}>
+            <button 
+              onClick={(e) => { e.stopPropagation(); setResumePdfUrl(null); }}
+              style={{ padding: '0.6rem 1.25rem', background: '#f43f5e', color: 'white', borderRadius: '8px', border: 'none', fontWeight: 600, cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '0.5rem' }}
+            >
+              <X size={18} /> Close PDF Viewer
+            </button>
+          </div>
+          <iframe src={resumePdfUrl} style={{ width: '100%', height: '100%', flex: 1, border: 'none', background: 'white' }} title="Resume PDF Viewer" />
+        </div>
+      )}
     </div>
   );
 }
@@ -216,6 +251,7 @@ function JobModal({ match, onClose }) {
   const [details, setDetails] = useState(match.jobDetails);
   const [loading, setLoading] = useState(!match.jobDetails);
   const [error, setError] = useState(null);
+  const [companyName, setCompanyName] = useState('');
 
   useEffect(() => {
     if (!details) {
@@ -239,6 +275,21 @@ function JobModal({ match, onClose }) {
       fetchDetails();
     }
   }, [match.jobId, details]);
+
+  // Once we have job details with a recruiterId, fetch company name
+  useEffect(() => {
+    if (details && details.recruiterId) {
+      const token = localStorage.getItem('token');
+      fetch(`http://localhost:8081/api/recruiters/${details.recruiterId}`, {
+        headers: token ? { 'Authorization': `Bearer ${token}` } : {}
+      })
+        .then(res => res.ok ? res.json() : null)
+        .then(data => {
+          if (data) setCompanyName(data.company || `${data.firstName || ''} ${data.lastName || ''}`.trim());
+        })
+        .catch(() => {});
+    }
+  }, [details]);
 
   return (
     <div
@@ -297,6 +348,11 @@ function JobModal({ match, onClose }) {
                 <h2 style={{ margin: 0, fontSize: '1.75rem', color: '#1e293b', fontWeight: 800 }}>
                   {details.roleName}
                 </h2>
+                {companyName && (
+                  <p style={{ margin: '0.25rem 0 0', fontSize: '0.95rem', color: '#64748b', fontWeight: 500 }}>
+                    {companyName}
+                  </p>
+                )}
                 <span style={{
                   display: 'inline-block', marginTop: '0.4rem', fontSize: '0.8rem',
                   background: '#fff1f2', color: '#e11d48',
@@ -382,9 +438,9 @@ export default function Matches({ userRole }) {
 
         let endpoint = '';
         if (role === 'recruiter') {
-          endpoint = `http://localhost:8082/api/v1/matches/recruiter/${id}`;
+          endpoint = `http://localhost:8080/api/v1/matches/recruiter/${id}`;
         } else {
-          endpoint = `http://localhost:8082/api/v1/matches/candidate/${id}`;
+          endpoint = `http://localhost:8080/api/v1/matches/candidate/${id}`;
         }
 
         const response = await fetch(endpoint, { headers: authenticatedHeaders });
