@@ -7,7 +7,7 @@ export default function RecruiterHome() {
   const [candidates, setCandidates] = useState([]);
   const [jobs, setJobs] = useState([]);
   const [selectedJob, setSelectedJob] = useState(null);
-  
+
   const [currentIndex, setCurrentIndex] = useState(0);
   const [loadingCandidates, setLoadingCandidates] = useState(true);
   const [loadingJobs, setLoadingJobs] = useState(true);
@@ -20,7 +20,7 @@ export default function RecruiterHome() {
       setLoadingCandidates(true);
       try {
         const token = localStorage.getItem('token');
-        const res = await fetch(`http://localhost:8082/api/v1/swipes/jobs/${selectedJob.id}/unswiped-candidates`, {
+        const res = await fetch(`http://localhost:8080/api/v1/swipes/jobs/${selectedJob.id}/unswiped-candidates`, {
           headers: token ? { 'Authorization': `Bearer ${token}` } : {}
         });
         if (res.ok) {
@@ -70,11 +70,11 @@ export default function RecruiterHome() {
       try {
         const token = localStorage.getItem('token');
         const recruiterId = localStorage.getItem('id');
-        
+
         const res = await fetch(`http://localhost:8081/api/recruiters/${recruiterId}/jobs`, {
           headers: token ? { 'Authorization': `Bearer ${token}` } : {}
         });
-        
+
         if (res.ok) {
           const data = await res.json();
           setJobs(data);
@@ -107,7 +107,7 @@ export default function RecruiterHome() {
     };
 
     try {
-      const response = await fetch('http://localhost:8082/api/v1/swipes', {
+      const response = await fetch('http://localhost:8080/api/v1/swipes', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload)
@@ -128,7 +128,7 @@ export default function RecruiterHome() {
       <Navbar />
 
       <main className="recruiter-home-layout">
-        
+
         {/* SIDEBAR FOR JOBS */}
         <aside className="jobs-sidebar">
           <div className="sidebar-header">
@@ -139,12 +139,12 @@ export default function RecruiterHome() {
               <p style={{ padding: '1rem', color: 'var(--text-light)' }}>Loading jobs...</p>
             ) : jobs.length === 0 ? (
               <p style={{ padding: '1rem', color: 'var(--text-light)' }}>
-                No active jobs. <a href="/create-job" style={{color: 'var(--primary)'}}>Create one first!</a>
+                No active jobs. <a href="/create-job" style={{ color: 'var(--primary)' }}>Create one first!</a>
               </p>
             ) : (
               jobs.map(job => (
-                <div 
-                  key={job.id} 
+                <div
+                  key={job.id}
                   className={`sidebar-job-item ${selectedJob?.id === job.id ? 'selected' : ''}`}
                   onClick={() => {
                     setSelectedJob(job);
@@ -172,8 +172,8 @@ export default function RecruiterHome() {
             </div>
           ) : currentCandidate ? (
             <div className="list-card-wrapper active-card">
-              <CandidateCard 
-                candidate={currentCandidate} 
+              <CandidateCard
+                candidate={currentCandidate}
                 onLike={(id) => handleAction(id, 'LIKED')}
                 onPass={(id) => handleAction(id, 'PASSED')}
               />

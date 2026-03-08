@@ -1,27 +1,31 @@
 import time
 import json
 import os
-import pymongo
-from bson import ObjectId
-from sentence_transformers import SentenceTransformer, util
-import torch
+import pymongo # type: ignore
+from bson import ObjectId # type: ignore
+from sentence_transformers import SentenceTransformer, util # type: ignore
+import torch # type: ignore
+from typing import Any
 
 # Custom JSON encoder to handle MongoDB special types (ObjectId, datetime, etc.)
 class MongoEncoder(json.JSONEncoder):
-    def default(self, obj):
+    def default(self, obj: Any) -> Any: # type: ignore
+        if isinstance(obj, ObjectId):
+            return str(obj)
         try:
             # Try standard serialization first
             return super().default(obj)
         except TypeError:
             # Fall back to string conversion for any non-serializable type
             return str(obj)
+            return str(obj)
 
 # MongoDB Connection
 MONGO_URI = "mongodb+srv://jumble_app_user:test123@jumble.ewhoayr.mongodb.net/jumbledb?retryWrites=true&w=majority&appName=JUMBLE"
-client = pymongo.MongoClient(MONGO_URI)
-db = client.get_database("jumbledb")
-jobs_collection = db["jobs"]
-candidates_collection = db["candidates"]
+client: Any = pymongo.MongoClient(MONGO_URI)
+db: Any = client.get_database("jumbledb")
+jobs_collection: Any = db["jobs"]
+candidates_collection: Any = db["candidates"]
 
 # Output Directories inside the React Client
 OUTPUT_DIR = os.path.join(os.path.dirname(__file__), "..", "client", "public", "ml_outputs")
@@ -65,7 +69,7 @@ def extract_candidate_text(candidate):
             parts.append(val)
     skills = candidate.get('skills', [])
     if isinstance(skills, list):
-        parts.append(' '.join(skills))
+        parts.append(str(' '.join(str(s) for s in skills))) # type: ignore
     return ' '.join(parts)
 
 
@@ -93,9 +97,10 @@ def generate_matrices(all_candidates, all_jobs):
         for job in all_jobs:
             j_text = extract_job_text(job)
             score = compute_similarity(c_text, j_text)
-            job_copy = {k: v for k, v in job.items() if k != '_id'} # clean mongo ID
-            job_copy['id'] = str(job.get('_id', job.get('id')))
-            job_copy['matchScore'] = round((score * 100), 2)
+            job_copy = dict(job) # type: ignore
+            job_copy.pop('_id', None)
+            job_copy['id'] = str(job.get('_id', job.get('id'))) # type: ignore
+            job_copy['matchScore'] = round((float(score) * 100), 2) # type: ignore
             
             job_rankings.append(job_copy)
             
@@ -115,9 +120,10 @@ def generate_matrices(all_candidates, all_jobs):
             c_text = extract_candidate_text(candidate)
             score = compute_similarity(c_text, j_text)
             
-            c_copy = {k: v for k, v in candidate.items() if k != '_id'}
-            c_copy['id'] = str(candidate.get('_id', candidate.get('id')))
-            c_copy['matchScore'] = round((score * 100), 2)
+            c_copy = dict(candidate) # type: ignore
+            c_copy.pop('_id', None)
+            c_copy['id'] = str(candidate.get('_id', candidate.get('id'))) # type: ignore
+            c_copy['matchScore'] = round((float(score) * 100), 2) # type: ignore
             
             candidate_rankings.append(c_copy)
             
@@ -142,16 +148,18 @@ if __name__ == "__main__":
         
     print("Entering Observer Loop...")
     while True:
-        # Check for absolutely new entries by some creation timestamp / logic here 
-        # (For simplicity here, just repeating a fetch / diff can work, or checking a `createdAt` epoch)
-        # Using a primitive length check to avoid heavy queries in prototype
-        curr_candidates_len = candidates_collection.count_documents({})
-        curr_jobs_len = jobs_collection.count_documents({})
-        
-        if curr_candidates_len > len(candidates) or curr_jobs_len > len(jobs):
-            print("New documents detected! Recalculating Matrix...")
-            candidates = fetch_all(candidates_collection)
-            jobs = fetch_all(jobs_collection)
-            generate_matrices(candidates, jobs)
-        
+        try:
+            # Using a primitive length check to avoid heavy queries in prototype
+            curr_candidates_len = candidates_collection.count_documents({}) # type: ignore
+            curr_jobs_len = jobs_collection.count_documents({}) # type: ignore
+            
+            if curr_candidates_len > len(candidates) or curr_jobs_len > len(jobs):
+                print("New documents detected! Recalculating Matrix...")
+                candidates = fetch_all(candidates_collection)
+                jobs = fetch_all(jobs_collection)
+                generate_matrices(candidates, jobs)
+        except Exception as e:
+            print(f"Error in observer loop: {e}")
+            print("Will retry in 10 seconds...")
+            
         time.sleep(10) # 10-second polling interval
