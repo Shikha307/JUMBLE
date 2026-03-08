@@ -171,12 +171,19 @@ function CandidateModal({ match, onClose }) {
                     padding: '0.6rem 1.5rem', fontSize: '0.9rem', textDecoration: 'none', 
                     display: 'flex', alignItems: 'center', gap: '0.5rem', 
                     color: 'white', background: '#0077b5', borderRadius: '12px',
-                    fontWeight: 600, boxShadow: '0 4px 6px -1px rgba(0, 119, 181, 0.2)'
+                    fontWeight: 700, boxShadow: '0 4px 6px -1px rgba(0, 119, 181, 0.2)',
+                    transition: 'all 0.2s'
                   }}
-                  onMouseEnter={e => e.currentTarget.style.background = '#006194'}
-                  onMouseLeave={e => e.currentTarget.style.background = '#0077b5'}
+                  onMouseEnter={e => {
+                    e.currentTarget.style.background = '#006194';
+                    e.currentTarget.style.transform = 'translateY(-2px)';
+                  }}
+                  onMouseLeave={e => {
+                    e.currentTarget.style.background = '#0077b5';
+                    e.currentTarget.style.transform = 'translateY(0)';
+                  }}
                 >
-                  <Linkedin size={18} /> LinkedIn Profile
+                  <Linkedin size={20} style={{ strokeWidth: 2.5 }} /> LinkedIn Profile
                 </a>
               )}
             </div>
@@ -298,15 +305,26 @@ function JobModal({ match, onClose }) {
               </div>
             )}
 
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem', marginBottom: '2rem' }}>
-              <div style={{ padding: '1rem', background: '#f8fafc', borderRadius: '16px', border: '1px solid #e2e8f0' }}>
-                <h4 style={{ margin: '0 0 0.4rem', fontSize: '0.75rem', textTransform: 'uppercase', color: '#94a3b8', fontWeight: 700 }}>Job ID</h4>
-                <p style={{ margin: 0, fontWeight: 600, color: '#1e293b' }}>{details.jobId}</p>
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '1rem', marginBottom: '2rem' }}>
+              <div style={{ padding: '1.25rem', background: '#f8fafc', borderRadius: '16px', border: '1px solid #e2e8f0' }}>
+                <h4 style={{ margin: '0 0 0.8rem', fontSize: '0.8rem', textTransform: 'uppercase', color: '#94a3b8', fontWeight: 700, letterSpacing: '0.05em' }}>Skills Required</h4>
+                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.6rem' }}>
+                  {details.skills && details.skills.length > 0 ? (
+                    details.skills.map(skill => (
+                      <span key={skill} style={{ 
+                        padding: '0.4rem 0.8rem', fontSize: '0.85rem', background: 'white', 
+                        border: '1px solid #e2e8f0', borderRadius: '8px', color: '#334155', fontWeight: 600 
+                      }}>{skill}</span>
+                    ))
+                  ) : (
+                    <span style={{ color: '#94a3b8', fontSize: '0.9rem', fontStyle: 'italic' }}>No specific skills listed</span>
+                  )}
+                </div>
               </div>
               {details.location && (
-                <div style={{ padding: '1rem', background: '#f8fafc', borderRadius: '16px', border: '1px solid #e2e8f0' }}>
-                  <h4 style={{ margin: '0 0 0.4rem', fontSize: '0.75rem', textTransform: 'uppercase', color: '#94a3b8', fontWeight: 700 }}>Location</h4>
-                  <p style={{ margin: 0, fontWeight: 600, color: '#1e293b' }}>{details.location}</p>
+                <div style={{ padding: '1.25rem', background: '#f8fafc', borderRadius: '16px', border: '1px solid #e2e8f0' }}>
+                  <h4 style={{ margin: '0 0 0.4rem', fontSize: '0.8rem', textTransform: 'uppercase', color: '#94a3b8', fontWeight: 700, letterSpacing: '0.05em' }}>Location</h4>
+                  <p style={{ margin: 0, fontWeight: 700, color: '#1e293b' }}>{details.location}</p>
                 </div>
               )}
             </div>
