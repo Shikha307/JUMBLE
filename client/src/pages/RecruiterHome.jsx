@@ -11,6 +11,9 @@ export default function RecruiterHome() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [loadingCandidates, setLoadingCandidates] = useState(true);
   const [loadingJobs, setLoadingJobs] = useState(true);
+  
+  const [countries, setCountries] = useState([]);
+  const [selectedCountry, setSelectedCountry] = useState('');
 
   // Fetch Unswiped Candidates for the selected job
   useEffect(() => {
@@ -20,7 +23,12 @@ export default function RecruiterHome() {
       setLoadingCandidates(true);
       try {
         const token = localStorage.getItem('token');
-        const res = await fetch(`http://localhost:8082/api/v1/swipes/jobs/${selectedJob.id}/unswiped-candidates`, {
+        let url = `http://localhost:8082/api/v1/swipes/jobs/${selectedJob.id}/unswiped-candidates`;
+        if (selectedCountry) {
+          url += `?country=${encodeURIComponent(selectedCountry)}`;
+        }
+        
+        const res = await fetch(url, {
           headers: token ? { 'Authorization': `Bearer ${token}` } : {}
         });
         if (res.ok) {
@@ -62,7 +70,18 @@ export default function RecruiterHome() {
       }
     };
     fetchCandidates();
-  }, [selectedJob]);
+  }, [selectedJob, selectedCountry]);
+
+  // Fetch Countries on mount
+  useEffect(() => {
+    fetch('https://restcountries.com/v3.1/all?fields=name')
+      .then(res => res.json())
+      .then(data => {
+        const sorted = data.map(c => c.name.common).sort();
+        setCountries(sorted);
+      })
+      .catch(err => console.error('Failed to fetch countries', err));
+  }, []);
 
   // Fetch Jobs belonging to the recruiter
   useEffect(() => {
@@ -129,33 +148,56 @@ export default function RecruiterHome() {
 
       <main className="recruiter-home-layout">
         
-        {/* SIDEBAR FOR JOBS */}
+        {/* SIDEBAR FOR FILTERS */}
         <aside className="jobs-sidebar">
           <div className="sidebar-header">
-            <h3>Your Job Postings</h3>
+            <h3>Filters</h3>
           </div>
+          
           <div className="sidebar-list">
-            {loadingJobs ? (
-              <p style={{ padding: '1rem', color: 'var(--text-light)' }}>Loading jobs...</p>
-            ) : jobs.length === 0 ? (
-              <p style={{ padding: '1rem', color: 'var(--text-light)' }}>
-                No active jobs. <a href="/create-job" style={{color: 'var(--primary)'}}>Create one first!</a>
-              </p>
-            ) : (
-              jobs.map(job => (
-                <div 
-                  key={job.id} 
-                  className={`sidebar-job-item ${selectedJob?.id === job.id ? 'selected' : ''}`}
-                  onClick={() => {
-                    setSelectedJob(job);
-                    setCurrentIndex(0); // Reset candidate list!
-                  }}
-                >
-                  <Briefcase size={16} />
-                  <span>{job.roleName}</span>
+            <div className="sidebar-filter-group">
+              <label>Filter by Country</label>
+              <select 
+                value={selectedCountry} 
+                onChange={(e) => {
+                  setSelectedCountry(e.target.value);
+                  setCurrentIndex(0);
+                }}
+                className="sidebar-select"
+              >
+                <option value="">All Countries</option>
+                {countries.map(c => (
+                  <option key={c} value={c}>{c}</option>
+                ))}
+              </select>
+            </div>
+
+            <div className="sidebar-filter-group">
+              <label>Filter by Job Posting</label>
+              {loadingJobs ? (
+                <p style={{ padding: '0.5rem 0', color: 'var(--text-light)', fontSize: '0.9rem' }}>Loading jobs...</p>
+              ) : jobs.length === 0 ? (
+                <p style={{ padding: '0.5rem 0', color: 'var(--text-light)', fontSize: '0.9rem' }}>
+                  No active jobs. <a href="/create-job" style={{color: 'var(--primary)'}}>Create one first!</a>
+                </p>
+              ) : (
+                <div className="sidebar-job-list">
+                  {jobs.map(job => (
+                    <div 
+                      key={job.id} 
+                      className={`sidebar-job-item ${selectedJob?.id === job.id ? 'selected' : ''}`}
+                      onClick={() => {
+                        setSelectedJob(job);
+                        setCurrentIndex(0);
+                      }}
+                    >
+                      <Briefcase size={14} />
+                      <span>{job.roleName}</span>
+                    </div>
+                  ))}
                 </div>
-              ))
-            )}
+              )}
+            </div>
           </div>
         </aside>
 
