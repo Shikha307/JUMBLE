@@ -29,7 +29,8 @@ public class CandidateController {
             @RequestParam("resume") MultipartFile resumeFile,
             @RequestParam("country") String country,
             @RequestParam("University") String university,
-            @RequestParam("password") String password) {
+            @RequestParam("password") String password,
+            @RequestParam("linkedin") String linkedin) {
 
         try {
             Candidate user = new Candidate();
@@ -39,6 +40,7 @@ public class CandidateController {
             user.setCountry(country);
             user.setUniversity(university);
             user.setPassword(password);
+            user.setLinkedin(linkedin);
 
             Candidate savedUser = userService.createUser(user, resumeFile);
             return new ResponseEntity<>(savedUser, HttpStatus.CREATED);

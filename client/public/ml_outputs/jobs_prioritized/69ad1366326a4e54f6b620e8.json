@@ -1,15 +1,14 @@
 [
   {
-    "recruiterId": "69acaae932e1b554400f220d",
-    "roleName": "ML Engineer",
-    "description": "Looking for an expert ML Engineer.",
+    "recruiterId": "R1",
+    "roleName": "Test Job",
+    "description": "Test desc",
     "skillsNeeded": [
-      "java",
-      "spring boot"
+      "Java"
     ],
     "_class": "com.jumble.userjob.job.model.Job",
-    "id": "69acc5e37eba71d2aaaa208d",
-    "matchScore": 65.05
+    "id": "69acfae40bb735b8163c5b25",
+    "matchScore": 54.39
   },
   {
     "recruiterId": "R1",
@@ -22,7 +21,19 @@
     ],
     "_class": "com.jumble.userjob.job.model.Job",
     "id": "69acfb110bb735b8163c5b26",
-    "matchScore": 61.01
+    "matchScore": 35.49
+  },
+  {
+    "recruiterId": "69acaae932e1b554400f220d",
+    "roleName": "ML Engineer",
+    "description": "Looking for an expert ML Engineer.",
+    "skillsNeeded": [
+      "java",
+      "spring boot"
+    ],
+    "_class": "com.jumble.userjob.job.model.Job",
+    "id": "69acc5e37eba71d2aaaa208d",
+    "matchScore": 32.73
   },
   {
     "recruiterId": "69acaae932e1b554400f220d",
@@ -34,18 +45,18 @@
     ],
     "_class": "com.jumble.userjob.job.model.Job",
     "id": "69acab6d32e1b554400f220e",
-    "matchScore": 52.13
+    "matchScore": 28.7
   },
   {
-    "recruiterId": "R1",
-    "roleName": "Test Job",
-    "description": "Test desc",
+    "recruiterId": "69acfcfede8bc04c38f4c252",
+    "roleName": "abc",
+    "description": "qsjiwhdiwhd",
     "skillsNeeded": [
-      "Java"
+      "kjdkwadbqj"
     ],
     "_class": "com.jumble.userjob.job.model.Job",
-    "id": "69acfae40bb735b8163c5b25",
-    "matchScore": 41.48
+    "id": "69ad14a289e52b7eba77c417",
+    "matchScore": 21.35
   },
   {
     "recruiterId": "R1",
@@ -58,30 +69,7 @@
     ],
     "_class": "com.jumble.userjob.job.model.Job",
     "id": "69acfd2ede8bc04c38f4c253",
-    "matchScore": 35.8
-  },
-  {
-    "recruiterId": "69acfcfede8bc04c38f4c252",
-    "roleName": "abc",
-    "description": "qsjiwhdiwhd",
-    "skillsNeeded": [
-      "kjdkwadbqj"
-    ],
-    "_class": "com.jumble.userjob.job.model.Job",
-    "id": "69ad14a289e52b7eba77c417",
-    "matchScore": 25.94
-  },
-  {
-    "recruiterId": "R1",
-    "roleName": "Senior Kubernetes Engineer",
-    "description": "Looking for senior kubernetes engineer.",
-    "skillsNeeded": [
-      "Kubernetes",
-      "Docker."
-    ],
-    "_class": "com.jumble.userjob.job.model.Job",
-    "id": "69ad09f00bb735b8163c5b28",
-    "matchScore": 25.4
+    "matchScore": 18.37
   },
   {
     "recruiterId": "R1",
@@ -94,7 +82,19 @@
     ],
     "_class": "com.jumble.userjob.job.model.Job",
     "id": "69acc074a425d47c979142e6",
-    "matchScore": 23.4
+    "matchScore": 12.83
+  },
+  {
+    "recruiterId": "R1",
+    "roleName": "Senior Kubernetes Engineer",
+    "description": "Looking for senior kubernetes engineer.",
+    "skillsNeeded": [
+      "Kubernetes",
+      "Docker."
+    ],
+    "_class": "com.jumble.userjob.job.model.Job",
+    "id": "69ad09f00bb735b8163c5b28",
+    "matchScore": 10.55
   },
   {
     "recruiterId": "R1",
@@ -108,7 +108,7 @@
     ],
     "_class": "com.jumble.userjob.job.model.Job",
     "id": "69ad09660bb735b8163c5b27",
-    "matchScore": 22.05
+    "matchScore": 6.59
   },
   {
     "recruiterId": "R1",
@@ -121,6 +121,6 @@
     ],
     "_class": "com.jumble.userjob.job.model.Job",
     "id": "69acc1a4a425d47c979142e7",
-    "matchScore": 20.58
+    "matchScore": 1.86
   }
 ]
