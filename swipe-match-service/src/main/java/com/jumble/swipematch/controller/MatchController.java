@@ -24,4 +24,9 @@ public class MatchController {
     public ResponseEntity<List<Match>> getJobMatches(@PathVariable String jobId) {
         return ResponseEntity.ok(matchRepository.findByJobId(jobId));
     }
+
+    @GetMapping("/recruiter/{recruiterId}")
+    public ResponseEntity<List<Match>> getRecruiterMatches(@PathVariable String recruiterId) {
+        return ResponseEntity.ok(matchRepository.findByRecruiterId(recruiterId));
+    }
 }

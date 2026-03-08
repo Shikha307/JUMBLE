@@ -23,6 +23,7 @@ public class SwipeService {
                 .id(UUID.randomUUID().toString())
                 .candidateId(request.getCandidateId())
                 .jobId(request.getJobId())
+                .recruiterId(request.getRecruiterId())
                 .swiperRole(request.getSwiperRole())
                 .direction(request.getDirection())
                 .timestamp(Instant.now())
