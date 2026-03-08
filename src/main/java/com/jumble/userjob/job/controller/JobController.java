@@ -30,4 +30,10 @@ public class JobController {
         List<Job> jobs = jobService.getJobsBySkills(skills);
         return ResponseEntity.ok(jobs);
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteJob(@PathVariable String id) {
+        jobService.deleteJob(id);
+        return ResponseEntity.noContent().build();
+    }
 }

@@ -26,11 +26,13 @@ public class JobService {
         if (skills == null || skills.isEmpty()) {
             return getAllJobs();
         }
-        // findBySkillsNeededIn returns one result per matching skill element,
-        // so we deduplicate to ensure each job appears at most once.
         return jobRepository.findBySkillsNeededIn(skills)
                 .stream()
                 .distinct()
                 .collect(Collectors.toList());
+    }
+
+    public void deleteJob(String id) {
+        jobRepository.deleteById(id);
     }
 }
