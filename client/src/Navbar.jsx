@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from 'react';
-import { User, LogOut, Heart, Briefcase, PlusCircle, Settings } from 'lucide-react';
+import { User, LogOut, Heart, Briefcase, PlusCircle, Settings, Home } from 'lucide-react';
 import { useNavigate, Link } from 'react-router-dom';
 
 function Navbar({ role, name }) {
@@ -41,13 +41,28 @@ function Navbar({ role, name }) {
   }, [role]);
 
   return (
-    <nav className="navbar">
-      <div className="navbar-left">
+    <nav className="navbar" style={{ display: 'grid', gridTemplateColumns: '1fr auto 1fr', alignItems: 'center' }}>
+      {/* Left: Home button */}
+      <div className="navbar-left" style={{ display: 'flex', alignItems: 'center' }}>
+        <Link
+          to={role === 'recruiter' ? '/recruiter' : '/dashboard'}
+          reloadDocument
+          className="nav-action-btn subtle"
+          title="Home"
+          style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', textDecoration: 'none' }}
+        >
+          <Home size={18} />
+          <span style={{ fontSize: '0.85rem' }}>Home</span>
+        </Link>
+      </div>
+
+      {/* Center: JUMBLE logo */}
+      <div style={{ textAlign: 'center' }}>
         <Link
           to={role === 'recruiter' ? '/recruiter' : '/dashboard'}
           reloadDocument
           className="brand-name"
-          style={{ textDecoration: 'none' }}
+          style={{ textDecoration: 'none', fontSize: '1.8rem', letterSpacing: '0.05em' }}
         >
           JUMBLE
         </Link>
