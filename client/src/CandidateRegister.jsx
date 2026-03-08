@@ -4,7 +4,7 @@ import { X, Plus, UploadCloud, CheckCircle } from 'lucide-react';
 
 function CandidateRegister() {
   const [form, setForm] = useState({
-    name: '', email: '', password: '', confirmPassword: '', country: '', university: ''
+    name: '', email: '', password: '', confirmPassword: '', country: '', university: '', linkedin: ''
   });
   const [errors, setErrors] = useState({});
   const [skills, setSkills] = useState([]);
@@ -142,11 +142,12 @@ function CandidateRegister() {
     formData.append('password', form.password);
     formData.append('country', form.country);
     formData.append('University', form.university);   // backend expects capital-U "University"
+    if (form.linkedin) formData.append('linkedin', form.linkedin);
     skills.forEach(skill => formData.append('skills', skill));
     formData.append('resume', resumeFile);
 
     try {
-      const response = await fetch('http://localhost:8081/api/auth/register/candidate', {
+      const response = await fetch('http://localhost:8080/api/auth/register/candidate', {
         method: 'POST',
         body: formData
       });
@@ -222,6 +223,13 @@ function CandidateRegister() {
             <label htmlFor="university">University (Optional)</label>
             <input id="university" name="university" type="text" placeholder="Enter your university name"
               value={form.university} onChange={handleChange} onBlur={handleBlur} />
+          </div>
+
+          {/* LinkedIn */}
+          <div className="input-group">
+            <label htmlFor="linkedin">LinkedIn Profile (Optional)</label>
+            <input id="linkedin" name="linkedin" type="url" placeholder="https://linkedin.com/in/yourprofile"
+              value={form.linkedin} onChange={handleChange} onBlur={handleBlur} />
           </div>
 
           {/* Password */}

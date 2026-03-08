@@ -20,10 +20,12 @@ export default function CandidateCard({ candidate, onLike, onPass }) {
         </div>
         
         <div className="actions-section">
-          <a href={candidate.linkedin} target="_blank" rel="noopener noreferrer" className="action-btn linkedin">
-            <Linkedin size={20} />
-            <span>LinkedIn</span>
-          </a>
+          {candidate.linkedin && (
+            <a href={candidate.linkedin} target="_blank" rel="noopener noreferrer" className="action-btn linkedin">
+              <Linkedin size={20} />
+              <span>LinkedIn</span>
+            </a>
+          )}
           <a href={`mailto:${candidate.email}`} className="action-btn email">
             <Mail size={20} />
             <span>Email</span>

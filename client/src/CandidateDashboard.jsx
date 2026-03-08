@@ -11,7 +11,7 @@ function CandidateDashboard({ userName }) {
     const fetchJobs = async () => {
       try {
         const token = localStorage.getItem('token');
-        const res = await fetch('http://localhost:8081/api/jobs/all', {
+        const res = await fetch('http://localhost:8080/api/jobs/all', {
           headers: token ? { 'Authorization': `Bearer ${token}` } : {}
         });
         if (res.ok) {

@@ -23,6 +23,7 @@ public class Candidate {
     private String university;
     @com.fasterxml.jackson.annotation.JsonIgnore
     private String password;
+    private String linkedin;
 
     @com.fasterxml.jackson.annotation.JsonIgnore
     private byte[] resumeData;
