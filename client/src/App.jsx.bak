@@ -1,9 +1,6 @@
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import Login from './Login';
-import Register from './Register';
 import RecruiterHome from './pages/RecruiterHome';
-import AddJob from './pages/AddJob';
-import MyJobs from './pages/MyJobs';
 import './index.css';
 
 function App() {
@@ -23,10 +20,8 @@ function App() {
           </div>
         } />
         <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
         <Route path="/recruiter" element={<RecruiterHome />} />
-        <Route path="/add-job" element={<AddJob />} />
-        <Route path="/my-jobs" element={<MyJobs />} />
+        <Route path="/register" element={<div className="login-container"><div className="login-card"><h1>Register</h1><p>Coming Soon</p></div></div>} />
       </Routes>
     </Router>
   );
