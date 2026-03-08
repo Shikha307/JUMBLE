@@ -90,9 +90,10 @@ public class SwipeService {
     }
 
     /**
-     * Returns a list of *unswiped* Candidate objects for a specific job.
+     * Returns a list of *unswiped* Candidate objects for a specific job,
+     * optionally filtered by country.
      */
-    public java.util.List<com.jumble.swipematch.model.Candidate> getUnswipedCandidatesForJob(String jobId) {
+    public java.util.List<com.jumble.swipematch.model.Candidate> getUnswipedCandidatesForJob(String jobId, String country) {
         java.util.List<String> swipedIds = mongoSwipeRecordRepository.findByJobIdAndRecruiterSwipeIsNotNull(jobId)
                 .stream()
                 .map(SwipeRecord::getCandidateId)
@@ -101,6 +102,7 @@ public class SwipeService {
         return candidateRepository.findAll()
                 .stream()
                 .filter(candidate -> !swipedIds.contains(candidate.getId()))
+                .filter(candidate -> country == null || country.isEmpty() || country.equalsIgnoreCase(candidate.getCountry()))
                 .toList();
     }
 

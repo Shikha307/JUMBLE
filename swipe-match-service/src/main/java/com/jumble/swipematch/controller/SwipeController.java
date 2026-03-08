@@ -27,8 +27,9 @@ public class SwipeController {
      */
     @GetMapping("/jobs/{jobId}/unswiped-candidates")
     public ResponseEntity<java.util.List<com.jumble.swipematch.model.Candidate>> getUnswipedCandidates(
-            @PathVariable String jobId) {
-        return ResponseEntity.ok(swipeService.getUnswipedCandidatesForJob(jobId));
+            @PathVariable String jobId,
+            @RequestParam(required = false) String country) {
+        return ResponseEntity.ok(swipeService.getUnswipedCandidatesForJob(jobId, country));
     }
 
     /**
