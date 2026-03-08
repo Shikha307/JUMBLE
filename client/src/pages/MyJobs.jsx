@@ -59,7 +59,7 @@ export default function MyJobs() {
   };
 
   return (
-    <div className="add-job-page my-jobs-page">
+    <div className="add-job-page my-jobs-page recruiter-theme">
       <Navbar />
       <div className="form-container my-jobs-container">
         <div className="form-header my-jobs-header">
