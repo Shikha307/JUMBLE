@@ -932,3 +932,27 @@ body {
 .cancel-btn:hover { background:#f1f5f9; transform:translateY(-2px); box-shadow:0 4px 10px rgba(0,0,0,0.05); }
 .no-jobs-empty { text-align:center; padding:3rem; color:var(--text-light); font-size:1.1rem; }
 
+/* --- MATCHES PAGE STYLES --- */
+.match-card {
+  border-left: 4px solid #10b981;
+}
+
+.match-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+
+.match-detail {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.95rem;
+  color: #374151;
+  margin: 0;
+}
+
+.match-icon {
+  color: #10b981;
+}

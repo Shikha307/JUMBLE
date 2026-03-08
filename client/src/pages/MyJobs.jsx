@@ -10,7 +10,13 @@ export default function MyJobs() {
   useEffect(() => {
     const fetchJobs = async () => {
       try {
-        const response = await fetch('http://localhost:8081/api/jobs');
+        const recruiterId = localStorage.getItem('id');
+        const token = localStorage.getItem('token');
+        const response = await fetch(`http://localhost:8081/api/recruiters/${recruiterId}/jobs`, {
+          headers: {
+            'Authorization': `Bearer ${token}`
+          }
+        });
         if (response.ok) {
           const data = await response.json();
           setJobs(data);
