@@ -15,7 +15,7 @@ function RecruiterDashboard({ userName }) {
           </p>
 
           <div className="create-job-action">
-            <Link to="/create-job" className="create-job-btn">
+            <Link to="/add-job" className="create-job-btn">
               <PlusCircle size={28} className="create-icon" />
               <span>Add Job</span>
             </Link>

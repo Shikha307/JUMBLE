@@ -1,0 +1,176 @@
+[
+  {
+    "recruiterId": "69ad3b55c7d5f2c747b8aa44",
+    "roleName": "Senior Kubernetes Engineer",
+    "description": "Kubenetes chahiye. Padh ke aao.",
+    "skillsNeeded": [
+      "Java",
+      "Springboot",
+      "SQL"
+    ],
+    "_class": "com.jumble.userjob.job.model.Job",
+    "id": "69ad3bc3c7d5f2c747b8aa45",
+    "matchScore": 53.35
+  },
+  {
+    "recruiterId": "R1",
+    "roleName": "Senior Kubernetes Engineer",
+    "description": "Looking for senior kubernetes engineer.",
+    "skillsNeeded": [
+      "Kubernetes",
+      "Docker."
+    ],
+    "_class": "com.jumble.userjob.job.model.Job",
+    "id": "69ad09f00bb735b8163c5b28",
+    "matchScore": 46.24
+  },
+  {
+    "recruiterId": "R1",
+    "roleName": "Senior ML Engineer",
+    "description": "Looking for ML Engineer who has knowledge of Flutter, Python, Tensorflow, Keras.",
+    "skillsNeeded": [
+      "Python",
+      "Keras",
+      "Tensorflow",
+      "ML"
+    ],
+    "_class": "com.jumble.userjob.job.model.Job",
+    "id": "69ad09660bb735b8163c5b27",
+    "matchScore": 26.65
+  },
+  {
+    "recruiterId": "R1",
+    "roleName": "Senior Java Developer",
+    "description": "Looking for Senior Java Developer",
+    "skillsNeeded": [
+      "Java",
+      "Springboot",
+      "SQL"
+    ],
+    "_class": "com.jumble.userjob.job.model.Job",
+    "id": "69acfb110bb735b8163c5b26",
+    "matchScore": 25.82
+  },
+  {
+    "recruiterId": "R1",
+    "roleName": "Software intern",
+    "description": "build a full stack application using any tech stack",
+    "skillsNeeded": [
+      "python",
+      "java",
+      "C++"
+    ],
+    "_class": "com.jumble.userjob.job.model.Job",
+    "id": "69acc074a425d47c979142e6",
+    "matchScore": 24.56
+  },
+  {
+    "recruiterId": "R1",
+    "roleName": "network intern",
+    "description": "managing networks",
+    "skillsNeeded": [
+      "java",
+      "C",
+      "network systems"
+    ],
+    "_class": "com.jumble.userjob.job.model.Job",
+    "id": "69acfd2ede8bc04c38f4c253",
+    "matchScore": 22.13
+  },
+  {
+    "recruiterId": "69acaae932e1b554400f220d",
+    "roleName": "ML Engineer",
+    "description": "Looking for an expert ML Engineer.",
+    "skillsNeeded": [
+      "java",
+      "spring boot"
+    ],
+    "_class": "com.jumble.userjob.job.model.Job",
+    "id": "69acc5e37eba71d2aaaa208d",
+    "matchScore": 21.83
+  },
+  {
+    "recruiterId": "69acaae932e1b554400f220d",
+    "roleName": "Senior Java Developer",
+    "description": "Looking for an expert Spring Boot developer to build skynet APIs.",
+    "skillsNeeded": [
+      "java",
+      "spring boot"
+    ],
+    "_class": "com.jumble.userjob.job.model.Job",
+    "id": "69acab6d32e1b554400f220e",
+    "matchScore": 21.48
+  },
+  {
+    "recruiterId": "R1",
+    "roleName": "Test Job",
+    "description": "Test desc",
+    "skillsNeeded": [
+      "Java"
+    ],
+    "_class": "com.jumble.userjob.job.model.Job",
+    "id": "69acfae40bb735b8163c5b25",
+    "matchScore": 17.28
+  },
+  {
+    "recruiterId": "69acfcfede8bc04c38f4c252",
+    "roleName": "cyber intern",
+    "description": "security ",
+    "skillsNeeded": [
+      "c",
+      "java",
+      "python"
+    ],
+    "_class": "com.jumble.userjob.job.model.Job",
+    "id": "69ad15b36c934748729e68c3",
+    "matchScore": 16.17
+  },
+  {
+    "recruiterId": "R1",
+    "roleName": "ml intern",
+    "description": "build any application",
+    "skillsNeeded": [
+      "ML",
+      "AI",
+      "NLP"
+    ],
+    "_class": "com.jumble.userjob.job.model.Job",
+    "id": "69acc1a4a425d47c979142e7",
+    "matchScore": 14.95
+  },
+  {
+    "recruiterId": "69ad4085e2f5646291887c17",
+    "roleName": "operating security",
+    "description": "operating system using any os",
+    "skillsNeeded": [
+      "operating system",
+      "java",
+      "c"
+    ],
+    "_class": "com.jumble.userjob.job.model.Job",
+    "id": "69ad4af018f9f1541a270772",
+    "matchScore": 13.51
+  },
+  {
+    "recruiterId": "69ad4085e2f5646291887c17",
+    "roleName": "network intern",
+    "description": "2sss2",
+    "skillsNeeded": [
+      "swdwdwdq"
+    ],
+    "_class": "com.jumble.userjob.job.model.Job",
+    "id": "69ad40a0e2f5646291887c18",
+    "matchScore": 12.31
+  },
+  {
+    "recruiterId": "69acfcfede8bc04c38f4c252",
+    "roleName": "abc",
+    "description": "qsjiwhdiwhd",
+    "skillsNeeded": [
+      "kjdkwadbqj"
+    ],
+    "_class": "com.jumble.userjob.job.model.Job",
+    "id": "69ad14a289e52b7eba77c417",
+    "matchScore": 7.53
+  }
+]

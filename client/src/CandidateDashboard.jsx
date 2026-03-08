@@ -17,12 +17,35 @@ function CandidateDashboard({ userName }) {
     const fetchJobs = async () => {
       try {
         const token = localStorage.getItem('token');
+        const candidateId = localStorage.getItem('id'); // Get candidate ID
         const res = await fetch('http://localhost:8081/api/jobs/all', {
           headers: token ? { 'Authorization': `Bearer ${token}` } : {}
         });
         if (res.ok) {
-          const data = await res.json();
-          setJobs(data);
+          let jobsData = await res.json();
+
+          // Try to fetch ML priorities
+          try {
+            if (candidateId) {
+              const mlRes = await fetch(`/ml_outputs/jobs_prioritized/${candidateId}.json`);
+              if (mlRes.ok) {
+                const mlJobs = await mlRes.json();
+                const scoreMap = {};
+                mlJobs.forEach(job => {
+                  if (job.id) scoreMap[job.id] = job.matchScore || 0;
+                });
+
+                jobsData = jobsData.map(job => ({
+                  ...job,
+                  matchScore: scoreMap[job.id] || 0
+                })).sort((a, b) => b.matchScore - a.matchScore);
+              }
+            }
+          } catch (mlErr) {
+            console.warn("Could not load ML priorities for candidate, falling back to default sort.", mlErr);
+          }
+
+          setJobs(jobsData);
         } else {
           console.error("Failed to fetch jobs");
           setError(`Failed to load jobs (${res.status})`);
@@ -41,10 +64,7 @@ function CandidateDashboard({ userName }) {
   const handleSwipe = async (direction) => {
     const currentJob = jobs[currentIndex];
 
-    // In RecruiterRegister/Login we saved token/role. Currently no candidateId is saved cleanly, 
-    // so we will extract candidate email or name from localStorage for the API just to test it.
-    // (In a real app, the candidateId would be stored in localStorage at Login).
-    const candidateId = localStorage.getItem('name') || "dummy_candidate_id";
+    const candidateId = localStorage.getItem('id') || "dummy_candidate_id";
 
     // Optimistically advance the card
     setCurrentIndex(prev => prev + 1);

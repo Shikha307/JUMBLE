@@ -8,7 +8,7 @@
     ],
     "_class": "com.jumble.userjob.job.model.Job",
     "id": "69acfae40bb735b8163c5b25",
-    "matchScore": 54.39
+    "matchScore": 56.92
   },
   {
     "recruiterId": "R1",
@@ -21,7 +21,7 @@
     ],
     "_class": "com.jumble.userjob.job.model.Job",
     "id": "69acfb110bb735b8163c5b26",
-    "matchScore": 35.49
+    "matchScore": 33.56
   },
   {
     "recruiterId": "69acaae932e1b554400f220d",
@@ -33,19 +33,7 @@
     ],
     "_class": "com.jumble.userjob.job.model.Job",
     "id": "69acc5e37eba71d2aaaa208d",
-    "matchScore": 32.73
-  },
-  {
-    "recruiterId": "69acaae932e1b554400f220d",
-    "roleName": "Senior Java Developer",
-    "description": "Looking for an expert Spring Boot developer to build skynet APIs.",
-    "skillsNeeded": [
-      "java",
-      "spring boot"
-    ],
-    "_class": "com.jumble.userjob.job.model.Job",
-    "id": "69acab6d32e1b554400f220e",
-    "matchScore": 28.7
+    "matchScore": 31.44
   },
   {
     "recruiterId": "69acfcfede8bc04c38f4c252",
@@ -58,18 +46,19 @@
     ],
     "_class": "com.jumble.userjob.job.model.Job",
     "id": "69ad15b36c934748729e68c3",
-    "matchScore": 25.16
+    "matchScore": 25.08
   },
   {
-    "recruiterId": "69ad4085e2f5646291887c17",
-    "roleName": "network intern",
-    "description": "2sss2",
+    "recruiterId": "69acaae932e1b554400f220d",
+    "roleName": "Senior Java Developer",
+    "description": "Looking for an expert Spring Boot developer to build skynet APIs.",
     "skillsNeeded": [
-      "swdwdwdq"
+      "java",
+      "spring boot"
     ],
     "_class": "com.jumble.userjob.job.model.Job",
-    "id": "69ad40a0e2f5646291887c18",
-    "matchScore": 24.68
+    "id": "69acab6d32e1b554400f220e",
+    "matchScore": 24.91
   },
   {
     "recruiterId": "69ad3b55c7d5f2c747b8aa44",
@@ -82,31 +71,18 @@
     ],
     "_class": "com.jumble.userjob.job.model.Job",
     "id": "69ad3bc3c7d5f2c747b8aa45",
-    "matchScore": 23.48
-  },
-  {
-    "recruiterId": "69acfcfede8bc04c38f4c252",
-    "roleName": "abc",
-    "description": "qsjiwhdiwhd",
-    "skillsNeeded": [
-      "kjdkwadbqj"
-    ],
-    "_class": "com.jumble.userjob.job.model.Job",
-    "id": "69ad14a289e52b7eba77c417",
-    "matchScore": 21.35
+    "matchScore": 21.73
   },
   {
     "recruiterId": "69ad4085e2f5646291887c17",
-    "roleName": "operating security",
-    "description": "operating system using any os",
+    "roleName": "network intern",
+    "description": "2sss2",
     "skillsNeeded": [
-      "operating system",
-      "java",
-      "c"
+      "swdwdwdq"
     ],
     "_class": "com.jumble.userjob.job.model.Job",
-    "id": "69ad4af018f9f1541a270772",
-    "matchScore": 18.55
+    "id": "69ad40a0e2f5646291887c18",
+    "matchScore": 20.08
   },
   {
     "recruiterId": "R1",
@@ -119,7 +95,31 @@
     ],
     "_class": "com.jumble.userjob.job.model.Job",
     "id": "69acfd2ede8bc04c38f4c253",
-    "matchScore": 18.37
+    "matchScore": 17.78
+  },
+  {
+    "recruiterId": "69ad4085e2f5646291887c17",
+    "roleName": "operating security",
+    "description": "operating system using any os",
+    "skillsNeeded": [
+      "operating system",
+      "java",
+      "c"
+    ],
+    "_class": "com.jumble.userjob.job.model.Job",
+    "id": "69ad4af018f9f1541a270772",
+    "matchScore": 17.5
+  },
+  {
+    "recruiterId": "69acfcfede8bc04c38f4c252",
+    "roleName": "abc",
+    "description": "qsjiwhdiwhd",
+    "skillsNeeded": [
+      "kjdkwadbqj"
+    ],
+    "_class": "com.jumble.userjob.job.model.Job",
+    "id": "69ad14a289e52b7eba77c417",
+    "matchScore": 16.68
   },
   {
     "recruiterId": "R1",
@@ -132,7 +132,7 @@
     ],
     "_class": "com.jumble.userjob.job.model.Job",
     "id": "69acc074a425d47c979142e6",
-    "matchScore": 12.83
+    "matchScore": 12.59
   },
   {
     "recruiterId": "R1",
@@ -144,7 +144,7 @@
     ],
     "_class": "com.jumble.userjob.job.model.Job",
     "id": "69ad09f00bb735b8163c5b28",
-    "matchScore": 10.55
+    "matchScore": 8.78
   },
   {
     "recruiterId": "R1",
@@ -158,7 +158,7 @@
     ],
     "_class": "com.jumble.userjob.job.model.Job",
     "id": "69ad09660bb735b8163c5b27",
-    "matchScore": 6.59
+    "matchScore": 5.68
   },
   {
     "recruiterId": "R1",
@@ -171,6 +171,6 @@
     ],
     "_class": "com.jumble.userjob.job.model.Job",
     "id": "69acc1a4a425d47c979142e7",
-    "matchScore": 1.86
+    "matchScore": 3.08
   }
 ]
