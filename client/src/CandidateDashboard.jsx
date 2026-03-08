@@ -3,7 +3,7 @@ import Navbar from './Navbar';
 import { X, Heart, Briefcase } from 'lucide-react';
 
 const JOBS_API = 'http://localhost:8081/api/jobs/all';
-const SWIPE_API = 'http://localhost:8082/api/v1/swipes';
+const SWIPE_API = 'http://localhost:8080/api/v1/swipes';
 
 function CandidateDashboard({ userName }) {
   const [jobs, setJobs] = useState([]);
@@ -11,6 +11,7 @@ function CandidateDashboard({ userName }) {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [swipeStatus, setSwipeStatus] = useState(null); // feedback message
+  const [currentCompany, setCurrentCompany] = useState("Loading company...");
 
   // Fetch only jobs the candidate hasn't swiped on yet
   useEffect(() => {
@@ -18,7 +19,7 @@ function CandidateDashboard({ userName }) {
       try {
         const token = localStorage.getItem('token');
         const candidateId = localStorage.getItem('id');
-        const res = await fetch(`http://localhost:8082/api/v1/swipes/candidates/${candidateId}/unswiped-jobs`, {
+        const res = await fetch(`http://localhost:8080/api/v1/swipes/candidates/${candidateId}/unswiped-jobs`, {
           headers: token ? { 'Authorization': `Bearer ${token}` } : {}
         });
         if (res.ok) {
@@ -96,6 +97,27 @@ function CandidateDashboard({ userName }) {
   const currentJob = jobs[currentIndex];
   const isFinished = !loading && currentIndex >= jobs.length;
 
+  // Fetch company whenever currentJob changes
+  useEffect(() => {
+    if (currentJob && currentJob.recruiterId) {
+      setCurrentCompany("Loading company...");
+      const token = localStorage.getItem('token');
+      fetch(`http://localhost:8081/api/recruiters/${currentJob.recruiterId}`, {
+        headers: token ? { 'Authorization': `Bearer ${token}` } : {}
+      })
+        .then(res => {
+          if (!res.ok) throw new Error("Recruiter not found");
+          return res.json();
+        })
+        .then(data => {
+          setCurrentCompany(data.company || `Recruiter: ${data.firstName || currentJob.recruiterId}`);
+        })
+        .catch(err => {
+          setCurrentCompany(`Recruiter ID: ${currentJob.recruiterId}`);
+        });
+    }
+  }, [currentJob]);
+
   if (loading) {
     return (
       <div className="dashboard-layout bg-dots">
@@ -144,7 +166,7 @@ function CandidateDashboard({ userName }) {
           <div className="swipe-card fade-in">
             <div className="card-header">
               <h2 className="job-title">{currentJob.roleName || currentJob.title}</h2>
-              <p className="company-name">Recruiter ID: {currentJob.recruiterId}</p>
+              <p className="company-name">{currentCompany}</p>
             </div>
 
             <div className="card-body">

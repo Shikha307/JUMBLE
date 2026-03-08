@@ -61,6 +61,20 @@
     "matchScore": 41.48
   },
   {
+    "recruiterId": "69ad71c728c2428ca7507e67",
+    "roleName": "Senior Devops Engineer",
+    "description": "Looking for senior devops engineer with knowledge of kubernetes.",
+    "skillsNeeded": [
+      "Kubernetes",
+      "SQL",
+      "Docker",
+      "Java"
+    ],
+    "_class": "com.jumble.userjob.job.model.Job",
+    "id": "69ad720f28c2428ca7507e68",
+    "matchScore": 37.81
+  },
+  {
     "recruiterId": "69ad4085e2f5646291887c17",
     "roleName": "operating security",
     "description": "operating system using any os",
