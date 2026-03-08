@@ -25,7 +25,7 @@ export default function RecruiterHome() {
         });
         if (res.ok) {
           const data = await res.json();
-          const mappedData = data.map(c => ({
+          let mappedData = data.map(c => ({
             id: c.userId || c.id,
             name: `${c.firstName || ''} ${c.lastName || ''}`.trim() || c.name,
             skills: c.skills || [],
@@ -33,6 +33,26 @@ export default function RecruiterHome() {
             email: c.email || '',
             resumeUrl: c.resumeUrl || ''
           }));
+
+          // Try to fetch ML priorities
+          try {
+            const mlRes = await fetch(`/ml_outputs/candidates_prioritized/${selectedJob.id}.json`);
+            if (mlRes.ok) {
+              const mlCandidates = await mlRes.json();
+              const scoreMap = {};
+              mlCandidates.forEach(c => {
+                if (c.id) scoreMap[c.id] = c.matchScore || 0;
+              });
+
+              mappedData = mappedData.map(c => ({
+                ...c,
+                matchScore: scoreMap[c.id] || 0
+              })).sort((a, b) => b.matchScore - a.matchScore);
+            }
+          } catch (mlErr) {
+            console.warn("Could not load ML priorities for job, falling back to default sort.", mlErr);
+          }
+
           setCandidates(mappedData);
         }
       } catch (err) {
