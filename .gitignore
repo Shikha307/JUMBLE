@@ -31,3 +31,7 @@ build/
 
 ### VS Code ###
 .vscode/
+### cover letter###
+cover-letter-service/.env
+cover-letter-service/venv/
+cover-letter-service/__pycache__/
