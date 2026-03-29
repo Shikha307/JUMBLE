@@ -210,7 +210,3 @@ JUMBLE/
 ```
 
 ---
-
-## Built at HackCU 🏆
-
-JUMBLE was built during **HackCU** by a team passionate about making hiring fairer and faster through ML-powered matching.
