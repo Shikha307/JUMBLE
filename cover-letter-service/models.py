@@ -1,16 +1,13 @@
 from pydantic import BaseModel
-from typing import List, Optional
+from typing import Optional
 
 
 class CoverLetterRequest(BaseModel):
-    candidateName: str
-    skills: List[str] = []
-    university: Optional[str] = None
-    linkedin: Optional[str] = None
-    jobTitle: str
-    companyName: str
-    jobDescription: str
+    candidate_name: str
+    job_description: str
+    resume_filename: Optional[str] = None
+    resume_base64: str
 
 
 class CoverLetterResponse(BaseModel):
-    coverLetter: str
+    cover_letter: str
