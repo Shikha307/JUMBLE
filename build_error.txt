@@ -1,0 +1,168 @@
+﻿[INFO] Error stacktraces are turned on.
+[INFO] Scanning for projects...
+[INFO] 
+[INFO] -------------------< com.jumble:user-job-management >-------------------
+[INFO] Building user-job-management 0.0.1-SNAPSHOT
+[INFO]   from pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] >>> spring-boot:4.0.3:run (default-cli) > test-compile @ user-job-management >>>
+[INFO] 
+[INFO] --- resources:3.3.1:resources (default-resources) @ user-job-management ---
+[INFO] Copying 1 resource from src\main\resources to target\classes
+[INFO] Copying 0 resource from src\main\resources to target\classes
+[INFO] 
+[INFO] --- compiler:3.14.1:compile (default-compile) @ user-job-management ---
+[INFO] Nothing to compile - all classes are up to date.
+[INFO] 
+[INFO] --- resources:3.3.1:testResources (default-testResources) @ user-job-management ---
+[INFO] skip non existing resourceDirectory D:\HackCU\JUMBLE_main\JUMBLE\src\test\resources
+[INFO] 
+[INFO] --- compiler:3.14.1:testCompile (default-testCompile) @ user-job-management ---
+[INFO] Nothing to compile - all classes are up to date.
+[INFO] 
+[INFO] <<< spring-boot:4.0.3:run (default-cli) < test-compile @ user-job-management <<<
+[INFO] 
+[INFO] 
+[INFO] --- spring-boot:4.0.3:run (default-cli) @ user-job-management ---
+[INFO] Attaching agents: []
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::                (v4.0.3)
+
+2026-03-07T23:09:10.781-07:00  INFO 58972 --- [user-job-management] [           main] c.j.u.UserJobManagementApplication       : Starting UserJobManagementApplication using Java 21.0.10 with PID 58972 (D:\HackCU\JUMBLE_main\JUMBLE\target\classes started by Harsh Mukesh Sharma in D:\HackCU\JUMBLE_main\JUMBLE)
+2026-03-07T23:09:10.789-07:00  INFO 58972 --- [user-job-management] [           main] c.j.u.UserJobManagementApplication       : No active profile set, falling back to 1 default profile: "default"
+2026-03-07T23:09:11.614-07:00  INFO 58972 --- [user-job-management] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data MongoDB repositories in DEFAULT mode.
+2026-03-07T23:09:11.708-07:00  INFO 58972 --- [user-job-management] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 79 ms. Found 3 MongoDB repository interfaces.
+2026-03-07T23:09:12.885-07:00  INFO 58972 --- [user-job-management] [           main] o.s.boot.tomcat.TomcatWebServer          : Tomcat initialized with port 8080 (http)
+2026-03-07T23:09:12.912-07:00  INFO 58972 --- [user-job-management] [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-03-07T23:09:12.912-07:00  INFO 58972 --- [user-job-management] [           main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/11.0.18]
+2026-03-07T23:09:13.006-07:00  INFO 58972 --- [user-job-management] [           main] b.w.c.s.WebApplicationContextInitializer : Root WebApplicationContext: initialization completed in 2111 ms
+2026-03-07T23:09:13.315-07:00 DEBUG 58972 --- [user-job-management] [           main] org.mongodb.driver.cluster               : Starting monitoring for topology with ID ClusterId{value='69ad1289abd36d746469321d', description='JUMBLE'}
+2026-03-07T23:09:13.354-07:00  INFO 58972 --- [user-job-management] [ayr.mongodb.net] org.mongodb.driver.cluster               : Adding discovered server ac-nsh8tkf-shard-00-02.ewhoayr.mongodb.net:27017 to client view of cluster
+2026-03-07T23:09:13.384-07:00 DEBUG 58972 --- [user-job-management] [ayr.mongodb.net] org.mongodb.driver.connection            : Connection pool created for ac-nsh8tkf-shard-00-02.ewhoayr.mongodb.net:27017 using options maxIdleTimeMS=0, minPoolSize=0, maxPoolSize=100, maxConnecting=2, waitQueueTimeoutMS=120000
+2026-03-07T23:09:13.386-07:00  INFO 58972 --- [user-job-management] [           main] org.mongodb.driver.client                : MongoClient with metadata {"application": {"name": "JUMBLE"}, "driver": {"name": "mongo-java-driver|sync", "version": "5.6.3"}, "os": {"type": "Windows", "name": "Windows 11", "architecture": "amd64", "version": "10.0"}, "platform": "Java/Oracle Corporation/21.0.10+8-LTS-217"} created with settings MongoClientSettings{readPreference=primary, writeConcern=WriteConcern{w=majority, wTimeout=null ms, journal=null}, retryWrites=true, retryReads=true, readConcern=ReadConcern{level=null}, credential=MongoCredential{mechanism=null, userName='jumble_app_user', source='admin', password=<hidden>, mechanismProperties=<hidden>}, transportSettings=null, commandListeners=[], codecRegistry=ProvidersCodecRegistry{codecProviders=[ValueCodecProvider{}, BsonValueCodecProvider{}, DBRefCodecProvider{}, DBObjectCodecProvider{}, DocumentCodecProvider{}, CollectionCodecProvider{}, IterableCodecProvider{}, MapCodecProvider{}, GeoJsonCodecProvider{}, GridFSFileCodecProvider{}, Jsr310CodecProvider{}, JsonObjectCodecProvider{}, BsonCodecProvider{}, com.mongodb.client.model.mql.ExpressionCodecProvider@29a33620, com.mongodb.Jep395RecordCodecProvider@ea04cab, com.mongodb.KotlinCodecProvider@134f8ef6, EnumCodecProvider{}]}, loggerSettings=LoggerSettings{maxDocumentLength=1000}, clusterSettings={hosts=[127.0.0.1:27017], srvHost=jumble.ewhoayr.mongodb.net, srvServiceName=mongodb, mode=MULTIPLE, requiredClusterType=REPLICA_SET, requiredReplicaSetName='atlas-5qxgef-shard-0', serverSelector='null', clusterListeners='[]', serverSelectionTimeout='30000 ms', localThreshold='15 ms'}, socketSettings=SocketSettings{connectTimeoutMS=10000, readTimeoutMS=0, receiveBufferSize=0, proxySettings=ProxySettings{host=null, port=null, username=null, password=null}}, heartbeatSocketSettings=SocketSettings{connectTimeoutMS=10000, readTimeoutMS=10000, receiveBufferSize=0, proxySettings=ProxySettings{host=null, port=null, username=null, password=null}}, connectionPoolSettings=ConnectionPoolSettings{maxSize=100, minSize=0, maxWaitTimeMS=120000, maxConnectionLifeTimeMS=0, maxConnectionIdleTimeMS=0, maintenanceInitialDelayMS=0, maintenanceFrequencyMS=60000, connectionPoolListeners=[], maxConnecting=2}, serverSettings=ServerSettings{heartbeatFrequencyMS=10000, minHeartbeatFrequencyMS=500, serverMonitoringMode=AUTO, serverListeners='[]', serverMonitorListeners='[]'}, sslSettings=SslSettings{enabled=true, invalidHostNameAllowed=false, context=null}, applicationName='JUMBLE', compressorList=[], uuidRepresentation=UNSPECIFIED, serverApi=null, autoEncryptionSettings=null, dnsClient=null, inetAddressResolver=null, contextProvider=null, timeoutMS=null}
+2026-03-07T23:09:13.399-07:00 DEBUG 58972 --- [user-job-management] [ayr.mongodb.net] org.mongodb.driver.cluster               : Starting monitoring for server ac-nsh8tkf-shard-00-02.ewhoayr.mongodb.net:27017 in topology with ID ClusterId{value='69ad1289abd36d746469321d', description='JUMBLE'}
+2026-03-07T23:09:13.400-07:00 DEBUG 58972 --- [user-job-management] [ngodb.net:27017] org.mongodb.driver.cluster               : Checking status of ac-nsh8tkf-shard-00-02.ewhoayr.mongodb.net:27017
+2026-03-07T23:09:13.404-07:00  INFO 58972 --- [user-job-management] [ayr.mongodb.net] org.mongodb.driver.cluster               : Adding discovered server ac-nsh8tkf-shard-00-00.ewhoayr.mongodb.net:27017 to client view of cluster
+2026-03-07T23:09:13.405-07:00 DEBUG 58972 --- [user-job-management] [ayr.mongodb.net] org.mongodb.driver.connection            : Connection pool created for ac-nsh8tkf-shard-00-00.ewhoayr.mongodb.net:27017 using options maxIdleTimeMS=0, minPoolSize=0, maxPoolSize=100, maxConnecting=2, waitQueueTimeoutMS=120000
+2026-03-07T23:09:13.405-07:00 DEBUG 58972 --- [user-job-management] [ayr.mongodb.net] org.mongodb.driver.cluster               : Starting monitoring for server ac-nsh8tkf-shard-00-00.ewhoayr.mongodb.net:27017 in topology with ID ClusterId{value='69ad1289abd36d746469321d', description='JUMBLE'}
+2026-03-07T23:09:13.405-07:00  INFO 58972 --- [user-job-management] [ayr.mongodb.net] org.mongodb.driver.cluster               : Adding discovered server ac-nsh8tkf-shard-00-01.ewhoayr.mongodb.net:27017 to client view of cluster
+2026-03-07T23:09:13.406-07:00 DEBUG 58972 --- [user-job-management] [ngodb.net:27017] org.mongodb.driver.cluster               : Checking status of ac-nsh8tkf-shard-00-00.ewhoayr.mongodb.net:27017
+2026-03-07T23:09:13.406-07:00 DEBUG 58972 --- [user-job-management] [ayr.mongodb.net] org.mongodb.driver.connection            : Connection pool created for ac-nsh8tkf-shard-00-01.ewhoayr.mongodb.net:27017 using options maxIdleTimeMS=0, minPoolSize=0, maxPoolSize=100, maxConnecting=2, waitQueueTimeoutMS=120000
+2026-03-07T23:09:13.406-07:00 DEBUG 58972 --- [user-job-management] [ayr.mongodb.net] org.mongodb.driver.cluster               : Starting monitoring for server ac-nsh8tkf-shard-00-01.ewhoayr.mongodb.net:27017 in topology with ID ClusterId{value='69ad1289abd36d746469321d', description='JUMBLE'}
+2026-03-07T23:09:13.407-07:00 DEBUG 58972 --- [user-job-management] [ngodb.net:27017] org.mongodb.driver.cluster               : Checking status of ac-nsh8tkf-shard-00-01.ewhoayr.mongodb.net:27017
+2026-03-07T23:09:13.409-07:00 DEBUG 58972 --- [user-job-management] [ayr.mongodb.net] org.mongodb.driver.cluster               : Updating cluster description to  {type=REPLICA_SET, servers=[{address=ac-nsh8tkf-shard-00-01.ewhoayr.mongodb.net:27017, type=UNKNOWN, state=CONNECTING}, {address=ac-nsh8tkf-shard-00-02.ewhoayr.mongodb.net:27017, type=UNKNOWN, state=CONNECTING}, {address=ac-nsh8tkf-shard-00-00.ewhoayr.mongodb.net:27017, type=UNKNOWN, state=CONNECTING}]
+2026-03-07T23:09:13.414-07:00 DEBUG 58972 --- [user-job-management] [ayr.mongodb.net] org.mongodb.driver.cluster               : Description changed for topology with ID ClusterId{value='69ad1289abd36d746469321d', description='JUMBLE'}. Previous description: {type=UNKNOWN, servers=[]. New description: {type=REPLICA_SET, servers=[{address=ac-nsh8tkf-shard-00-01.ewhoayr.mongodb.net:27017, type=UNKNOWN, state=CONNECTING}, {address=ac-nsh8tkf-shard-00-02.ewhoayr.mongodb.net:27017, type=UNKNOWN, state=CONNECTING}, {address=ac-nsh8tkf-shard-00-00.ewhoayr.mongodb.net:27017, type=UNKNOWN, state=CONNECTING}]
+2026-03-07T23:09:13.422-07:00 DEBUG 58972 --- [user-job-management] [ngodb.net:27017] org.mongodb.driver.cluster               : Heartbeat started for ac-nsh8tkf-shard-00-01.ewhoayr.mongodb.net:27017 on connection with driver-generated ID 2 and server-generated ID null in topology with ID ClusterId{value='69ad1289abd36d746469321d', description='JUMBLE'}. Awaited: false
+2026-03-07T23:09:13.422-07:00 DEBUG 58972 --- [user-job-management] [ngodb.net:27017] org.mongodb.driver.cluster               : Heartbeat started for ac-nsh8tkf-shard-00-00.ewhoayr.mongodb.net:27017 on connection with driver-generated ID 3 and server-generated ID null in topology with ID ClusterId{value='69ad1289abd36d746469321d', description='JUMBLE'}. Awaited: false
+2026-03-07T23:09:13.422-07:00 DEBUG 58972 --- [user-job-management] [ngodb.net:27017] org.mongodb.driver.cluster               : Heartbeat started for ac-nsh8tkf-shard-00-02.ewhoayr.mongodb.net:27017 on connection with driver-generated ID 1 and server-generated ID null in topology with ID ClusterId{value='69ad1289abd36d746469321d', description='JUMBLE'}. Awaited: false
+2026-03-07T23:09:14.200-07:00  INFO 58972 --- [user-job-management] [ngodb.net:27017] org.mongodb.driver.cluster               : Monitor thread successfully connected to server with description ServerDescription{address=ac-nsh8tkf-shard-00-02.ewhoayr.mongodb.net:27017, type=REPLICA_SET_SECONDARY, cryptd=false, state=CONNECTED, ok=true, minWireVersion=0, maxWireVersion=25, maxDocumentSize=16777216, logicalSessionTimeoutMinutes=30, roundTripTimeNanos=463696800, minRoundTripTimeNanos=0, setName='atlas-5qxgef-shard-0', canonicalAddress=ac-nsh8tkf-shard-00-02.ewhoayr.mongodb.net:27017, hosts=[ac-nsh8tkf-shard-00-00.ewhoayr.mongodb.net:27017, ac-nsh8tkf-shard-00-02.ewhoayr.mongodb.net:27017, ac-nsh8tkf-shard-00-01.ewhoayr.mongodb.net:27017], passives=[], arbiters=[], primary='ac-nsh8tkf-shard-00-01.ewhoayr.mongodb.net:27017', tagSet=TagSet{[Tag{name='availabilityZone', value='usw2-az3'}, Tag{name='diskState', value='READY'}, Tag{name='nodeType', value='ELECTABLE'}, Tag{name='provider', value='AWS'}, Tag{name='region', value='US_WEST_2'}, Tag{name='workloadType', value='OPERATIONAL'}]}, electionId=null, setVersion=180, topologyVersion=TopologyVersion{processId=699f6c7e21a23b072f90d3d9, counter=3}, lastWriteDate=Sat Mar 07 23:09:13 MST 2026, lastUpdateTimeNanos=1585584208338500}
+2026-03-07T23:09:14.200-07:00  INFO 58972 --- [user-job-management] [ngodb.net:27017] org.mongodb.driver.cluster               : Monitor thread successfully connected to server with description ServerDescription{address=ac-nsh8tkf-shard-00-01.ewhoayr.mongodb.net:27017, type=REPLICA_SET_PRIMARY, cryptd=false, state=CONNECTED, ok=true, minWireVersion=0, maxWireVersion=25, maxDocumentSize=16777216, logicalSessionTimeoutMinutes=30, roundTripTimeNanos=463645400, minRoundTripTimeNanos=0, setName='atlas-5qxgef-shard-0', canonicalAddress=ac-nsh8tkf-shard-00-01.ewhoayr.mongodb.net:27017, hosts=[ac-nsh8tkf-shard-00-00.ewhoayr.mongodb.net:27017, ac-nsh8tkf-shard-00-02.ewhoayr.mongodb.net:27017, ac-nsh8tkf-shard-00-01.ewhoayr.mongodb.net:27017], passives=[], arbiters=[], primary='ac-nsh8tkf-shard-00-01.ewhoayr.mongodb.net:27017', tagSet=TagSet{[Tag{name='availabilityZone', value='usw2-az1'}, Tag{name='diskState', value='READY'}, Tag{name='nodeType', value='ELECTABLE'}, Tag{name='provider', value='AWS'}, Tag{name='region', value='US_WEST_2'}, Tag{name='workloadType', value='OPERATIONAL'}]}, electionId=7fffffff00000000000001c5, setVersion=180, topologyVersion=TopologyVersion{processId=699f69b5503e08471450188e, counter=6}, lastWriteDate=Sat Mar 07 23:09:13 MST 2026, lastUpdateTimeNanos=1585584208336100}
+2026-03-07T23:09:14.200-07:00  INFO 58972 --- [user-job-management] [ngodb.net:27017] org.mongodb.driver.cluster               : Monitor thread successfully connected to server with description ServerDescription{address=ac-nsh8tkf-shard-00-00.ewhoayr.mongodb.net:27017, type=REPLICA_SET_SECONDARY, cryptd=false, state=CONNECTED, ok=true, minWireVersion=0, maxWireVersion=25, maxDocumentSize=16777216, logicalSessionTimeoutMinutes=30, roundTripTimeNanos=463795300, minRoundTripTimeNanos=0, setName='atlas-5qxgef-shard-0', canonicalAddress=ac-nsh8tkf-shard-00-00.ewhoayr.mongodb.net:27017, hosts=[ac-nsh8tkf-shard-00-00.ewhoayr.mongodb.net:27017, ac-nsh8tkf-shard-00-02.ewhoayr.mongodb.net:27017, ac-nsh8tkf-shard-00-01.ewhoayr.mongodb.net:27017], passives=[], arbiters=[], primary='ac-nsh8tkf-shard-00-01.ewhoayr.mongodb.net:27017', tagSet=TagSet{[Tag{name='availabilityZone', value='usw2-az2'}, Tag{name='diskState', value='READY'}, Tag{name='nodeType', value='ELECTABLE'}, Tag{name='provider', value='AWS'}, Tag{name='region', value='US_WEST_2'}, Tag{name='workloadType', value='OPERATIONAL'}]}, electionId=null, setVersion=180, topologyVersion=TopologyVersion{processId=699f6800acc8b2f7e41bc934, counter=4}, lastWriteDate=Sat Mar 07 23:09:13 MST 2026, lastUpdateTimeNanos=1585584208338600}
+2026-03-07T23:09:14.207-07:00 DEBUG 58972 --- [user-job-management] [ngodb.net:27017] org.mongodb.driver.connection            : Connection pool ready for ac-nsh8tkf-shard-00-01.ewhoayr.mongodb.net:27017
+2026-03-07T23:09:14.212-07:00  INFO 58972 --- [user-job-management] [ngodb.net:27017] org.mongodb.driver.cluster               : Discovered replica set primary ac-nsh8tkf-shard-00-01.ewhoayr.mongodb.net:27017 with max election id 7fffffff00000000000001c5 and max set version 180
+2026-03-07T23:09:14.216-07:00 DEBUG 58972 --- [user-job-management] [ngodb.net:27017] org.mongodb.driver.cluster               : Updating cluster description to  {type=REPLICA_SET, servers=[{address=ac-nsh8tkf-shard-00-01.ewhoayr.mongodb.net:27017, type=REPLICA_SET_PRIMARY, TagSet{[Tag{name='availabilityZone', value='usw2-az1'}, Tag{name='diskState', value='READY'}, Tag{name='nodeType', value='ELECTABLE'}, Tag{name='provider', value='AWS'}, Tag{name='region', value='US_WEST_2'}, Tag{name='workloadType', value='OPERATIONAL'}]}, roundTripTime=463.6 ms, state=CONNECTED}, {address=ac-nsh8tkf-shard-00-02.ewhoayr.mongodb.net:27017, type=UNKNOWN, state=CONNECTING}, {address=ac-nsh8tkf-shard-00-00.ewhoayr.mongodb.net:27017, type=UNKNOWN, state=CONNECTING}]
+2026-03-07T23:09:14.217-07:00 DEBUG 58972 --- [user-job-management] [ngodb.net:27017] org.mongodb.driver.cluster               : Description changed for topology with ID ClusterId{value='69ad1289abd36d746469321d', description='JUMBLE'}. Previous description: {type=REPLICA_SET, servers=[{address=ac-nsh8tkf-shard-00-01.ewhoayr.mongodb.net:27017, type=UNKNOWN, state=CONNECTING}, {address=ac-nsh8tkf-shard-00-02.ewhoayr.mongodb.net:27017, type=UNKNOWN, state=CONNECTING}, {address=ac-nsh8tkf-shard-00-00.ewhoayr.mongodb.net:27017, type=UNKNOWN, state=CONNECTING}]. New description: {type=REPLICA_SET, servers=[{address=ac-nsh8tkf-shard-00-01.ewhoayr.mongodb.net:27017, type=REPLICA_SET_PRIMARY, TagSet{[Tag{name='availabilityZone', value='usw2-az1'}, Tag{name='diskState', value='READY'}, Tag{name='nodeType', value='ELECTABLE'}, Tag{name='provider', value='AWS'}, Tag{name='region', value='US_WEST_2'}, Tag{name='workloadType', value='OPERATIONAL'}]}, roundTripTime=463.6 ms, state=CONNECTED}, {address=ac-nsh8tkf-shard-00-02.ewhoayr.mongodb.net:27017, type=UNKNOWN, state=CONNECTING}, {address=ac-nsh8tkf-shard-00-00.ewhoayr.mongodb.net:27017, type=UNKNOWN, state=CONNECTING}]
+2026-03-07T23:09:14.217-07:00 DEBUG 58972 --- [user-job-management] [ngodb.net:27017] org.mongodb.driver.cluster               : Checking status of ac-nsh8tkf-shard-00-01.ewhoayr.mongodb.net:27017
+2026-03-07T23:09:14.217-07:00 DEBUG 58972 --- [user-job-management] [ngodb.net:27017] org.mongodb.driver.connection            : Connection pool ready for ac-nsh8tkf-shard-00-02.ewhoayr.mongodb.net:27017
+2026-03-07T23:09:14.219-07:00 DEBUG 58972 --- [user-job-management] [ngodb.net:27017] org.mongodb.driver.cluster               : Updating cluster description to  {type=REPLICA_SET, servers=[{address=ac-nsh8tkf-shard-00-01.ewhoayr.mongodb.net:27017, type=REPLICA_SET_PRIMARY, TagSet{[Tag{name='availabilityZone', value='usw2-az1'}, Tag{name='diskState', value='READY'}, Tag{name='nodeType', value='ELECTABLE'}, Tag{name='provider', value='AWS'}, Tag{name='region', value='US_WEST_2'}, Tag{name='workloadType', value='OPERATIONAL'}]}, roundTripTime=463.6 ms, state=CONNECTED}, {address=ac-nsh8tkf-shard-00-02.ewhoayr.mongodb.net:27017, type=REPLICA_SET_SECONDARY, TagSet{[Tag{name='availabilityZone', value='usw2-az3'}, Tag{name='diskState', value='READY'}, Tag{name='nodeType', value='ELECTABLE'}, Tag{name='provider', value='AWS'}, Tag{name='region', value='US_WEST_2'}, Tag{name='workloadType', value='OPERATIONAL'}]}, roundTripTime=463.7 ms, state=CONNECTED}, {address=ac-nsh8tkf-shard-00-00.ewhoayr.mongodb.net:27017, type=UNKNOWN, state=CONNECTING}]
+2026-03-07T23:09:14.219-07:00 DEBUG 58972 --- [user-job-management] [ngodb.net:27017] org.mongodb.driver.cluster               : Description changed for topology with ID ClusterId{value='69ad1289abd36d746469321d', description='JUMBLE'}. Previous description: {type=REPLICA_SET, servers=[{address=ac-nsh8tkf-shard-00-01.ewhoayr.mongodb.net:27017, type=REPLICA_SET_PRIMARY, TagSet{[Tag{name='availabilityZone', value='usw2-az1'}, Tag{name='diskState', value='READY'}, Tag{name='nodeType', value='ELECTABLE'}, Tag{name='provider', value='AWS'}, Tag{name='region', value='US_WEST_2'}, Tag{name='workloadType', value='OPERATIONAL'}]}, roundTripTime=463.6 ms, state=CONNECTED}, {address=ac-nsh8tkf-shard-00-02.ewhoayr.mongodb.net:27017, type=UNKNOWN, state=CONNECTING}, {address=ac-nsh8tkf-shard-00-00.ewhoayr.mongodb.net:27017, type=UNKNOWN, state=CONNECTING}]. New description: {type=REPLICA_SET, servers=[{address=ac-nsh8tkf-shard-00-01.ewhoayr.mongodb.net:27017, type=REPLICA_SET_PRIMARY, TagSet{[Tag{name='availabilityZone', value='usw2-az1'}, Tag{name='diskState', value='READY'}, Tag{name='nodeType', value='ELECTABLE'}, Tag{name='provider', value='AWS'}, Tag{name='region', value='US_WEST_2'}, Tag{name='workloadType', value='OPERATIONAL'}]}, roundTripTime=463.6 ms, state=CONNECTED}, {address=ac-nsh8tkf-shard-00-02.ewhoayr.mongodb.net:27017, type=REPLICA_SET_SECONDARY, TagSet{[Tag{name='availabilityZone', value='usw2-az3'}, Tag{name='diskState', value='READY'}, Tag{name='nodeType', value='ELECTABLE'}, Tag{name='provider', value='AWS'}, Tag{name='region', value='US_WEST_2'}, Tag{name='workloadType', value='OPERATIONAL'}]}, roundTripTime=463.7 ms, state=CONNECTED}, {address=ac-nsh8tkf-shard-00-00.ewhoayr.mongodb.net:27017, type=UNKNOWN, state=CONNECTING}]
+2026-03-07T23:09:14.219-07:00 DEBUG 58972 --- [user-job-management] [ngodb.net:27017] org.mongodb.driver.cluster               : Checking status of ac-nsh8tkf-shard-00-02.ewhoayr.mongodb.net:27017
+2026-03-07T23:09:14.220-07:00 DEBUG 58972 --- [user-job-management] [ngodb.net:27017] org.mongodb.driver.connection            : Connection pool ready for ac-nsh8tkf-shard-00-00.ewhoayr.mongodb.net:27017
+2026-03-07T23:09:14.221-07:00 DEBUG 58972 --- [user-job-management] [ngodb.net:27017] org.mongodb.driver.cluster               : Updating cluster description to  {type=REPLICA_SET, servers=[{address=ac-nsh8tkf-shard-00-01.ewhoayr.mongodb.net:27017, type=REPLICA_SET_PRIMARY, TagSet{[Tag{name='availabilityZone', value='usw2-az1'}, Tag{name='diskState', value='READY'}, Tag{name='nodeType', value='ELECTABLE'}, Tag{name='provider', value='AWS'}, Tag{name='region', value='US_WEST_2'}, Tag{name='workloadType', value='OPERATIONAL'}]}, roundTripTime=463.6 ms, state=CONNECTED}, {address=ac-nsh8tkf-shard-00-02.ewhoayr.mongodb.net:27017, type=REPLICA_SET_SECONDARY, TagSet{[Tag{name='availabilityZone', value='usw2-az3'}, Tag{name='diskState', value='READY'}, Tag{name='nodeType', value='ELECTABLE'}, Tag{name='provider', value='AWS'}, Tag{name='region', value='US_WEST_2'}, Tag{name='workloadType', value='OPERATIONAL'}]}, roundTripTime=463.7 ms, state=CONNECTED}, {address=ac-nsh8tkf-shard-00-00.ewhoayr.mongodb.net:27017, type=REPLICA_SET_SECONDARY, TagSet{[Tag{name='availabilityZone', value='usw2-az2'}, Tag{name='diskState', value='READY'}, Tag{name='nodeType', value='ELECTABLE'}, Tag{name='provider', value='AWS'}, Tag{name='region', value='US_WEST_2'}, Tag{name='workloadType', value='OPERATIONAL'}]}, roundTripTime=463.8 ms, state=CONNECTED}]
+2026-03-07T23:09:14.222-07:00 DEBUG 58972 --- [user-job-management] [ngodb.net:27017] org.mongodb.driver.cluster               : Description changed for topology with ID ClusterId{value='69ad1289abd36d746469321d', description='JUMBLE'}. Previous description: {type=REPLICA_SET, servers=[{address=ac-nsh8tkf-shard-00-01.ewhoayr.mongodb.net:27017, type=REPLICA_SET_PRIMARY, TagSet{[Tag{name='availabilityZone', value='usw2-az1'}, Tag{name='diskState', value='READY'}, Tag{name='nodeType', value='ELECTABLE'}, Tag{name='provider', value='AWS'}, Tag{name='region', value='US_WEST_2'}, Tag{name='workloadType', value='OPERATIONAL'}]}, roundTripTime=463.6 ms, state=CONNECTED}, {address=ac-nsh8tkf-shard-00-02.ewhoayr.mongodb.net:27017, type=REPLICA_SET_SECONDARY, TagSet{[Tag{name='availabilityZone', value='usw2-az3'}, Tag{name='diskState', value='READY'}, Tag{name='nodeType', value='ELECTABLE'}, Tag{name='provider', value='AWS'}, Tag{name='region', value='US_WEST_2'}, Tag{name='workloadType', value='OPERATIONAL'}]}, roundTripTime=463.7 ms, state=CONNECTED}, {address=ac-nsh8tkf-shard-00-00.ewhoayr.mongodb.net:27017, type=UNKNOWN, state=CONNECTING}]. New description: {type=REPLICA_SET, servers=[{address=ac-nsh8tkf-shard-00-01.ewhoayr.mongodb.net:27017, type=REPLICA_SET_PRIMARY, TagSet{[Tag{name='availabilityZone', value='usw2-az1'}, Tag{name='diskState', value='READY'}, Tag{name='nodeType', value='ELECTABLE'}, Tag{name='provider', value='AWS'}, Tag{name='region', value='US_WEST_2'}, Tag{name='workloadType', value='OPERATIONAL'}]}, roundTripTime=463.6 ms, state=CONNECTED}, {address=ac-nsh8tkf-shard-00-02.ewhoayr.mongodb.net:27017, type=REPLICA_SET_SECONDARY, TagSet{[Tag{name='availabilityZone', value='usw2-az3'}, Tag{name='diskState', value='READY'}, Tag{name='nodeType', value='ELECTABLE'}, Tag{name='provider', value='AWS'}, Tag{name='region', value='US_WEST_2'}, Tag{name='workloadType', value='OPERATIONAL'}]}, roundTripTime=463.7 ms, state=CONNECTED}, {address=ac-nsh8tkf-shard-00-00.ewhoayr.mongodb.net:27017, type=REPLICA_SET_SECONDARY, TagSet{[Tag{name='availabilityZone', value='usw2-az2'}, Tag{name='diskState', value='READY'}, Tag{name='nodeType', value='ELECTABLE'}, Tag{name='provider', value='AWS'}, Tag{name='region', value='US_WEST_2'}, Tag{name='workloadType', value='OPERATIONAL'}]}, roundTripTime=463.8 ms, state=CONNECTED}]
+2026-03-07T23:09:14.223-07:00 DEBUG 58972 --- [user-job-management] [ngodb.net:27017] org.mongodb.driver.cluster               : Checking status of ac-nsh8tkf-shard-00-00.ewhoayr.mongodb.net:27017
+2026-03-07T23:09:14.393-07:00  INFO 58972 --- [user-job-management] [           main] eAuthenticationProviderManagerConfigurer : Global AuthenticationManager configured with AuthenticationProvider bean with name authenticationProvider
+2026-03-07T23:09:14.394-07:00  WARN 58972 --- [user-job-management] [           main] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with an AuthenticationProvider bean. UserDetailsService beans will not be used by Spring Security for automatically configuring username/password login. Consider removing the AuthenticationProvider bean. Alternatively, consider using the UserDetailsService in a manually instantiated DaoAuthenticationProvider. If the current configuration is intentional, to turn off this warning, increase the logging level of 'org.springframework.security.config.annotation.authentication.configuration.InitializeUserDetailsBeanManagerConfigurer' to ERROR
+2026-03-07T23:09:15.275-07:00  WARN 58972 --- [user-job-management] [           main] ConfigServletWebServerApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.context.ApplicationContextException: Failed to start bean 'webServerStartStop'
+2026-03-07T23:09:15.302-07:00  INFO 58972 --- [user-job-management] [           main] .s.b.a.l.ConditionEvaluationReportLogger : 
+
+Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
+2026-03-07T23:09:15.326-07:00 ERROR 58972 --- [user-job-management] [           main] o.s.b.d.LoggingFailureAnalysisReporter   : 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+Web server failed to start. Port 8080 was already in use.
+
+Action:
+
+Identify and stop the process that's listening on port 8080 or configure this application to listen on another port.
+
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD FAILURE
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  10.226 s
+[INFO] Finished at: 2026-03-07T23:09:15-07:00
+[INFO] ------------------------------------------------------------------------
+[ERROR] Failed to execute goal org.springframework.boot:spring-boot-maven-plugin:4.0.3:run (default-cli) on project user-job-management: Process terminated with exit code: 1 -> [Help 1]
+org.apache.maven.lifecycle.LifecycleExecutionException: Failed to execute goal org.springframework.boot:spring-boot-maven-plugin:4.0.3:run (default-cli) on project user-job-management: Process terminated with exit code: 1
+    at org.apache.maven.lifecycle.internal.MojoExecutor.doExecute2 (MojoExecutor.java:333)
+    at org.apache.maven.lifecycle.internal.MojoExecutor.doExecute (MojoExecutor.java:316)
+    at org.apache.maven.lifecycle.internal.MojoExecutor.execute (MojoExecutor.java:212)
+    at org.apache.maven.lifecycle.internal.MojoExecutor.execute (MojoExecutor.java:174)
+    at org.apache.maven.lifecycle.internal.MojoExecutor.access$000 (MojoExecutor.java:75)
+    at org.apache.maven.lifecycle.internal.MojoExecutor$1.run (MojoExecutor.java:162)
+    at org.apache.maven.plugin.DefaultMojosExecutionStrategy.execute (DefaultMojosExecutionStrategy.java:39)
+    at org.apache.maven.lifecycle.internal.MojoExecutor.execute (MojoExecutor.java:159)
+    at org.apache.maven.lifecycle.internal.LifecycleModuleBuilder.buildProject (LifecycleModuleBuilder.java:105)
+    at org.apache.maven.lifecycle.internal.LifecycleModuleBuilder.buildProject (LifecycleModuleBuilder.java:73)
+    at org.apache.maven.lifecycle.internal.builder.singlethreaded.SingleThreadedBuilder.build (SingleThreadedBuilder.java:53)
+    at org.apache.maven.lifecycle.internal.LifecycleStarter.execute (LifecycleStarter.java:118)
+    at org.apache.maven.DefaultMaven.doExecute (DefaultMaven.java:261)
+    at org.apache.maven.DefaultMaven.doExecute (DefaultMaven.java:173)
+    at org.apache.maven.DefaultMaven.execute (DefaultMaven.java:101)
+    at org.apache.maven.cli.MavenCli.execute (MavenCli.java:919)
+    at org.apache.maven.cli.MavenCli.doMain (MavenCli.java:285)
+    at org.apache.maven.cli.MavenCli.main (MavenCli.java:207)
+    at jdk.internal.reflect.DirectMethodHandleAccessor.invoke (DirectMethodHandleAccessor.java:103)
+    at java.lang.reflect.Method.invoke (Method.java:580)
+    at org.codehaus.plexus.classworlds.launcher.Launcher.launchEnhanced (Launcher.java:255)
+    at org.codehaus.plexus.classworlds.launcher.Launcher.launch (Launcher.java:201)
+    at org.codehaus.plexus.classworlds.launcher.Launcher.mainWithExitCode (Launcher.java:361)
+    at org.codehaus.plexus.classworlds.launcher.Launcher.main (Launcher.java:314)
+Caused by: org.apache.maven.plugin.MojoExecutionException: Process terminated with exit code: 1
+    at org.springframework.boot.maven.JavaProcessExecutor.run (JavaProcessExecutor.java:75)
+    at org.springframework.boot.maven.RunMojo.run (RunMojo.java:84)
+    at org.springframework.boot.maven.AbstractRunMojo.run (AbstractRunMojo.java:263)
+    at org.springframework.boot.maven.AbstractRunMojo.execute (AbstractRunMojo.java:226)
+    at org.apache.maven.plugin.DefaultBuildPluginManager.executeMojo (DefaultBuildPluginManager.java:126)
+    at org.apache.maven.lifecycle.internal.MojoExecutor.doExecute2 (MojoExecutor.java:328)
+    at org.apache.maven.lifecycle.internal.MojoExecutor.doExecute (MojoExecutor.java:316)
+    at org.apache.maven.lifecycle.internal.MojoExecutor.execute (MojoExecutor.java:212)
+    at org.apache.maven.lifecycle.internal.MojoExecutor.execute (MojoExecutor.java:174)
+    at org.apache.maven.lifecycle.internal.MojoExecutor.access$000 (MojoExecutor.java:75)
+    at org.apache.maven.lifecycle.internal.MojoExecutor$1.run (MojoExecutor.java:162)
+    at org.apache.maven.plugin.DefaultMojosExecutionStrategy.execute (DefaultMojosExecutionStrategy.java:39)
+    at org.apache.maven.lifecycle.internal.MojoExecutor.execute (MojoExecutor.java:159)
+    at org.apache.maven.lifecycle.internal.LifecycleModuleBuilder.buildProject (LifecycleModuleBuilder.java:105)
+    at org.apache.maven.lifecycle.internal.LifecycleModuleBuilder.buildProject (LifecycleModuleBuilder.java:73)
+    at org.apache.maven.lifecycle.internal.builder.singlethreaded.SingleThreadedBuilder.build (SingleThreadedBuilder.java:53)
+    at org.apache.maven.lifecycle.internal.LifecycleStarter.execute (LifecycleStarter.java:118)
+    at org.apache.maven.DefaultMaven.doExecute (DefaultMaven.java:261)
+    at org.apache.maven.DefaultMaven.doExecute (DefaultMaven.java:173)
+    at org.apache.maven.DefaultMaven.execute (DefaultMaven.java:101)
+    at org.apache.maven.cli.MavenCli.execute (MavenCli.java:919)
+    at org.apache.maven.cli.MavenCli.doMain (MavenCli.java:285)
+    at org.apache.maven.cli.MavenCli.main (MavenCli.java:207)
+    at jdk.internal.reflect.DirectMethodHandleAccessor.invoke (DirectMethodHandleAccessor.java:103)
+    at java.lang.reflect.Method.invoke (Method.java:580)
+    at org.codehaus.plexus.classworlds.launcher.Launcher.launchEnhanced (Launcher.java:255)
+    at org.codehaus.plexus.classworlds.launcher.Launcher.launch (Launcher.java:201)
+    at org.codehaus.plexus.classworlds.launcher.Launcher.mainWithExitCode (Launcher.java:361)
+    at org.codehaus.plexus.classworlds.launcher.Launcher.main (Launcher.java:314)
+[ERROR] 
+[ERROR] Re-run Maven using the -X switch to enable full debug logging.
+[ERROR] 
+[ERROR] For more information about the errors and possible solutions, please read the following articles:
+[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/MojoExecutionException
