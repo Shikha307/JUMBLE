@@ -16,17 +16,22 @@ export default function AddJob() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const token = localStorage.getItem('token');
+    const recruiterId = localStorage.getItem('id');
     const payload = {
       roleName: formData.roleName,
       description: formData.description,
       skillsNeeded: formData.skillsNeeded.split(',').map(s => s.trim()).filter(s => s),
-      recruiterId: localStorage.getItem('id') // Retrieved from login/registration
+      recruiterId: recruiterId
     };
     
     try {
       const response = await fetch('http://localhost:8081/api/jobs', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
         body: JSON.stringify(payload)
       });
       
