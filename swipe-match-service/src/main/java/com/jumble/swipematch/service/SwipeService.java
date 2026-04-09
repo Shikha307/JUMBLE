@@ -45,6 +45,7 @@ public class SwipeService {
                 .swiperRole(request.getSwiperRole())
                 .direction(request.getDirection())
                 .timestamp(Instant.now())
+                .resumeId(request.getResumeId())
                 .build();
 
         swipeRepository.save(swipe);
@@ -72,10 +73,13 @@ public class SwipeService {
 
         SwipeRecord record = mongoSwipeRecordRepository
                 .findByCandidateIdAndJobId(candidateId, jobId)
-                .orElse(new SwipeRecord(null, candidateId, jobId, null, null, false));
+                .orElse(new SwipeRecord(null, request.getCandidateId(), request.getJobId(), null, null, false, null));
 
         if (request.getSwiperRole() == UserRole.CANDIDATE) {
             record.setCandidateSwipe(dir);
+            if (dir == SwipeDirection.RIGHT) {
+                record.setCandidateResumeId(request.getResumeId());
+            }
         } else {
             record.setRecruiterSwipe(dir);
         }

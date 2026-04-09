@@ -42,6 +42,8 @@ public class CandidateProfileController {
             response.put("university", candidate.getUniversity());
             response.put("linkedin", candidate.getLinkedin());
             response.put("resumeFilename", candidate.getResumeFilename());
+            response.put("resumes", candidate.getResumes());
+            response.put("activeResumeId", candidate.getActiveResumeId());
             return ResponseEntity.ok(response);
         }
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Candidate not found.");
@@ -81,6 +83,80 @@ public class CandidateProfileController {
         } catch (IOException e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to process resume file.");
         }
+    }
+
+    @PostMapping("/me/resumes")
+    public ResponseEntity<?> addResume(
+            Authentication authentication,
+            @RequestParam("fieldName") String fieldName,
+            @RequestParam("resume") MultipartFile resume) {
+        String email = authentication.getName();
+        Optional<Candidate> candidateOpt = candidateRepository.findByEmail(email);
+
+        if (candidateOpt.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Candidate not found.");
+        }
+
+        try {
+            Candidate candidate = candidateOpt.get();
+            if (candidate.getResumes() == null) {
+                candidate.setResumes(new java.util.ArrayList<>());
+            }
+            
+            com.jumble.userjob.candidate.model.CandidateResume newResume = new com.jumble.userjob.candidate.model.CandidateResume();
+            newResume.setFieldName(fieldName);
+            newResume.setFilename(resume.getOriginalFilename());
+            newResume.setContentType(resume.getContentType());
+            newResume.setData(resume.getBytes());
+            
+            candidate.getResumes().add(newResume);
+            candidateRepository.save(candidate);
+            
+            return ResponseEntity.ok("Resume added successfully.");
+        } catch (IOException e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to process resume file.");
+        }
+    }
+
+    @DeleteMapping("/me/resumes/{resumeId}")
+    public ResponseEntity<?> deleteResume(
+            Authentication authentication,
+            @PathVariable String resumeId) {
+        String email = authentication.getName();
+        Optional<Candidate> candidateOpt = candidateRepository.findByEmail(email);
+
+        if (candidateOpt.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Candidate not found.");
+        }
+
+        Candidate candidate = candidateOpt.get();
+        if (candidate.getResumes() != null) {
+            candidate.getResumes().removeIf(r -> r.getId().equals(resumeId));
+            if (resumeId.equals(candidate.getActiveResumeId())) {
+                candidate.setActiveResumeId(null);
+            }
+            candidateRepository.save(candidate);
+        }
+        
+        return ResponseEntity.ok("Resume deleted successfully.");
+    }
+
+    @PutMapping("/me/active-resume")
+    public ResponseEntity<?> updateActiveResume(
+            Authentication authentication,
+            @RequestBody Map<String, String> request) {
+        String email = authentication.getName();
+        Optional<Candidate> candidateOpt = candidateRepository.findByEmail(email);
+
+        if (candidateOpt.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Candidate not found.");
+        }
+
+        Candidate candidate = candidateOpt.get();
+        candidate.setActiveResumeId(request.get("activeResumeId"));
+        candidateRepository.save(candidate);
+        
+        return ResponseEntity.ok("Active resume updated.");
     }
 
     @PutMapping("/me/password")

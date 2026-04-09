@@ -21,4 +21,5 @@ public class Match {
     @Indexed
     private String recruiterId;
     private Instant matchedAt;
+    private String candidateResumeId;
 }

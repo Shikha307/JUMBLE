@@ -35,4 +35,6 @@ public class SwipeRecord {
 
     /** true when both parties have swiped RIGHT */
     private boolean matched;
+
+    private String candidateResumeId;
 }

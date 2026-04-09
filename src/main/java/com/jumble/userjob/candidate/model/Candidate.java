@@ -27,4 +27,7 @@ public class Candidate {
 
     @com.fasterxml.jackson.annotation.JsonIgnore
     private byte[] resumeData;
+
+    private List<CandidateResume> resumes;
+    private String activeResumeId;
 }

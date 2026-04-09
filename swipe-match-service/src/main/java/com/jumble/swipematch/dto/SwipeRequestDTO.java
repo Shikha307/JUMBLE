@@ -11,4 +11,5 @@ public class SwipeRequestDTO {
     private String recruiterId;
     private UserRole swiperRole;
     private SwipeDirection direction;
+    private String resumeId;
 }

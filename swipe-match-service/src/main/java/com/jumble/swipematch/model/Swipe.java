@@ -27,4 +27,5 @@ public class Swipe {
     private UserRole swiperRole;
     private SwipeDirection direction;
     private Instant timestamp;
+    private String resumeId;
 }

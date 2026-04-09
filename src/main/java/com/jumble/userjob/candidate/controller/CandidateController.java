@@ -58,14 +58,55 @@ public class CandidateController {
     }
 
     @GetMapping("/{id}/resume")
-    public ResponseEntity<byte[]> downloadResume(@PathVariable String id) {
+    public ResponseEntity<byte[]> downloadResume(
+            @PathVariable String id, 
+            @RequestParam(value = "resumeId", required = false) String resumeId) {
         return userService.getUserById(id)
-                .filter(candidate -> candidate.getResumeData() != null)
-                .map(candidate -> ResponseEntity.ok()
-                        .header(org.springframework.http.HttpHeaders.CONTENT_DISPOSITION,
-                                "attachment; filename=\"" + candidate.getResumeFilename() + "\"")
-                        .header(org.springframework.http.HttpHeaders.CONTENT_TYPE, candidate.getResumeContentType())
-                        .body(candidate.getResumeData()))
+                .map(candidate -> {
+                    // 1. If a specific resumeId is requested, serve that one
+                    if (resumeId != null && candidate.getResumes() != null) {
+                        for (com.jumble.userjob.candidate.model.CandidateResume r : candidate.getResumes()) {
+                            if (r.getId().equals(resumeId)) {
+                                return ResponseEntity.ok()
+                                        .header(org.springframework.http.HttpHeaders.CONTENT_DISPOSITION,
+                                                "attachment; filename=\"" + r.getFilename() + "\"")
+                                        .header(org.springframework.http.HttpHeaders.CONTENT_TYPE, r.getContentType())
+                                        .body(r.getData());
+                            }
+                        }
+                    }
+                    // 2. No specific resumeId — check if candidate has set an activeResumeId
+                    String activeId = candidate.getActiveResumeId();
+                    if (activeId != null && !activeId.isBlank() && candidate.getResumes() != null) {
+                        for (com.jumble.userjob.candidate.model.CandidateResume r : candidate.getResumes()) {
+                            if (r.getId().equals(activeId)) {
+                                return ResponseEntity.ok()
+                                        .header(org.springframework.http.HttpHeaders.CONTENT_DISPOSITION,
+                                                "attachment; filename=\"" + r.getFilename() + "\"")
+                                        .header(org.springframework.http.HttpHeaders.CONTENT_TYPE, r.getContentType())
+                                        .body(r.getData());
+                            }
+                        }
+                    }
+                    // 3. Fall back to original primary resume
+                    if (candidate.getResumeData() != null) {
+                        return ResponseEntity.ok()
+                                .header(org.springframework.http.HttpHeaders.CONTENT_DISPOSITION,
+                                        "attachment; filename=\"" + candidate.getResumeFilename() + "\"")
+                                .header(org.springframework.http.HttpHeaders.CONTENT_TYPE, candidate.getResumeContentType())
+                                .body(candidate.getResumeData());
+                    }
+                    // 4. Fall back to first uploaded resume
+                    if (candidate.getResumes() != null && !candidate.getResumes().isEmpty()) {
+                        com.jumble.userjob.candidate.model.CandidateResume r = candidate.getResumes().get(0);
+                        return ResponseEntity.ok()
+                                .header(org.springframework.http.HttpHeaders.CONTENT_DISPOSITION,
+                                        "attachment; filename=\"" + r.getFilename() + "\"")
+                                .header(org.springframework.http.HttpHeaders.CONTENT_TYPE, r.getContentType())
+                                .body(r.getData());
+                    }
+                    return null;
+                })
                 .orElse(ResponseEntity.notFound().build());
     }
 

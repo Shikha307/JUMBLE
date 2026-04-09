@@ -74,6 +74,7 @@ public class MatchDetectionService {
                         .jobId(record.getJobId())
                         .recruiterId(recruiterId)
                         .matchedAt(Instant.now())
+                        .candidateResumeId(record.getCandidateResumeId())
                         .build();
                         
                 matchRepository.save(match);

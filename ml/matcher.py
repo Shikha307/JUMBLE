@@ -67,6 +67,13 @@ def extract_candidate_text(candidate):
         val = candidate.get(field, '')
         if val:
             parts.append(val)
+            
+    resumes = candidate.get('resumes', [])
+    if isinstance(resumes, list):
+        for res in resumes:
+            if isinstance(res, dict) and 'fieldName' in res:
+                parts.append(res['fieldName'])
+                
     skills = candidate.get('skills', [])
     if isinstance(skills, list):
         parts.append(str(' '.join(str(s) for s in skills))) # type: ignore

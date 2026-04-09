@@ -32,11 +32,12 @@ function CandidateModal({ match, onClose }) {
     }
   }, [match.candidateId, details]);
 
-  const handleViewResume = async (e) => {
+  const handleViewResume = async (e, resumeId = null) => {
     e.preventDefault();
     try {
       const token = localStorage.getItem('token');
-      const res = await fetch(`http://localhost:8081/api/candidates/${match.candidateId}/resume`, {
+      const queryParams = resumeId ? `?resumeId=${resumeId}` : '';
+      const res = await fetch(`http://localhost:8081/api/candidates/${match.candidateId}/resume${queryParams}`, {
         headers: token ? { 'Authorization': `Bearer ${token}` } : {}
       });
       if (res.ok) {
@@ -156,29 +157,30 @@ function CandidateModal({ match, onClose }) {
                 <h4 style={{ margin: '0 0 0.8rem', fontSize: '0.85rem', textTransform: 'uppercase', letterSpacing: '0.05em', color: '#94a3b8', fontWeight: 700 }}>Matched For Positions</h4>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
                   {match.allMatchedJobs.map((job, idx) => (
-                    <div key={idx} style={{ padding: '1.25rem', background: '#f8fafc', borderRadius: '16px', border: '1px solid #e2e8f0' }}>
-                      <p style={{ margin: 0, fontWeight: 700, color: '#1e293b', fontSize: '1.1rem' }}>{job.roleName}</p>
-                      {job.description && (
-                        <p style={{ margin: '0.5rem 0 0', fontSize: '0.9rem', color: '#64748b', lineHeight: 1.5 }}>
-                          {job.description}
-                        </p>
-                      )}
+                    <div key={idx} style={{ padding: '1.25rem', background: '#f8fafc', borderRadius: '16px', border: '1px solid #e2e8f0', display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
+                      <div style={{ flex: 1, paddingRight: '1rem' }}>
+                        <p style={{ margin: 0, fontWeight: 700, color: '#1e293b', fontSize: '1.1rem' }}>{job.roleName}</p>
+                        {job.description && (
+                          <p style={{ margin: '0.5rem 0 0', fontSize: '0.9rem', color: '#64748b', lineHeight: 1.5 }}>
+                            {job.description}
+                          </p>
+                        )}
+                      </div>
+                      <button
+                        onClick={(e) => handleViewResume(e, job.matchResumeId)}
+                        className="nav-action-btn subtle"
+                        style={{ padding: '0.6rem 1rem', fontSize: '0.85rem', cursor: 'pointer', border: 'none', background: '#fff1f2', color: '#f43f5e', borderRadius: '12px', display: 'flex', alignItems: 'center', gap: '0.5rem', whiteSpace: 'nowrap' }}
+                        title={job.matchResumeId ? "Candidate specific resume" : "Candidate primary resume"}
+                      >
+                        <FileText size={16} /> View Resume
+                      </button>
                     </div>
                   ))}
                 </div>
               </div>
             )}
 
-            <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap', borderTop: '1px solid #f1f5f9', paddingTop: '1.5rem' }}>
-              {details.resumeFilename && (
-                <button
-                  onClick={handleViewResume}
-                  className="nav-action-btn subtle"
-                  style={{ padding: '0.6rem 1.25rem', fontSize: '0.9rem', cursor: 'pointer', border: 'none', background: '#fff1f2', color: '#f43f5e', textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '0.5rem', borderRadius: '12px' }}
-                >
-                  <FileText size={18} /> Resume
-                </button>
-              )}
+            <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap', borderTop: '1px solid #f1f5f9', paddingTop: '1.5rem', alignItems: 'center' }}>
               {details.email && (
                 <a
                   href={`mailto:${details.email}`}
@@ -478,10 +480,10 @@ export default function Matches({ userRole }) {
               if (!acc[key]) {
                 acc[key] = {
                   ...current,
-                  allMatchedJobs: current.jobDetails ? [current.jobDetails] : []
+                  allMatchedJobs: current.jobDetails ? [{ ...current.jobDetails, matchResumeId: current.candidateResumeId }] : []
                 };
               } else if (current.jobDetails) {
-                acc[key].allMatchedJobs.push(current.jobDetails);
+                acc[key].allMatchedJobs.push({ ...current.jobDetails, matchResumeId: current.candidateResumeId });
               }
               return acc;
             }, {});

@@ -12,6 +12,7 @@ function CandidateDashboard({ userName }) {
   const [error, setError] = useState(null);
   const [swipeStatus, setSwipeStatus] = useState(null); // feedback message
   const [currentCompany, setCurrentCompany] = useState("Loading company...");
+  const [activeResumeId, setActiveResumeId] = useState(null);
 
   // Fetch only jobs the candidate hasn't swiped on yet
   useEffect(() => {
@@ -24,6 +25,21 @@ function CandidateDashboard({ userName }) {
         });
         if (res.ok) {
           let jobsData = await res.json();
+
+          // Fetch profile for active resume
+          try {
+            const profileRes = await fetch('http://localhost:8081/api/candidates/me', {
+              headers: token ? { 'Authorization': `Bearer ${token}` } : {}
+            });
+            if (profileRes.ok) {
+              const profileData = await profileRes.json();
+              if (profileData.activeResumeId) {
+                setActiveResumeId(profileData.activeResumeId);
+              }
+            }
+          } catch(e) {
+            console.error("Error fetching profile active resume:", e);
+          }
 
           // Try to fetch ML priorities
           try {
@@ -80,7 +96,8 @@ function CandidateDashboard({ userName }) {
           jobId: currentJob.id,
           recruiterId: currentJob.recruiterId,
           swiperRole: "CANDIDATE",
-          direction: direction   // 'RIGHT' or 'LEFT'
+          direction: direction,   // 'RIGHT' or 'LEFT'
+          resumeId: activeResumeId
         })
       });
 

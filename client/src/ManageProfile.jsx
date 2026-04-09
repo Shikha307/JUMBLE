@@ -11,13 +11,32 @@ function ManageProfile() {
   // Candidate state
   const [skills, setSkills] = useState([]);
   const [skillInput, setSkillInput] = useState('');
-  const [resumeFile, setResumeFile] = useState(null);
   const [existingResume, setExistingResume] = useState(null);
   const [country, setCountry] = useState('');
   const [university, setUniversity] = useState('');
   const [linkedin, setLinkedin] = useState('');
   const [countries, setCountries] = useState([]);
   const fileRef = useRef(null);
+
+  // Multiple Resumes state
+  const [resumes, setResumes] = useState([]);
+  const [newResumeField, setNewResumeField] = useState('');
+  const [newResumeFile, setNewResumeFile] = useState(null);
+  const [resumeLoading, setResumeLoading] = useState(false);
+  const [activeResumeId, setActiveResumeId] = useState('');
+  const [activeResumeLoading, setActiveResumeLoading] = useState(false);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const dropdownRef = useRef(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setIsDropdownOpen(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
 
   // Recruiter state
   const [companyName, setCompanyName] = useState('');
@@ -63,6 +82,8 @@ function ManageProfile() {
         if (role === 'candidate') {
           setSkills(data.skills || []);
           setExistingResume(data.resumeFilename || null);
+          setResumes(data.resumes || []);
+          setActiveResumeId(data.activeResumeId || '');
           setCountry(data.country || '');
           setUniversity(data.university || '');
           setLinkedin(data.linkedin || '');
@@ -85,10 +106,6 @@ function ManageProfile() {
     setSkillInput('');
   };
   const removeSkill = (skill) => setSkills(prev => prev.filter(s => s !== skill));
-  const handleFileChange = (e) => {
-    const file = e.target.files[0];
-    if (file) setResumeFile(file);
-  };
 
   /* --- Password Validation --- */
   const validatePassword = (value) => {
@@ -120,19 +137,16 @@ function ManageProfile() {
         const formData = new FormData();
         skills.forEach(s => formData.append('skills', s));
         formData.append('country', country);
-        formData.append('University', university);   // backend expects capital-U "University"
+        formData.append('University', university);
         if (linkedin) formData.append('linkedin', linkedin);
-        if (resumeFile) formData.append('resume', resumeFile);
-        else if (!existingResume) {
-          setErrorMsg('Resume is required');
+        if (!existingResume) {
+          setErrorMsg('Please upload at least one resume first.');
           setProfileLoading(false);
           return;
-        } else {
-          // Need a dummy file if not updating resume but spring requires MultipartFile. 
-          // In a robust implementation, the backend would handle partial updates better.
-          const blob = new Blob(['dummy'], { type: 'application/pdf' });
-          formData.append('resume', blob, existingResume);
         }
+        // Keep existing resume unchanged
+        const blob = new Blob(['dummy'], { type: 'application/pdf' });
+        formData.append('resume', blob, existingResume);
 
         const res = await fetch('http://localhost:8081/api/candidates/me/profile', {
           method: 'PUT',
@@ -204,6 +218,91 @@ function ManageProfile() {
       setErrorMsg('Error updating password.');
     } finally {
       setPasswordLoading(false);
+    }
+  };
+
+  /* --- Multiple Resumes Operations --- */
+  const handleUploadNewResume = async () => {
+    if (!newResumeFile) {
+        setErrorMsg('Please select a file to upload.');
+        return;
+    }
+    if (!newResumeField.trim()) {
+        setErrorMsg('Please enter a field or title for this resume.');
+        return;
+    }
+    setResumeLoading(true);
+    setMessage(''); setErrorMsg('');
+    try {
+        const formData = new FormData();
+        formData.append('fieldName', newResumeField);
+        formData.append('resume', newResumeFile);
+
+        const res = await fetch('http://localhost:8081/api/candidates/me/resumes', {
+            method: 'POST',
+            headers: { 'Authorization': `Bearer ${token}` },
+            body: formData
+        });
+
+        if (res.ok) {
+            setMessage('Resume added successfully!');
+            setNewResumeFile(null);
+            setNewResumeField('');
+            fetchProfile();
+        } else {
+            setErrorMsg(await res.text() || 'Failed to add resume.');
+        }
+    } catch (e) {
+        setErrorMsg('Error adding resume.');
+    } finally {
+        setResumeLoading(false);
+    }
+  };
+
+  const handleDeleteResume = async (resumeId) => {
+      setResumeLoading(true);
+      setMessage(''); setErrorMsg('');
+      try {
+          const res = await fetch(`http://localhost:8081/api/candidates/me/resumes/${resumeId}`, {
+              method: 'DELETE',
+              headers: { 'Authorization': `Bearer ${token}` }
+          });
+          if (res.ok) {
+              setMessage('Resume deleted successfully!');
+              fetchProfile();
+          } else {
+              setErrorMsg(await res.text() || 'Failed to delete resume.');
+          }
+      } catch (e) {
+          setErrorMsg('Error deleting resume.');
+      } finally {
+          setResumeLoading(false);
+      }
+  };
+
+  const handleActiveResumeChange = async (e) => {
+    const newActiveId = e.target.value;
+    setActiveResumeLoading(true);
+    setMessage(''); setErrorMsg('');
+    try {
+      const res = await fetch('http://localhost:8081/api/candidates/me/active-resume', {
+        method: 'PUT',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ activeResumeId: newActiveId })
+      });
+      if (res.ok) {
+        setActiveResumeId(newActiveId);
+        setMessage('Active resume updated successfully!');
+      } else {
+        setErrorMsg('Failed to update active resume.');
+      }
+    } catch (err) {
+      setErrorMsg('Error updating active resume.');
+    } finally {
+      setActiveResumeLoading(false);
     }
   };
 
@@ -286,21 +385,103 @@ function ManageProfile() {
                 />
               </div>
 
-              <div className="input-group">
-                <label>Resume Update</label>
-                <div className="resume-upload-box" onClick={() => fileRef.current.click()}>
-                  <input type="file" ref={fileRef} accept=".pdf,.docx" onChange={handleFileChange} style={{ display: 'none' }} />
-                  {!resumeFile ? (
-                    <>
-                      <UploadCloud size={28} className="upload-icon-inline" />
-                      <span>{existingResume ? `Current: ${existingResume} (Click to change)` : 'Upload new resume (.pdf / .docx)'}</span>
-                    </>
-                  ) : (
-                    <>
-                      <CheckCircle size={24} style={{ color: '#48bb78' }} />
-                      <span className="file-name">{resumeFile.name}</span>
-                    </>
-                  )}
+              <div className="input-group" style={{ background: '#f7fafc', padding: '1rem', borderRadius: '8px', border: '1px solid #e2e8f0' }}>
+                
+                {resumes.length > 0 && (
+                  <div style={{ marginBottom: '1.5rem', padding: '1rem', background: '#ebf8ff', borderRadius: '8px', border: '1px solid #bee3f8' }}>
+                    <label style={{ display: 'block', fontWeight: 'bold', marginBottom: '0.5rem', color: '#2b6cb0' }}>Select Primary Resume</label>
+                    <p style={{ fontSize: '0.875rem', color: '#4a5568', marginBottom: '0.75rem' }}>The selected resume will be sent to recruiters when you apply for jobs.</p>
+                    
+                    <div ref={dropdownRef} style={{ position: 'relative', width: '100%' }}>
+                      <div 
+                        onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+                        className="skill-textbox"
+                        style={{ width: '100%', padding: '0.75rem', borderColor: '#90cdf4', background: 'white', display: 'flex', justifyContent: 'space-between', alignItems: 'center', cursor: 'pointer', borderRadius: '4px' }}
+                      >
+                         <span style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                           {!activeResumeId ? (existingResume ? `Primary Resume (${existingResume})` : 'Default Primary Resume') : 
+                             resumes.find(r => r.id === activeResumeId) ? `${resumes.find(r => r.id === activeResumeId).fieldName} (${resumes.find(r => r.id === activeResumeId).filename})` : 'Select a resume'
+                           }
+                         </span>
+                         <span style={{ transform: isDropdownOpen ? 'rotate(180deg)' : 'none', transition: 'transform 0.2s', flexShrink: 0, marginLeft: '0.5rem' }}>▼</span>
+                      </div>
+
+                      {isDropdownOpen && (
+                        <div style={{ position: 'absolute', top: '100%', left: 0, right: 0, background: 'white', border: '1px solid #cbd5e0', borderRadius: '0 0 4px 4px', zIndex: 10, maxHeight: '250px', overflowY: 'auto', boxShadow: '0 4px 12px rgba(0,0,0,0.1)' }}>
+                          
+                          {/* Primary Option */}
+                          <div 
+                            onClick={() => { handleActiveResumeChange({target: {value: ''}}); setIsDropdownOpen(false); }}
+                            style={{ padding: '0.75rem', borderBottom: '1px solid #edf2f7', cursor: 'pointer', background: !activeResumeId ? '#ebf8ff' : 'white', display: 'flex', alignItems: 'center' }}
+                            onMouseEnter={(e) => e.currentTarget.style.background = '#f7fafc'}
+                            onMouseLeave={(e) => e.currentTarget.style.background = !activeResumeId ? '#ebf8ff' : 'white'}
+                          >
+                            <span style={{ flex: 1, fontWeight: !activeResumeId ? 'bold' : 'normal', color: '#2d3748' }}>{existingResume ? `Primary Resume (${existingResume})` : 'Default Primary Resume'}</span>
+                            {!activeResumeId && <CheckCircle size={16} color="#4299e1" />}
+                          </div>
+
+                          {/* Uploaded Resumes */}
+                          {resumes.map(r => (
+                            <div 
+                              key={r.id}
+                              style={{ padding: '0.75rem', borderBottom: '1px solid #edf2f7', cursor: 'pointer', background: activeResumeId === r.id ? '#ebf8ff' : 'white', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}
+                              onMouseEnter={(e) => e.currentTarget.style.background = '#f7fafc'}
+                              onMouseLeave={(e) => e.currentTarget.style.background = activeResumeId === r.id ? '#ebf8ff' : 'white'}
+                            >
+                              <div 
+                                onClick={() => { handleActiveResumeChange({target: {value: r.id}}); setIsDropdownOpen(false); }}
+                                style={{ flex: 1, display: 'flex', alignItems: 'center', gap: '0.5rem' }}
+                              >
+                                <span style={{ fontWeight: activeResumeId === r.id ? 'bold' : 'normal', color: '#2d3748' }}>
+                                  {r.fieldName} <span style={{ color: '#718096', fontSize: '0.85rem', fontWeight: 'normal' }}>({r.filename})</span>
+                                </span>
+                                {activeResumeId === r.id && <CheckCircle size={16} color="#4299e1" />}
+                              </div>
+                              <button 
+                                type="button" 
+                                onClick={(e) => { e.stopPropagation(); handleDeleteResume(r.id); }}
+                                style={{ background: '#fff5f5', border: '1px solid #feb2b2', color: '#e53e3e', borderRadius: '50%', width: '26px', height: '26px', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', padding: 0, flexShrink: 0, transition: '0.2s', marginLeft: '1rem' }}
+                                onMouseEnter={(e) => { e.currentTarget.style.background = '#fed7d7'; }}
+                                onMouseLeave={(e) => { e.currentTarget.style.background = '#fff5f5'; }}
+                                title="Delete resume"
+                              >
+                                <X size={14} strokeWidth={2.5} />
+                              </button>
+                            </div>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                )}
+                
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+                  <strong>Add New Resume:</strong>
+                  <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center', flexWrap: 'wrap' }}>
+                    <input 
+                      type="text"
+                      placeholder="e.g. Frontend Resume"
+                      value={newResumeField} 
+                      onChange={(e) => setNewResumeField(e.target.value)}
+                      className="skill-textbox"
+                    />
+                    
+                    <input 
+                      type="file" 
+                      accept=".pdf,.docx" 
+                      onChange={(e) => setNewResumeFile(e.target.files[0])}
+                      style={{ flex: 1, padding: '0.5rem', background: 'white', borderRadius: '4px', border: '1px solid #cbd5e0' }} 
+                    />
+                  </div>
+                  <button 
+                    type="button" 
+                    onClick={handleUploadNewResume} 
+                    disabled={resumeLoading || !newResumeFile || !newResumeField.trim()}
+                    className="login-btn"
+                    style={{ padding: '0.5rem', background: '#4a5568', marginTop: '0.5rem' }}
+                  >
+                    {resumeLoading ? 'Uploading...' : 'Upload Resume'}
+                  </button>
                 </div>
               </div>
             </>
