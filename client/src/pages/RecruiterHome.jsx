@@ -33,14 +33,24 @@ export default function RecruiterHome() {
         });
         if (res.ok) {
           const data = await res.json();
-          let mappedData = data.map(c => ({
-            id: c.userId || c.id,
-            name: `${c.firstName || ''} ${c.lastName || ''}`.trim() || c.name,
-            skills: c.skills || [],
-            linkedin: c.socialLinks?.linkedin || c.linkedin || '',
-            email: c.email || '',
-            resumeUrl: c.resumeUrl || ''
-          }));
+          let mappedData = data.map(c => {
+            const candidateId = c.userId || c.id || '';
+            const activeResumeId = c.activeResumeId || '';
+            // Construct the link to the file-serving endpoint on port 8081
+            const resumeUrl = candidateId 
+              ? `http://localhost:8081/api/candidates/${candidateId}/resume${activeResumeId ? `?resumeId=${activeResumeId}` : ''}`
+              : '';
+
+            return {
+              id: candidateId,
+              // Prioritize 'name', then fall back to firstName/lastName combo
+              name: c.name || `${c.firstName || ''} ${c.lastName || ''}`.trim() || 'Unnamed Candidate',
+              skills: Array.isArray(c.skills) ? c.skills : [],
+              linkedin: c.linkedin || c.socialLinks?.linkedin || '',
+              email: c.email || '',
+              resumeUrl: resumeUrl
+            };
+          });
 
           // Try to fetch ML priorities
           try {
@@ -89,6 +99,19 @@ export default function RecruiterHome() {
       try {
         const token = localStorage.getItem('token');
         const recruiterId = localStorage.getItem('id');
+        if (!recruiterId || recruiterId === 'null') {
+          console.warn("Recruiter ID missing, fetching all jobs as fallback.");
+          const allJobsRes = await fetch(`http://localhost:8081/api/jobs/all`, {
+            headers: token ? { 'Authorization': `Bearer ${token}` } : {}
+          });
+          if (allJobsRes.ok) {
+            const allData = await allJobsRes.json();
+            setJobs(allData);
+            if (allData.length > 0) setSelectedJob(allData[0]);
+          }
+          setLoadingJobs(false);
+          return;
+        }
 
         const res = await fetch(`http://localhost:8081/api/recruiters/${recruiterId}/jobs`, {
           headers: token ? { 'Authorization': `Bearer ${token}` } : {}
@@ -99,6 +122,23 @@ export default function RecruiterHome() {
           setJobs(data);
           if (data.length > 0) {
             setSelectedJob(data[0]);
+          } else {
+            // If this recruiter has no specific jobs, fall back to showing all jobs
+            const allRes = await fetch(`http://localhost:8081/api/jobs/all`);
+            if (allRes.ok) {
+              const allData = await allRes.json();
+              setJobs(allData);
+              if (allData.length > 0) setSelectedJob(allData[0]);
+            }
+          }
+        } else {
+          console.error('Failed to fetch recruiter-specific jobs, status:', res.status);
+          // General fallback
+          const allRes = await fetch(`http://localhost:8081/api/jobs/all`);
+          if (allRes.ok) {
+            const allData = await allRes.json();
+            setJobs(allData);
+            if (allData.length > 0) setSelectedJob(allData[0]);
           }
         }
       } catch (err) {
