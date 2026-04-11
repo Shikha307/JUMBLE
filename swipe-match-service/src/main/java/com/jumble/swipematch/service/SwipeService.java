@@ -94,19 +94,34 @@ public class SwipeService {
     }
 
     /**
-     * Returns a list of *unswiped* Candidate objects for a specific job,
-     * optionally filtered by country.
+     * Returns a list of Candidate objects who have swiped RIGHT on a specific job
+     * and have NOT yet been swiped on by the recruiter, optionally filtered by country.
+     * Each candidate's activeResumeId is set to the resume they chose for this specific job.
      */
     public java.util.List<com.jumble.swipematch.model.Candidate> getUnswipedCandidatesForJob(String jobId, String country) {
-        java.util.List<String> swipedIds = mongoSwipeRecordRepository.findByJobIdAndRecruiterSwipeIsNotNull(jobId)
-                .stream()
-                .map(SwipeRecord::getCandidateId)
-                .toList();
+        // Find swipe records where candidate swiped RIGHT on this job and recruiter hasn't swiped yet
+        java.util.List<SwipeRecord> interestedRecords = mongoSwipeRecordRepository
+                .findByJobIdAndCandidateSwipeAndRecruiterSwipeIsNull(jobId, SwipeDirection.RIGHT);
+
+        // Build a map of candidateId -> resumeId they chose for this job
+        java.util.Map<String, String> candidateResumeMap = interestedRecords.stream()
+                .collect(java.util.stream.Collectors.toMap(
+                        SwipeRecord::getCandidateId,
+                        r -> r.getCandidateResumeId() != null ? r.getCandidateResumeId() : "",
+                        (a, b) -> a));
+
+        java.util.Set<String> interestedCandidateIds = candidateResumeMap.keySet();
 
         return candidateRepository.findAll()
                 .stream()
-                .filter(candidate -> !swipedIds.contains(candidate.getId()))
+                .filter(candidate -> interestedCandidateIds.contains(candidate.getId()))
                 .filter(candidate -> country == null || country.isEmpty() || country.equalsIgnoreCase(candidate.getCountry()))
+                .peek(candidate -> {
+                    // Override activeResumeId with the job-specific resume the candidate selected
+                    String jobResumeId = candidateResumeMap.get(candidate.getId());
+                    // Always set to the job-specific resume (could be "default" or a specific UUID)
+                    candidate.setActiveResumeId(jobResumeId != null && !jobResumeId.isEmpty() ? jobResumeId : "default");
+                })
                 .toList();
     }
 

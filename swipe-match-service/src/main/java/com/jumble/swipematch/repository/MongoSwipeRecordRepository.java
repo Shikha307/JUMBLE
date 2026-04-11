@@ -1,5 +1,6 @@
 package com.jumble.swipematch.repository;
 
+import com.jumble.swipematch.model.SwipeDirection;
 import com.jumble.swipematch.model.SwipeRecord;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
@@ -16,4 +17,7 @@ public interface MongoSwipeRecordRepository extends MongoRepository<SwipeRecord,
 
     // Find all records for a candidate where the candidate has already swiped (left or right)
     List<SwipeRecord> findByCandidateIdAndCandidateSwipeIsNotNull(String candidateId);
+
+    // Find all records where a candidate swiped RIGHT on a job and the recruiter hasn't swiped yet
+    List<SwipeRecord> findByJobIdAndCandidateSwipeAndRecruiterSwipeIsNull(String jobId, SwipeDirection candidateSwipe);
 }

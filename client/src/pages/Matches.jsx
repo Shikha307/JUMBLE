@@ -170,7 +170,7 @@ function CandidateModal({ match, onClose }) {
                         onClick={(e) => handleViewResume(e, job.matchResumeId)}
                         className="nav-action-btn subtle"
                         style={{ padding: '0.6rem 1rem', fontSize: '0.85rem', cursor: 'pointer', border: 'none', background: '#fff1f2', color: '#f43f5e', borderRadius: '12px', display: 'flex', alignItems: 'center', gap: '0.5rem', whiteSpace: 'nowrap' }}
-                        title={job.matchResumeId ? "Candidate specific resume" : "Candidate primary resume"}
+                        title={job.matchResumeId ? "Candidate specific resume" : "Candidate default resume"}
                       >
                         <FileText size={16} /> View Resume
                       </button>

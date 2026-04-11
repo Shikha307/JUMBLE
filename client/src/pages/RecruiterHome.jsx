@@ -270,7 +270,7 @@ export default function RecruiterHome() {
             </div>
           ) : (
             <div className="no-more-profiles">
-              <h2>No more candidates!</h2>
+              <h2>No eligible candidates!</h2>
               <p>You have reviewed all available profiles for <strong>{selectedJob.roleName}</strong>.</p>
             </div>
           )}
