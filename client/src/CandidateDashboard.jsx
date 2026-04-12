@@ -109,7 +109,7 @@ function CandidateDashboard({ userName }) {
       });
 
       if (!res.ok) throw new Error(`Swipe failed (${res.status})`);
-      await res.json();
+      await res.text(); // Backend returns plain string
 
       // Only advance AFTER swipe is confirmed saved in backend
       setCurrentIndex(prev => prev + 1);
