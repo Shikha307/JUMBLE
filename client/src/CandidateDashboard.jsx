@@ -86,15 +86,18 @@ function CandidateDashboard({ userName }) {
   const handleSwipe = async (direction) => {
     const currentJob = jobs[currentIndex];
     const candidateId = localStorage.getItem('id') || "dummy_candidate_id";
+    const token = localStorage.getItem('token');
 
-    // Optimistically advance the card
-    setCurrentIndex(prev => prev + 1);
+    // Clear previous status
     setSwipeStatus(null);
 
     try {
       const res = await fetch(SWIPE_API, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          'Content-Type': 'application/json',
+          ...(token ? { 'Authorization': `Bearer ${token}` } : {})
+        },
         body: JSON.stringify({
           candidateId: candidateId,
           jobId: currentJob.id,
@@ -106,11 +109,14 @@ function CandidateDashboard({ userName }) {
       });
 
       if (!res.ok) throw new Error(`Swipe failed (${res.status})`);
-      const data = await res.json();
-      console.log('Swipe recorded:', data);
+      await res.json();
+
+      // Only advance AFTER swipe is confirmed saved in backend
+      setCurrentIndex(prev => prev + 1);
       setSwipeStatus({ type: direction === 'RIGHT' ? 'liked' : 'passed', jobTitle: currentJob.roleName || currentJob.title });
     } catch (err) {
       console.error('Swipe error:', err);
+      setSwipeStatus({ type: 'error', message: 'Failed to save swipe. Please try again.' });
     }
   };
 
@@ -173,6 +179,11 @@ function CandidateDashboard({ userName }) {
         {swipeStatus && swipeStatus.type !== 'error' && (
           <div className={`swipe-feedback ${swipeStatus.type}`}>
             {swipeStatus.type === 'liked' ? '❤️ Liked' : '✖ Passed'}: {swipeStatus.jobTitle}
+          </div>
+        )}
+        {swipeStatus && swipeStatus.type === 'error' && (
+          <div className="swipe-feedback" style={{ background: '#fee2e2', color: '#dc2626', border: '1px solid #fca5a5' }}>
+            ⚠️ {swipeStatus.message}
           </div>
         )}
 

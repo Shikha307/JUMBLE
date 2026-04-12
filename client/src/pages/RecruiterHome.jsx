@@ -11,75 +11,80 @@ export default function RecruiterHome() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [loadingCandidates, setLoadingCandidates] = useState(true);
   const [loadingJobs, setLoadingJobs] = useState(true);
+  const [lastRefreshed, setLastRefreshed] = useState(null);
 
   const [countries, setCountries] = useState([]);
   const [selectedCountry, setSelectedCountry] = useState('');
 
   // Fetch Unswiped Candidates for the selected job
+  const fetchCandidates = async (silent = false) => {
+    if (!selectedJob) return;
+    if (!silent) setLoadingCandidates(true);
+    try {
+      const token = localStorage.getItem('token');
+      let url = `http://localhost:8080/api/v1/swipes/jobs/${selectedJob.id}/unswiped-candidates`;
+      if (selectedCountry) {
+        url += `?country=${encodeURIComponent(selectedCountry)}`;
+      }
+
+      const res = await fetch(url, {
+        headers: token ? { 'Authorization': `Bearer ${token}` } : {}
+      });
+      if (res.ok) {
+        const data = await res.json();
+        let mappedData = data.map(c => {
+          const candidateId = c.userId || c.id || '';
+          const activeResumeId = c.activeResumeId || '';
+          const resumeUrl = candidateId 
+            ? `http://localhost:8081/api/candidates/${candidateId}/resume${activeResumeId ? `?resumeId=${activeResumeId}` : ''}`
+            : '';
+
+          return {
+            id: candidateId,
+            name: c.name || `${c.firstName || ''} ${c.lastName || ''}`.trim() || 'Unnamed Candidate',
+            skills: Array.isArray(c.skills) ? c.skills : [],
+            linkedin: c.linkedin || c.socialLinks?.linkedin || '',
+            email: c.email || '',
+            resumeUrl: resumeUrl
+          };
+        });
+
+        // Try to fetch ML priorities
+        try {
+          const mlRes = await fetch(`/ml_outputs/candidates_prioritized/${selectedJob.id}.json`);
+          if (mlRes.ok) {
+            const mlCandidates = await mlRes.json();
+            const scoreMap = {};
+            mlCandidates.forEach(c => {
+              if (c.id) scoreMap[c.id] = c.matchScore || 0;
+            });
+
+            mappedData = mappedData.map(c => ({
+              ...c,
+              matchScore: scoreMap[c.id] || 0
+            })).sort((a, b) => b.matchScore - a.matchScore);
+          }
+        } catch (mlErr) {
+          console.warn("Could not load ML priorities for job, falling back to default sort.", mlErr);
+        }
+
+        setCandidates(mappedData);
+        setLastRefreshed(new Date());
+      }
+    } catch (err) {
+      console.error('Error fetching candidates:', err);
+    } finally {
+      if (!silent) setLoadingCandidates(false);
+    }
+  };
+
+  // Fetch candidates on job/country change and set up 15s polling (Bug 2 fix)
   useEffect(() => {
     if (!selectedJob) return;
-
-    const fetchCandidates = async () => {
-      setLoadingCandidates(true);
-      try {
-        const token = localStorage.getItem('token');
-        let url = `http://localhost:8080/api/v1/swipes/jobs/${selectedJob.id}/unswiped-candidates`;
-        if (selectedCountry) {
-          url += `?country=${encodeURIComponent(selectedCountry)}`;
-        }
-
-        const res = await fetch(url, {
-          headers: token ? { 'Authorization': `Bearer ${token}` } : {}
-        });
-        if (res.ok) {
-          const data = await res.json();
-          let mappedData = data.map(c => {
-            const candidateId = c.userId || c.id || '';
-            const activeResumeId = c.activeResumeId || '';
-            // Construct the link to the file-serving endpoint on port 8081
-            const resumeUrl = candidateId 
-              ? `http://localhost:8081/api/candidates/${candidateId}/resume${activeResumeId ? `?resumeId=${activeResumeId}` : ''}`
-              : '';
-
-            return {
-              id: candidateId,
-              // Prioritize 'name', then fall back to firstName/lastName combo
-              name: c.name || `${c.firstName || ''} ${c.lastName || ''}`.trim() || 'Unnamed Candidate',
-              skills: Array.isArray(c.skills) ? c.skills : [],
-              linkedin: c.linkedin || c.socialLinks?.linkedin || '',
-              email: c.email || '',
-              resumeUrl: resumeUrl
-            };
-          });
-
-          // Try to fetch ML priorities
-          try {
-            const mlRes = await fetch(`/ml_outputs/candidates_prioritized/${selectedJob.id}.json`);
-            if (mlRes.ok) {
-              const mlCandidates = await mlRes.json();
-              const scoreMap = {};
-              mlCandidates.forEach(c => {
-                if (c.id) scoreMap[c.id] = c.matchScore || 0;
-              });
-
-              mappedData = mappedData.map(c => ({
-                ...c,
-                matchScore: scoreMap[c.id] || 0
-              })).sort((a, b) => b.matchScore - a.matchScore);
-            }
-          } catch (mlErr) {
-            console.warn("Could not load ML priorities for job, falling back to default sort.", mlErr);
-          }
-
-          setCandidates(mappedData);
-        }
-      } catch (err) {
-        console.error('Error fetching candidates:', err);
-      } finally {
-        setLoadingCandidates(false);
-      }
-    };
     fetchCandidates();
+    const interval = setInterval(() => fetchCandidates(true), 15000);
+    return () => clearInterval(interval);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedJob, selectedCountry]);
 
   // Fetch Countries on mount
@@ -257,6 +262,20 @@ export default function RecruiterHome() {
                   <Briefcase size={24} style={{ color: 'var(--primary)' }} />
                   Suggested Candidates
                 </h2>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+                  {lastRefreshed && (
+                    <span style={{ fontSize: '0.75rem', color: 'var(--text-light)' }}>
+                      Updated {lastRefreshed.toLocaleTimeString()}
+                    </span>
+                  )}
+                  <button
+                    onClick={() => fetchCandidates()}
+                    style={{ fontSize: '0.8rem', padding: '0.3rem 0.75rem', background: 'var(--primary-light)', color: 'var(--primary)', border: 'none', borderRadius: '8px', cursor: 'pointer', fontWeight: 600 }}
+                    title="Refresh candidate list"
+                  >
+                    ↻ Refresh
+                  </button>
+                </div>
                 <div className="accent-line"></div>
               </div>
 
