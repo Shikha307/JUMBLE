@@ -307,7 +307,7 @@ function ManageProfile() {
   };
 
   return (
-    <>
+    <div className={role === 'recruiter' ? 'recruiter-theme' : ''} style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
       <Navbar role={role} name={localStorage.getItem('name') || ''} />
       <div className="login-container" style={{ alignItems: 'flex-start', paddingTop: '2rem' }}>
         <div className="login-card register-card" style={{ maxWidth: 500, margin: '0 auto' }}>
@@ -500,7 +500,7 @@ function ManageProfile() {
           </form>
 
 
-          {/* --- PASSWORD FORM --- */}
+          {/* --- PASSWORD FORM ---
           <form className="login-form" onSubmit={handlePasswordSubmit}>
             <h2 style={{ fontSize: '1.25rem', marginBottom: '1rem', color: '#2d3748' }}>Change Password</h2>
 
@@ -523,10 +523,11 @@ function ManageProfile() {
               {passwordLoading ? 'Updating Password...' : 'Update Password'}
             </button>
           </form>
+          */}
 
         </div>
       </div>
-    </>
+    </div>
   );
 }
 
