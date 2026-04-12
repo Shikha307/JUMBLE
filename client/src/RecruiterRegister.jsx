@@ -24,14 +24,14 @@ function RecruiterRegister() {
         return value.trim() === '' ? 'Company name is required.' : '';
       case 'password': {
         if (!value) return 'Password is required.';
-        if (value.length < 8) return 'Password must be at least 8 characters.';
-        if (!/[A-Z]/.test(value)) return 'Must contain at least one uppercase letter.';
-        if (!/[a-z]/.test(value)) return 'Must contain at least one lowercase letter.';
-        if (!/[0-9]/.test(value)) return 'Must contain at least one number.';
-        if (!/[^A-Za-z0-9]/.test(value)) return 'Must contain at least one special character.';
-        for (let i = 0; i < value.length - 1; i++) {
-          if (value[i] === value[i + 1]) return 'No two consecutive identical characters allowed.';
-        }
+        // if (value.length < 8) return 'Password must be at least 8 characters.';
+        // if (!/[A-Z]/.test(value)) return 'Must contain at least one uppercase letter.';
+        // if (!/[a-z]/.test(value)) return 'Must contain at least one lowercase letter.';
+        // if (!/[0-9]/.test(value)) return 'Must contain at least one number.';
+        // if (!/[^A-Za-z0-9]/.test(value)) return 'Must contain at least one special character.';
+        // for (let i = 0; i < value.length - 1; i++) {
+        //   if (value[i] === value[i + 1]) return 'No two consecutive identical characters allowed.';
+        // }
         return '';
       }
       case 'confirmPassword':
