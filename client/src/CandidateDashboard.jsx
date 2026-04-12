@@ -9,8 +9,8 @@ function CandidateDashboard({ userName }) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [swipeStatus, setSwipeStatus] = useState(null);
   const [currentCompany, setCurrentCompany] = useState("Loading company...");
+  const [animatingDirection, setAnimatingDirection] = useState(null);
 
   // Resume selection state
   const [resumes, setResumes] = useState([]);
@@ -84,12 +84,10 @@ function CandidateDashboard({ userName }) {
   }, []);
 
   const handleSwipe = async (direction) => {
+    if (animatingDirection) return; // Prevent spam clicks
     const currentJob = jobs[currentIndex];
     const candidateId = localStorage.getItem('id') || "dummy_candidate_id";
     const token = localStorage.getItem('token');
-
-    // Clear previous status
-    setSwipeStatus(null);
 
     try {
       const res = await fetch(SWIPE_API, {
@@ -111,12 +109,16 @@ function CandidateDashboard({ userName }) {
       if (!res.ok) throw new Error(`Swipe failed (${res.status})`);
       await res.text(); // Backend returns plain string
 
-      // Only advance AFTER swipe is confirmed saved in backend
-      setCurrentIndex(prev => prev + 1);
-      setSwipeStatus({ type: direction === 'RIGHT' ? 'liked' : 'passed', jobTitle: currentJob.roleName || currentJob.title });
+      // Start animation
+      setAnimatingDirection(direction);
+
+      setTimeout(() => {
+        // Advance only after animation finishes
+        setCurrentIndex(prev => prev + 1);
+        setAnimatingDirection(null);
+      }, 400); // Wait for CSS animation width (0.4s)
     } catch (err) {
       console.error('Swipe error:', err);
-      setSwipeStatus({ type: 'error', message: 'Failed to save swipe. Please try again.' });
     }
   };
 
@@ -176,16 +178,6 @@ function CandidateDashboard({ userName }) {
 
       <main className="dashboard-content card-stack-container">
 
-        {swipeStatus && swipeStatus.type !== 'error' && (
-          <div className={`swipe-feedback ${swipeStatus.type}`}>
-            {swipeStatus.type === 'liked' ? '❤️ Liked' : '✖ Passed'}: {swipeStatus.jobTitle}
-          </div>
-        )}
-        {swipeStatus && swipeStatus.type === 'error' && (
-          <div className="swipe-feedback" style={{ background: '#fee2e2', color: '#dc2626', border: '1px solid #fca5a5' }}>
-            ⚠️ {swipeStatus.message}
-          </div>
-        )}
 
         {isFinished ? (
           <div className="empty-state-card">
@@ -194,88 +186,105 @@ function CandidateDashboard({ userName }) {
             <p>You have reviewed all available job postings. Check back later for more opportunities.</p>
           </div>
         ) : (
-          <div className="swipe-card fade-in">
-            <div className="card-header">
-              <h2 className="job-title">{currentJob.roleName || currentJob.title}</h2>
-              <p className="company-name">{currentCompany}</p>
-            </div>
+          <div style={{ position: 'relative', width: '100%', maxWidth: '480px', display: 'flex', justifyContent: 'center' }}>
+            {/* INVISIBLE NEXT CARD */}
+            {jobs[currentIndex + 1] && (
+              <div className="swipe-card next-card-behind">
+                <div className="card-header">
+                  <h2 className="job-title">{jobs[currentIndex + 1].roleName || jobs[currentIndex + 1].title}</h2>
+                  <p className="company-name">Loading company...</p>
+                </div>
+                <div className="card-body">
+                  <h3 className="section-title">Job Description</h3>
+                  <p className="job-description">{jobs[currentIndex + 1].description}</p>
+                </div>
+              </div>
+            )}
 
-            <div className="card-body">
-              <h3 className="section-title">Job Description</h3>
-              <p className="job-description">{currentJob.description}</p>
-
-              <h3 className="section-title mt-4">Required Skills</h3>
-              <div className="skills-container">
-                {(currentJob.skillsNeeded || currentJob.skills || []).map((skill, idx) => (
-                  <span key={idx} className="skill-pill">{skill}</span>
-                ))}
+            {/* ACTIVE CARD */}
+            <div className={`swipe-card fade-in front-card ${animatingDirection === 'LEFT' ? 'swipe-out-left' : ''} ${animatingDirection === 'RIGHT' ? 'swipe-out-right' : ''}`}>
+              <div className="card-header">
+                <h2 className="job-title">{currentJob.roleName || currentJob.title}</h2>
+                <p className="company-name">{currentCompany}</p>
               </div>
 
-              {/* Resume Selection Dropdown */}
-              {(resumes.length > 0 || defaultResumeName) && (
-                <div className="resume-select-section" style={{
-                  marginTop: '1.5rem',
-                  padding: '1rem',
-                  background: 'rgba(244, 63, 94, 0.05)',
-                  borderRadius: '12px',
-                  border: '1px solid rgba(244, 63, 94, 0.15)'
-                }}>
-                  <label style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: '0.5rem',
-                    fontWeight: 600,
-                    fontSize: '0.9rem',
-                    color: '#f43f5e',
-                    marginBottom: '0.5rem'
-                  }}>
-                    <FileText size={16} />
-                    Resume to share with recruiter
-                  </label>
-                  <select
-                    value={selectedResumeId}
-                    onChange={(e) => setSelectedResumeId(e.target.value)}
-                    style={{
-                      width: '100%',
-                      padding: '0.6rem 0.75rem',
-                      borderRadius: '8px',
-                      border: '1px solid #e2e8f0',
-                      background: 'white',
-                      fontSize: '0.9rem',
-                      color: '#2d3748',
-                      cursor: 'pointer',
-                      outline: 'none'
-                    }}
-                  >
-                    <option value="default">
-                      {defaultResumeName ? `Default (${defaultResumeName})` : 'Default Resume'}
-                    </option>
-                    {resumes.map(r => (
-                      <option key={r.id} value={r.id}>
-                        {r.fieldName} ({r.filename})
-                      </option>
-                    ))}
-                  </select>
+              <div className="card-body">
+                <h3 className="section-title">Job Description</h3>
+                <p className="job-description">{currentJob.description}</p>
+
+                <h3 className="section-title mt-4">Required Skills</h3>
+                <div className="skills-container">
+                  {(currentJob.skillsNeeded || currentJob.skills || []).map((skill, idx) => (
+                    <span key={idx} className="skill-pill">{skill}</span>
+                  ))}
                 </div>
-              )}
-            </div>
 
-            <div className="card-actions">
-              <button
-                className="action-btn pass-btn"
-                onClick={() => handleSwipe('LEFT')}
-                aria-label="Pass Job"
-              >
-                <X size={32} />
-              </button>
+                {/* Resume Selection Dropdown */}
+                {(resumes.length > 0 || defaultResumeName) && (
+                  <div className="resume-select-section" style={{
+                    marginTop: '1.5rem',
+                    padding: '1rem',
+                    background: 'rgba(244, 63, 94, 0.05)',
+                    borderRadius: '12px',
+                    border: '1px solid rgba(244, 63, 94, 0.15)'
+                  }}>
+                    <label style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '0.5rem',
+                      fontWeight: 600,
+                      fontSize: '0.9rem',
+                      color: '#f43f5e',
+                      marginBottom: '0.5rem'
+                    }}>
+                      <FileText size={16} />
+                      Resume to share with recruiter
+                    </label>
+                    <select
+                      value={selectedResumeId}
+                      onChange={(e) => setSelectedResumeId(e.target.value)}
+                      style={{
+                        width: '100%',
+                        padding: '0.6rem 0.75rem',
+                        borderRadius: '8px',
+                        border: '1px solid #e2e8f0',
+                        background: 'white',
+                        fontSize: '0.9rem',
+                        color: '#2d3748',
+                        cursor: 'pointer',
+                        outline: 'none'
+                      }}
+                    >
+                      <option value="default">
+                        {defaultResumeName ? `Default (${defaultResumeName})` : 'Default Resume'}
+                      </option>
+                      {resumes.map(r => (
+                        <option key={r.id} value={r.id}>
+                          {r.fieldName} ({r.filename})
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                )}
+              </div>
 
-              <button
-                className="action-btn like-btn"
-                onClick={() => handleSwipe('RIGHT')}
-                aria-label="Like Job"
-              >
-                <Heart size={32} />
-              </button>
+              <div className="card-actions">
+                <button
+                  className="action-btn pass-btn"
+                  onClick={() => handleSwipe('LEFT')}
+                  aria-label="Pass Job"
+                >
+                  <X size={32} />
+                </button>
+
+                <button
+                  className="action-btn like-btn"
+                  onClick={() => handleSwipe('RIGHT')}
+                  aria-label="Like Job"
+                >
+                  <Heart size={32} />
+                </button>
+              </div>
             </div>
           </div>
         )}

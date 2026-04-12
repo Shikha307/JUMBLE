@@ -15,6 +15,8 @@ export default function RecruiterHome() {
 
   const [countries, setCountries] = useState([]);
   const [selectedCountry, setSelectedCountry] = useState('');
+  const [animatingDirection, setAnimatingDirection] = useState(null);
+  const [showMatchCelebration, setShowMatchCelebration] = useState(false);
 
   // Fetch Unswiped Candidates for the selected job
   const fetchCandidates = async (silent = false) => {
@@ -156,6 +158,7 @@ export default function RecruiterHome() {
   }, []);
 
   const handleAction = async (candidateId, actionType) => {
+    if (animatingDirection) return; // Prevent spam clicks
     if (!selectedJob) {
       alert("Please select a job first before swiping.");
       return;
@@ -182,7 +185,27 @@ export default function RecruiterHome() {
     } catch (error) {
       console.error("Error recording swipe:", error);
     }
-    setCurrentIndex(prevIndex => prevIndex + 1);
+    
+    if (actionType === 'LIKED') {
+      // Trigger Match Celebration first
+      setShowMatchCelebration(true);
+      setTimeout(() => {
+        setShowMatchCelebration(false);
+        // Then start the swipe animation
+        setAnimatingDirection(direction);
+        setTimeout(() => {
+          setCurrentIndex(prevIndex => prevIndex + 1);
+          setAnimatingDirection(null);
+        }, 400);
+      }, 1200); // Overlay shows for 1.2 seconds
+    } else {
+      // Normal pass immediately starts swipe animation
+      setAnimatingDirection(direction);
+      setTimeout(() => {
+        setCurrentIndex(prevIndex => prevIndex + 1);
+        setAnimatingDirection(null);
+      }, 400); // 0.4s to match CSS animation duration
+    }
   };
 
   const currentCandidate = candidates[currentIndex];
@@ -279,12 +302,31 @@ export default function RecruiterHome() {
                 <div className="accent-line"></div>
               </div>
 
-              <div className="active-card">
-                <CandidateCard
-                  candidate={currentCandidate}
-                  onLike={(id) => handleAction(id, 'LIKED')}
-                  onPass={(id) => handleAction(id, 'PASSED')}
-                />
+              <div className="card-stack-container" style={{ position: 'relative', width: '100%', display: 'flex', justifyContent: 'center' }}>
+                {/* INVISIBLE NEXT CARD */}
+                {candidates[currentIndex + 1] && (
+                  <div className="next-card-behind">
+                    <CandidateCard
+                      candidate={candidates[currentIndex + 1]}
+                      onLike={() => {}}
+                      onPass={() => {}}
+                    />
+                  </div>
+                )}
+                
+                {/* ACTIVE CARD */}
+                <div className={`active-card front-card ${animatingDirection === 'LEFT' ? 'swipe-out-left' : ''} ${animatingDirection === 'RIGHT' ? 'swipe-out-right' : ''}`}>
+                  {showMatchCelebration && (
+                    <div className="match-celebration-overlay">
+                      <div className="match-text">IT'S A MATCH!</div>
+                    </div>
+                  )}
+                  <CandidateCard
+                    candidate={currentCandidate}
+                    onLike={(id) => handleAction(id, 'LIKED')}
+                    onPass={(id) => handleAction(id, 'PASSED')}
+                  />
+                </div>
               </div>
             </div>
           ) : (

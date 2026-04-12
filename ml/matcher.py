@@ -153,20 +153,20 @@ if __name__ == "__main__":
     else:
         generate_matrices(candidates, jobs)
         
-    print("Entering Observer Loop...")
+    print("Entering Event-Driven Observer Loop using Change Streams...")
     while True:
         try:
-            # Using a primitive length check to avoid heavy queries in prototype
-            curr_candidates_len = candidates_collection.count_documents({}) # type: ignore
-            curr_jobs_len = jobs_collection.count_documents({}) # type: ignore
-            
-            if curr_candidates_len > len(candidates) or curr_jobs_len > len(jobs):
-                print("New documents detected! Recalculating Matrix...")
-                candidates = fetch_all(candidates_collection)
-                jobs = fetch_all(jobs_collection)
-                generate_matrices(candidates, jobs)
+            # db.watch() yields changes dynamically without CPU overhead polling
+            with db.watch() as stream:
+                for change in stream:
+                    ns = change.get('ns', {})
+                    coll = ns.get('coll')
+                    if coll in ['candidates', 'jobs']:
+                        print(f"Modification detected in '{coll}'! Recalculating Matrix...")
+                        candidates = fetch_all(candidates_collection)
+                        jobs = fetch_all(jobs_collection)
+                        generate_matrices(candidates, jobs)
         except Exception as e:
-            print(f"Error in observer loop: {e}")
-            print("Will retry in 10 seconds...")
-            
-        time.sleep(10) # 10-second polling interval
+            print(f"Error in observer change stream: {e}")
+            print("Will attempt to reconnect in 10 seconds...")
+            time.sleep(10)

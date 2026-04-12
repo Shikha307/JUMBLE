@@ -54,7 +54,7 @@ services:
     ports:
       - "5173:5173"
     volumes:
-      - ml_outputs:/app/public/ml_outputs
+      - ./client/public/ml_outputs:/app/public/ml_outputs
     depends_on:
       - user-job
       - swipe-match
@@ -68,11 +68,9 @@ services:
       - ML_OUTPUT_DIR=/ml_outputs
       - MONGO_URI=mongodb+srv://jumble_app_user:test123@jumble.ewhoayr.mongodb.net/jumbledb?retryWrites=true&w=majority&appName=JUMBLE
     volumes:
-      - ml_outputs:/ml_outputs
+      - ./client/public/ml_outputs:/ml_outputs
     depends_on:
       - user-job
       - swipe-match
     restart: always
 
-volumes:
-  ml_outputs:

@@ -714,6 +714,41 @@ body {
   to { opacity: 1; transform: scale(1) translateY(0); }
 }
 
+@keyframes swipeLeft {
+  from { transform: translateX(0) rotate(0); opacity: 1; }
+  to { transform: translateX(-150%) rotate(-15deg); opacity: 0; }
+}
+
+@keyframes swipeRight {
+  from { transform: translateX(0) rotate(0); opacity: 1; }
+  to { transform: translateX(150%) rotate(15deg); opacity: 0; }
+}
+
+.swipe-out-left {
+  animation: swipeLeft 0.4s cubic-bezier(0.175, 0.885, 0.32, 1) forwards !important;
+}
+
+.swipe-out-right {
+  animation: swipeRight 0.4s cubic-bezier(0.175, 0.885, 0.32, 1) forwards !important;
+}
+
+.front-card {
+  position: relative;
+  z-index: 10;
+}
+
+.next-card-behind {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 0;
+  transform: scale(0.95) translateY(20px);
+  opacity: 0.6;
+  pointer-events: none;
+  filter: blur(1px);
+}
+
 .card-header {
   padding: 2rem 2rem 1.5rem;
   background: linear-gradient(to bottom, rgba(255,255,255,1), rgba(255,255,255,0.8));
@@ -976,7 +1011,7 @@ body {
 .passed-card { display:flex; align-items:center; justify-content:center; min-height:200px; background:#f8fafc; color:#94a3b8; font-weight:600; border:2px dashed #cbd5e1; border-radius:20px; }
 .liked-card { border:2px solid #10b981; border-radius:20px; }
 .status-badge { margin-top:0.5rem; background:white; padding:0.2rem 0.8rem; border-radius:20px; font-size:0.85rem; font-weight:700; color:#10b981; box-shadow:0 2px 5px rgba(0,0,0,0.1); }
-.no-more-profiles { display:flex; flex-direction:column; align-items:center; justify-content:center; color:var(--text-light); text-align:center; z-index:1; }
+.no-more-profiles { display:flex; flex-direction:column; align-items:center; justify-content:center; color:var(--text-light); text-align:center; z-index:1; animation: fadeIn 0.4s ease forwards; }
 .refresh-icon { margin-bottom:1rem; color:#cbd5e1; }
 
 /* components/Navbar */
@@ -1137,4 +1172,83 @@ body {
 .recruiter-theme .sidebar-select:focus {
   border-color: var(--primary);
   box-shadow: 0 0 0 3px var(--primary-light);
+}
+
+/* SWIPE FEEDBACK TOASTS */
+.swipe-feedback {
+  position: fixed;
+  top: 90px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 12px 28px;
+  border-radius: 40px;
+  font-weight: 700;
+  font-size: 1rem;
+  z-index: 9999;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+  animation: slideDownFade 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+@keyframes slideDownFade {
+  0% { opacity: 0; transform: translate(-50%, -30px) scale(0.9); }
+  100% { opacity: 1; transform: translate(-50%, 0) scale(1); }
+}
+
+.swipe-feedback.liked {
+  background: white;
+  color: var(--primary);
+  border: 2px solid var(--primary-light);
+}
+
+.swipe-feedback.passed {
+  background: white;
+  color: var(--text-dark);
+  border: 2px solid var(--input-border);
+}
+
+.swipe-feedback.error {
+  background: #fff5f5;
+  color: #e53e3e;
+  border: 2px solid #feb2b2;
+}
+
+/* MATCH CELEBRATION OVERLAY */
+.match-celebration-overlay {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(5px);
+  border-radius: 20px;
+  animation: matchFadeIn 0.3s ease-out forwards;
+}
+
+.match-text {
+  font-size: 3.5rem;
+  font-weight: 900;
+  color: #10b981;
+  text-shadow: 0 5px 15px rgba(16, 185, 129, 0.3);
+  transform: scale(0);
+  animation: stampPop 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.4) forwards;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+@keyframes stampPop {
+  0% { transform: scale(0) rotate(-15deg); opacity: 0; }
+  60% { transform: scale(1.1) rotate(5deg); opacity: 1; }
+  100% { transform: scale(1) rotate(-5deg); opacity: 1; }
+}
+
+@keyframes matchFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
