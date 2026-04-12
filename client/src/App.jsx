@@ -55,25 +55,14 @@ function App() {
     <Router>
       <Routes>
         {/* Public routes */}
-		<Route path="/" element={
-          <div className="login-container">
-            <div className="login-card">
-              <h1>JUMBLE</h1>
-              <p>A new way to match candidates and jobs.</p>
-              <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', marginTop: '1rem' }}>
-                <Link to="/login" className="login-btn" style={{ textDecoration: 'none' }}>Login</Link>
-                <Link to="/recruiter" className="login-btn" style={{ textDecoration: 'none', background: '#10b981' }}>Recruiter Viewer</Link>
-              </div>
-            </div>
-          </div>
-        } />
+        <Route path="/" element={<Navigate to="/login" />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<RoleSelect />} />
         <Route path="/register/candidate" element={<CandidateRegister />} />
         <Route path="/register/recruiter" element={<RecruiterRegister />} />
-        <Route path="/recruiter" element={<RecruiterHome />} />
-        <Route path="/add-job" element={<AddJob />} />
-        <Route path="/my-jobs" element={<MyJobs />} />
+        <Route path="/recruiter" element={isAuthenticated ? <RecruiterHome /> : <Navigate to="/login" />} />
+        <Route path="/add-job" element={isAuthenticated ? <AddJob /> : <Navigate to="/login" />} />
+        <Route path="/my-jobs" element={isAuthenticated ? <MyJobs /> : <Navigate to="/login" />} />
         {/* Protected dashboard */}
         <Route
           path="/dashboard"
