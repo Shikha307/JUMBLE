@@ -143,7 +143,7 @@ function CandidateRegister() {
     formData.append('country', form.country);
     formData.append('University', form.university);   // backend expects capital-U "University"
     if (form.linkedin) formData.append('linkedin', form.linkedin);
-    skills.forEach(skill => formData.append('skills', skill));
+    formData.append('skills', skills.join(','));
     formData.append('resume', resumeFile);
 
     try {
