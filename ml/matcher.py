@@ -20,15 +20,15 @@ class MongoEncoder(json.JSONEncoder):
             return str(obj)
             return str(obj)
 
-# MongoDB Connection
-MONGO_URI = "mongodb+srv://jumble_app_user:test123@jumble.ewhoayr.mongodb.net/jumbledb?retryWrites=true&w=majority&appName=JUMBLE"
+# MongoDB Connection — configurable via env var for Docker
+MONGO_URI = os.environ.get("MONGO_URI", "mongodb+srv://jumble_app_user:test123@jumble.ewhoayr.mongodb.net/jumbledb?retryWrites=true&w=majority&appName=JUMBLE")
 client: Any = pymongo.MongoClient(MONGO_URI)
 db: Any = client.get_database("jumbledb")
 jobs_collection: Any = db["jobs"]
 candidates_collection: Any = db["candidates"]
 
-# Output Directories inside the React Client
-OUTPUT_DIR = os.path.join(os.path.dirname(__file__), "..", "client", "public", "ml_outputs")
+# Output Directories — configurable via env var for Docker
+OUTPUT_DIR = os.environ.get("ML_OUTPUT_DIR", os.path.join(os.path.dirname(__file__), "..", "client", "public", "ml_outputs"))
 JOBS_PRIORITIZED_DIR = os.path.join(OUTPUT_DIR, "jobs_prioritized")
 CANDIDATES_PRIORITIZED_DIR = os.path.join(OUTPUT_DIR, "candidates_prioritized")
 

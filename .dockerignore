@@ -1,0 +1,10 @@
+# target/
+client/node_modules/
+client/dist/
+.git/
+.gitignore
+*.log
+*.md
+.vscode/
+build_error.txt
+swipe-match-service/target/
