@@ -10,6 +10,9 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.core.io.ByteArrayResource;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -178,5 +181,36 @@ public class CandidateProfileController {
         candidateRepository.save(candidate);
 
         return ResponseEntity.ok("Password updated successfully.");
+    }
+    @GetMapping("/me/resume")
+    public ResponseEntity<?> downloadMyResume(Authentication authentication) {
+    String email = authentication.getName();
+    Optional<Candidate> candidateOpt = candidateRepository.findByEmail(email);
+
+    if (candidateOpt.isEmpty()) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Candidate not found.");
+    }
+
+    Candidate candidate = candidateOpt.get();
+
+    if (candidate.getResumeData() == null || candidate.getResumeData().length == 0) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Resume not found.");
+    }
+
+    String filename = candidate.getResumeFilename() != null
+            ? candidate.getResumeFilename()
+            : "resume";
+
+    String contentType = candidate.getResumeContentType() != null
+            ? candidate.getResumeContentType()
+            : MediaType.APPLICATION_OCTET_STREAM_VALUE;
+
+    ByteArrayResource resource = new ByteArrayResource(candidate.getResumeData());
+
+    return ResponseEntity.ok()
+            .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + filename + "\"")
+            .contentType(MediaType.parseMediaType(contentType))
+            .contentLength(candidate.getResumeData().length)
+            .body(resource);
     }
 }
