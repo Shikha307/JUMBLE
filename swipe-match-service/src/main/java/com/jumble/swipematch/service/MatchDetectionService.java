@@ -10,6 +10,7 @@ import com.jumble.swipematch.repository.MongoSwipeRecordRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.client.RestTemplate;
 
 import java.time.Instant;
@@ -25,6 +26,9 @@ public class MatchDetectionService {
     
     private final MongoSwipeRecordRepository swipeRecordRepository;
     private final MatchRepository matchRepository;
+
+    @Value("${USER_JOB_API_URL:http://localhost:8081}")
+    private String userJobApiUrl;
     
     public void detectMatch(Swipe latestSwipe) {
         if (latestSwipe.getDirection() != SwipeDirection.RIGHT) {
@@ -52,7 +56,7 @@ public class MatchDetectionService {
                 if (recruiterId == null || recruiterId.isEmpty() || recruiterId.equals("R1")) {
                     try {
                         RestTemplate restTemplate = new RestTemplate();
-                        String jobUrl = "http://host.docker.internal:8081/api/jobs/" + record.getJobId();
+                        String jobUrl = userJobApiUrl + "/api/jobs/" + record.getJobId();
                         Map<String, Object> jobResponse = restTemplate.getForObject(jobUrl, Map.class);
                         if (jobResponse != null && jobResponse.containsKey("recruiterId")) {
                             recruiterId = (String) jobResponse.get("recruiterId");
