@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Navbar from '../components/Navbar';
 import { Pencil, Save, X } from 'lucide-react';
+import { USER_JOB_API } from '../config/api';
 
 export default function MyJobs() {
   const [jobs, setJobs] = useState([]);
@@ -12,7 +13,7 @@ export default function MyJobs() {
       try {
         const recruiterId = localStorage.getItem('id');
         const token = localStorage.getItem('token');
-        const response = await fetch(`http://localhost:8081/api/recruiters/${recruiterId}/jobs`, {
+        const response = await fetch(`${USER_JOB_API}/api/recruiters/${recruiterId}/jobs`, {
           headers: {
             'Authorization': `Bearer ${token}`
           }

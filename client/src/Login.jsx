@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { USER_JOB_API } from './config/api';
 
 function Login() {
   const [email, setEmail] = useState('');
@@ -18,7 +19,7 @@ function Login() {
     setLoading(true);
 
     try {
-      const response = await fetch('http://localhost:8081/api/auth/login', {
+      const response = await fetch(`${USER_JOB_API}/api/auth/login`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password })

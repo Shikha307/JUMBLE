@@ -1,0 +1,81 @@
+name: ECS Deploy
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy-frontend:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+          
+      - name: Install Dependencies
+        working-directory: ./client
+        run: npm ci
+
+      - name: Build React App
+        working-directory: ./client
+        run: npm run build
+        env:
+          VITE_SWIPE_API_URL: ${{ secrets.VITE_SWIPE_API_URL }}
+          VITE_USER_JOB_API_URL: ${{ secrets.VITE_USER_JOB_API_URL }}
+          VITE_ML_OUTPUTS_URL: ${{ secrets.VITE_ML_OUTPUTS_URL }}
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_REGION }}
+
+      - name: Deploy to S3
+        run: aws s3 sync ./client/dist s3://${{ secrets.S3_FRONTEND_BUCKET }} --delete
+
+      - name: Invalidate CloudFront Cache
+        run: aws cloudfront create-invalidation --distribution-id ${{ secrets.CLOUDFRONT_DISTRIBUTION_ID }} --paths "/*"
+
+  deploy-backend:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_REGION }}
+
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v2
+
+      - name: Build, tag, and push Docker images to ECR
+        env:
+          REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+        run: |
+          # Build images
+          docker build -t $REGISTRY/jumble/nginx ./
+          docker build -t $REGISTRY/jumble/user-job ./
+          docker build -t $REGISTRY/jumble/swipe-match ./swipe-match-service
+          docker build -t $REGISTRY/jumble/ml-worker ./ml
+          
+          # Push images
+          docker push $REGISTRY/jumble/nginx
+          docker push $REGISTRY/jumble/user-job
+          docker push $REGISTRY/jumble/swipe-match
+          docker push $REGISTRY/jumble/ml-worker
+
+      - name: Force redeploy ECS services
+        run: |
+          aws ecs update-service --cluster jumble-cluster --service user-job-service --force-new-deployment
+          aws ecs update-service --cluster jumble-cluster --service swipe-match-service --force-new-deployment
+          aws ecs update-service --cluster jumble-cluster --service ml-worker-service --force-new-deployment
+          aws ecs update-service --cluster jumble-cluster --service nginx-service --force-new-deployment

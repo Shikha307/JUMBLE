@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Navbar from '../Navbar';
 import { User, Briefcase, Users, Mail, FileText, Linkedin, X, Phone, MapPin } from 'lucide-react';
+import { SWIPE_API, USER_JOB_API } from '../config/api';
 
 // ─── Candidate Detail Modal ────────────────────────────────────────────────────
 function CandidateModal({ match, onClose }) {
@@ -15,7 +16,7 @@ function CandidateModal({ match, onClose }) {
         try {
           const token = localStorage.getItem('token');
           const headers = token ? { 'Authorization': `Bearer ${token}` } : {};
-          const res = await fetch(`http://localhost:8081/api/candidates/${match.candidateId}`, { headers });
+          const res = await fetch(`${USER_JOB_API}/api/candidates/${match.candidateId}`, { headers });
           if (res.ok) {
             const data = await res.json();
             setDetails(data);
@@ -37,7 +38,7 @@ function CandidateModal({ match, onClose }) {
     try {
       const token = localStorage.getItem('token');
       const queryParams = resumeId ? `?resumeId=${resumeId}` : '';
-      const res = await fetch(`http://localhost:8081/api/candidates/${match.candidateId}/resume${queryParams}`, {
+      const res = await fetch(`${USER_JOB_API}/api/candidates/${match.candidateId}/resume${queryParams}`, {
         headers: token ? { 'Authorization': `Bearer ${token}` } : {}
       });
       if (res.ok) {
@@ -261,7 +262,7 @@ function JobModal({ match, onClose }) {
         try {
           const token = localStorage.getItem('token');
           const headers = token ? { 'Authorization': `Bearer ${token}` } : {};
-          const res = await fetch(`http://localhost:8081/api/jobs/${match.jobId}`, { headers });
+          const res = await fetch(`${USER_JOB_API}/api/jobs/${match.jobId}`, { headers });
           if (res.ok) {
             const data = await res.json();
             setDetails(data);
@@ -282,7 +283,7 @@ function JobModal({ match, onClose }) {
   useEffect(() => {
     if (details && details.recruiterId) {
       const token = localStorage.getItem('token');
-      fetch(`http://localhost:8081/api/recruiters/${details.recruiterId}`, {
+      fetch(`${USER_JOB_API}/api/recruiters/${details.recruiterId}`, {
         headers: token ? { 'Authorization': `Bearer ${token}` } : {}
       })
         .then(res => res.ok ? res.json() : null)
@@ -440,9 +441,9 @@ export default function Matches({ userRole }) {
 
         let endpoint = '';
         if (role === 'recruiter') {
-          endpoint = `http://localhost:8080/api/v1/matches/recruiter/${id}`;
+          endpoint = `${SWIPE_API}/api/v1/matches/recruiter/${id}`;
         } else {
-          endpoint = `http://localhost:8080/api/v1/matches/candidate/${id}`;
+          endpoint = `${SWIPE_API}/api/v1/matches/candidate/${id}`;
         }
 
         const response = await fetch(endpoint, { headers: authenticatedHeaders });
@@ -456,7 +457,7 @@ export default function Matches({ userRole }) {
 
               if (role === 'recruiter') {
                 try {
-                  const candRes = await fetch(`http://localhost:8081/api/candidates/${match.candidateId}`, { headers: authenticatedHeaders });
+                  const candRes = await fetch(`${USER_JOB_API}/api/candidates/${match.candidateId}`, { headers: authenticatedHeaders });
                   if (candRes.ok) candidateDetails = await candRes.json();
                 } catch (e) {
                   console.error('Error fetching candidate details', e);
@@ -464,7 +465,7 @@ export default function Matches({ userRole }) {
               }
 
               try {
-                const jobRes = await fetch(`http://localhost:8081/api/jobs/${match.jobId}`, { headers: authenticatedHeaders });
+                const jobRes = await fetch(`${USER_JOB_API}/api/jobs/${match.jobId}`, { headers: authenticatedHeaders });
                 if (jobRes.ok) jobDetails = await jobRes.json();
               } catch (e) {
                 console.error('Error fetching job details', e);

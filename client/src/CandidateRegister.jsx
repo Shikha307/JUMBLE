@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { X, Plus, UploadCloud, CheckCircle } from 'lucide-react';
+import { USER_JOB_API } from './config/api';
 
 function CandidateRegister() {
   const [form, setForm] = useState({
@@ -147,7 +148,7 @@ function CandidateRegister() {
     formData.append('resume', resumeFile);
 
     try {
-      const response = await fetch('http://localhost:8081/api/auth/register/candidate', {
+      const response = await fetch(`${USER_JOB_API}/api/auth/register/candidate`, {
         method: 'POST',
         body: formData
       });
@@ -202,17 +203,17 @@ function CandidateRegister() {
           <div className="input-group">
             <label htmlFor="country">Country <span className="required-mark">*</span></label>
             <select
-                id="country"
-                name="country"
-                value={form.country}
-                onChange={handleChange}
-                onBlur={handleBlur}
-                className="skill-textbox"
-                style={{ width: '100%', padding: '0.75rem' }}
+              id="country"
+              name="country"
+              value={form.country}
+              onChange={handleChange}
+              onBlur={handleBlur}
+              className="skill-textbox"
+              style={{ width: '100%', padding: '0.75rem' }}
             >
               <option value="">Select your country</option>
               {countries.map(c => (
-                  <option key={c} value={c}>{c}</option>
+                <option key={c} value={c}>{c}</option>
               ))}
             </select>
             {errors.country && <p className="error-message">{errors.country}</p>}

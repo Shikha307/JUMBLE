@@ -1,8 +1,7 @@
 import { useState, useEffect } from 'react';
 import Navbar from './Navbar';
 import { X, Heart, Briefcase, FileText } from 'lucide-react';
-
-const SWIPE_API = 'http://localhost:8080/api/v1/swipes';
+import { SWIPE_API, USER_JOB_API, ML_OUTPUTS } from './config/api';
 
 function CandidateDashboard({ userName }) {
   const [jobs, setJobs] = useState([]);
@@ -26,7 +25,7 @@ function CandidateDashboard({ userName }) {
 
         // Fetch candidate profile to get resumes list
         try {
-          const profileRes = await fetch('http://localhost:8081/api/candidates/me', {
+          const profileRes = await fetch(`${USER_JOB_API}/api/candidates/me`, {
             headers: token ? { 'Authorization': `Bearer ${token}` } : {}
           });
           if (profileRes.ok) {
@@ -41,7 +40,7 @@ function CandidateDashboard({ userName }) {
         }
 
         // Fetch unswiped jobs
-        const res = await fetch(`http://localhost:8080/api/v1/swipes/candidates/${candidateId}/unswiped-jobs`, {
+        const res = await fetch(`${SWIPE_API}/api/v1/swipes/candidates/${candidateId}/unswiped-jobs`, {
           headers: token ? { 'Authorization': `Bearer ${token}` } : {}
         });
         if (res.ok) {
@@ -50,7 +49,7 @@ function CandidateDashboard({ userName }) {
           // Try to fetch ML priorities
           try {
             if (candidateId) {
-              const mlRes = await fetch(`/ml_outputs/jobs_prioritized/${candidateId}.json`);
+              const mlRes = await fetch(`${ML_OUTPUTS}/jobs_prioritized/${candidateId}.json`);
               if (mlRes.ok) {
                 const mlJobs = await mlRes.json();
                 const scoreMap = {};
@@ -90,7 +89,7 @@ function CandidateDashboard({ userName }) {
     const token = localStorage.getItem('token');
 
     try {
-      const res = await fetch(SWIPE_API, {
+      const res = await fetch(`${SWIPE_API}/api/v1/swipes`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -130,7 +129,7 @@ function CandidateDashboard({ userName }) {
     if (currentJob && currentJob.recruiterId) {
       setCurrentCompany("Loading company...");
       const token = localStorage.getItem('token');
-      fetch(`http://localhost:8081/api/recruiters/${currentJob.recruiterId}`, {
+      fetch(`${USER_JOB_API}/api/recruiters/${currentJob.recruiterId}`, {
         headers: token ? { 'Authorization': `Bearer ${token}` } : {}
       })
         .then(res => {

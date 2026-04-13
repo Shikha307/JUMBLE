@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate, Link } from 'react-router-dom';
+import { USER_JOB_API } from './config/api';
 import Login from './Login';
 import RoleSelect from './RoleSelect';
 import CandidateRegister from './CandidateRegister';
@@ -29,7 +30,7 @@ function App() {
         setCheckingJobs(true);
         try {
           const recruiterId = localStorage.getItem('id');
-          const res = await fetch(`http://localhost:8081/api/recruiters/${recruiterId}/jobs`, {
+          const res = await fetch(`${USER_JOB_API}/api/recruiters/${recruiterId}/jobs`, {
             headers: { 'Authorization': `Bearer ${token}` }
           });
           if (res.ok) {

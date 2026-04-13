@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Navbar from '../components/Navbar';
+import { USER_JOB_API } from '../config/api';
 
 export default function AddJob() {
   const navigate = useNavigate();
@@ -26,7 +27,7 @@ export default function AddJob() {
     };
     
     try {
-      const response = await fetch('http://localhost:8081/api/jobs', {
+      const response = await fetch(`${USER_JOB_API}/api/jobs`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

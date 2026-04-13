@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from 'react';
 import { User, LogOut, Heart, Briefcase, PlusCircle, Settings, Home } from 'lucide-react';
 import { useNavigate, Link } from 'react-router-dom';
+import { SWIPE_API } from './config/api';
 
 function Navbar({ role, name }) {
   const navigate = useNavigate();
@@ -32,8 +33,8 @@ function Navbar({ role, name }) {
     const token = localStorage.getItem('token');
     if (!id || !role) return;
     const endpoint = role === 'recruiter'
-      ? `http://localhost:8080/api/v1/matches/recruiter/${id}`
-      : `http://localhost:8080/api/v1/matches/candidate/${id}`;
+      ? `${SWIPE_API}/api/v1/matches/recruiter/${id}`
+      : `${SWIPE_API}/api/v1/matches/candidate/${id}`;
     fetch(endpoint, {
       headers: token ? { 'Authorization': `Bearer ${token}` } : {}
     })

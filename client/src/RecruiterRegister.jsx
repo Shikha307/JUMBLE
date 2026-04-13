@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { USER_JOB_API } from './config/api';
 
 function RecruiterRegister() {
   const [form, setForm] = useState({
@@ -73,7 +74,7 @@ function RecruiterRegister() {
 
     setLoading(true);
     try {
-      const response = await fetch('http://localhost:8081/api/auth/register/recruiter', {
+      const response = await fetch(`${USER_JOB_API}/api/auth/register/recruiter`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

@@ -6,7 +6,7 @@ spring:
     name: user-job-management
   data:
     mongodb:
-      uri: mongodb+srv://jumble_app_user:test123@jumble.ewhoayr.mongodb.net/jumbledb?retryWrites=true&w=majority&appName=JUMBLE
+      uri: ${MONGO_URI:mongodb+srv://jumble_app_user:test123@jumble.ewhoayr.mongodb.net/jumbledb?retryWrites=true&w=majority&appName=JUMBLE}
   servlet:
     multipart:
       max-file-size: 10MB
@@ -14,5 +14,5 @@ spring:
 
 logging:
   level:
-    org.springframework.data.mongodb: DEBUG
-    org.mongodb.driver: DEBUG
+    org.springframework.data.mongodb: INFO
+    org.mongodb.driver: INFO

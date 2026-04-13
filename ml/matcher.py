@@ -4,6 +4,8 @@ import os
 import pymongo # type: ignore
 from bson import ObjectId # type: ignore
 from sentence_transformers import SentenceTransformer, util # type: ignore
+import boto3 # type: ignore
+
 import torch # type: ignore
 from typing import Any
 
@@ -28,12 +30,16 @@ jobs_collection: Any = db["jobs"]
 candidates_collection: Any = db["candidates"]
 
 # Output Directories — configurable via env var for Docker
+S3_BUCKET = os.environ.get("S3_BUCKET")
+s3 = boto3.client('s3') if S3_BUCKET else None
+
 OUTPUT_DIR = os.environ.get("ML_OUTPUT_DIR", os.path.join(os.path.dirname(__file__), "..", "client", "public", "ml_outputs"))
 JOBS_PRIORITIZED_DIR = os.path.join(OUTPUT_DIR, "jobs_prioritized")
 CANDIDATES_PRIORITIZED_DIR = os.path.join(OUTPUT_DIR, "candidates_prioritized")
 
-os.makedirs(JOBS_PRIORITIZED_DIR, exist_ok=True)
-os.makedirs(CANDIDATES_PRIORITIZED_DIR, exist_ok=True)
+if not S3_BUCKET:
+    os.makedirs(JOBS_PRIORITIZED_DIR, exist_ok=True)
+    os.makedirs(CANDIDATES_PRIORITIZED_DIR, exist_ok=True)
 
 # Load NLP Model
 print("Loading SentenceTransformer model...")
@@ -114,8 +120,18 @@ def generate_matrices(all_candidates, all_jobs):
         # Sort descending by matchScore
         job_rankings.sort(key=lambda x: x['matchScore'], reverse=True)
         
-        with open(os.path.join(JOBS_PRIORITIZED_DIR, f"{c_id}.json"), "w") as f:
-            json.dump(job_rankings, f, indent=2, cls=MongoEncoder)
+        json_data = json.dumps(job_rankings, indent=2, cls=MongoEncoder)
+        if S3_BUCKET:
+            s3.put_object(
+                Bucket=S3_BUCKET,
+                Key=f"jobs_prioritized/{c_id}.json",
+                Body=json_data,
+                ContentType="application/json",
+                ACL="public-read"
+            )
+        else:
+            with open(os.path.join(JOBS_PRIORITIZED_DIR, f"{c_id}.json"), "w") as f:
+                f.write(json_data)
 
     # 2. Evaluate Candidates for Jobs (Recruiter View)
     for job in all_jobs:
@@ -136,8 +152,18 @@ def generate_matrices(all_candidates, all_jobs):
             
         candidate_rankings.sort(key=lambda x: x['matchScore'], reverse=True)
         
-        with open(os.path.join(CANDIDATES_PRIORITIZED_DIR, f"{j_id}.json"), "w") as f:
-            json.dump(candidate_rankings, f, indent=2, cls=MongoEncoder)
+        json_data = json.dumps(candidate_rankings, indent=2, cls=MongoEncoder)
+        if S3_BUCKET:
+            s3.put_object(
+                Bucket=S3_BUCKET,
+                Key=f"candidates_prioritized/{j_id}.json",
+                Body=json_data,
+                ContentType="application/json",
+                ACL="public-read"
+            )
+        else:
+            with open(os.path.join(CANDIDATES_PRIORITIZED_DIR, f"{j_id}.json"), "w") as f:
+                f.write(json_data)
             
     print("Matrix calculations and file outputs complete.")
 

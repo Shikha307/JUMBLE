@@ -17,7 +17,7 @@ services:
     ports:
       - "8081:8081"
     environment:
-      - SPRING_DATA_MONGODB_URI=mongodb+srv://jumble_app_user:test123@jumble.ewhoayr.mongodb.net/jumbledb?retryWrites=true&w=majority&appName=JUMBLE
+      - SPRING_DATA_MONGODB_URI=${MONGO_URI:-mongodb+srv://jumble_app_user:test123@jumble.ewhoayr.mongodb.net/jumbledb?retryWrites=true&w=majority&appName=JUMBLE}
     healthcheck:
       test: ["CMD", "sh", "-c", "curl -sf http://localhost:8081/api/jobs/all || exit 1"]
       interval: 15s
@@ -35,7 +35,7 @@ services:
     environment:
       - REDIS_HOST=redis
       - REDIS_PORT=6379
-      - SPRING_DATA_MONGODB_URI=mongodb+srv://jumble_app_user:test123@jumble.ewhoayr.mongodb.net/jumbledb?retryWrites=true&w=majority&appName=JUMBLE
+      - SPRING_DATA_MONGODB_URI=${MONGO_URI:-mongodb+srv://jumble_app_user:test123@jumble.ewhoayr.mongodb.net/jumbledb?retryWrites=true&w=majority&appName=JUMBLE}
     depends_on:
       redis:
         condition: service_healthy
@@ -65,8 +65,12 @@ services:
       context: ./ml
       dockerfile: Dockerfile
     environment:
+      - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID:-}
+      - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY:-}
+      - AWS_DEFAULT_REGION=${AWS_DEFAULT_REGION:-us-east-1}
+      - S3_BUCKET=${S3_BUCKET:-}
       - ML_OUTPUT_DIR=/ml_outputs
-      - MONGO_URI=mongodb+srv://jumble_app_user:test123@jumble.ewhoayr.mongodb.net/jumbledb?retryWrites=true&w=majority&appName=JUMBLE
+      - MONGO_URI=${MONGO_URI:-mongodb+srv://jumble_app_user:test123@jumble.ewhoayr.mongodb.net/jumbledb?retryWrites=true&w=majority&appName=JUMBLE}
     volumes:
       - ./client/public/ml_outputs:/ml_outputs
     depends_on:
