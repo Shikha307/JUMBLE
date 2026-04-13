@@ -1,0 +1,129 @@
+name: Build & Push to ECR
+
+on:
+  push:
+    branches: [main]
+
+env:
+  AWS_REGION: us-east-1
+  ECR_REGISTRY: 793432095797.dkr.ecr.us-east-1.amazonaws.com
+
+jobs:
+  # ─────────────────────────────────────────────
+  # 1. Build & push user-job (Spring Boot)
+  # ─────────────────────────────────────────────
+  user-job:
+    name: user-job service
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Java 21
+        uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+
+      - name: Build JAR (skip tests)
+        run: ./mvnw package -DskipTests
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ env.AWS_REGION }}
+
+      - name: Login to Amazon ECR
+        uses: aws-actions/amazon-ecr-login@v2
+
+      - name: Build and push user-job image
+        run: |
+          docker build -t $ECR_REGISTRY/jumble/user-job:latest -f Dockerfile .
+          docker push $ECR_REGISTRY/jumble/user-job:latest
+
+  # ─────────────────────────────────────────────
+  # 2. Build & push swipe-match (Spring Boot)
+  # ─────────────────────────────────────────────
+  swipe-match:
+    name: swipe-match service
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Java 21
+        uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+
+      - name: Build JAR (skip tests)
+        working-directory: swipe-match-service
+        run: ./mvnw package -DskipTests
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ env.AWS_REGION }}
+
+      - name: Login to Amazon ECR
+        uses: aws-actions/amazon-ecr-login@v2
+
+      - name: Build and push swipe-match image
+        run: |
+          docker build -t $ECR_REGISTRY/jumble/swipe-match:latest -f swipe-match-service/Dockerfile swipe-match-service/
+          docker push $ECR_REGISTRY/jumble/swipe-match:latest
+
+  # ─────────────────────────────────────────────
+  # 3. Build & push ml-worker (Python)
+  # ─────────────────────────────────────────────
+  ml-worker:
+    name: ml-worker service
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ env.AWS_REGION }}
+
+      - name: Login to Amazon ECR
+        uses: aws-actions/amazon-ecr-login@v2
+
+      - name: Build and push ml-worker image
+        run: |
+          docker build -t $ECR_REGISTRY/jumble/ml-worker:latest -f ml/Dockerfile ml/
+          docker push $ECR_REGISTRY/jumble/ml-worker:latest
+
+  # ─────────────────────────────────────────────
+  # 4. Build & push nginx (API Gateway)
+  # ─────────────────────────────────────────────
+  nginx:
+    name: nginx gateway
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ env.AWS_REGION }}
+
+      - name: Login to Amazon ECR
+        uses: aws-actions/amazon-ecr-login@v2
+
+      - name: Build and push nginx image
+        run: |
+          docker build -t $ECR_REGISTRY/jumble/nginx:latest -f Dockerfile.nginx .
+          docker push $ECR_REGISTRY/jumble/nginx:latest
