@@ -26,7 +26,7 @@ export default function Navbar() {
     const id = localStorage.getItem('id');
     const token = localStorage.getItem('token');
     if (!id) return;
-    fetch(`http://localhost:8080/api/v1/matches/recruiter/${id}`, {
+    fetch(`https://swipe-match-70755451505.us-central1.run.app/api/v1/matches/recruiter/${id}`, {
       headers: token ? { 'Authorization': `Bearer ${token}` } : {}
     })
       .then(r => r.ok ? r.json() : [])

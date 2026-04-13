@@ -12,7 +12,7 @@ export default function MyJobs() {
       try {
         const recruiterId = localStorage.getItem('id');
         const token = localStorage.getItem('token');
-        const response = await fetch(`http://localhost:8081/api/recruiters/${recruiterId}/jobs`, {
+        const response = await fetch(`https://user-job-70755451505.us-central1.run.app/api/recruiters/${recruiterId}/jobs`, {
           headers: {
             'Authorization': `Bearer ${token}`
           }

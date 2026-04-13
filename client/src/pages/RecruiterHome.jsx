@@ -23,7 +23,7 @@ export default function RecruiterHome() {
     if (!silent) setLoadingCandidates(true);
     try {
       const token = localStorage.getItem('token');
-      let url = `http://localhost:8080/api/v1/swipes/jobs/${selectedJob.id}/unswiped-candidates`;
+      let url = `https://swipe-match-70755451505.us-central1.run.app/api/v1/swipes/jobs/${selectedJob.id}/unswiped-candidates`;
       if (selectedCountry) {
         url += `?country=${encodeURIComponent(selectedCountry)}`;
       }
@@ -37,7 +37,7 @@ export default function RecruiterHome() {
           const candidateId = c.userId || c.id || '';
           const activeResumeId = c.activeResumeId || '';
           const resumeUrl = candidateId
-            ? `http://localhost:8081/api/candidates/${candidateId}/resume${activeResumeId ? `?resumeId=${activeResumeId}` : ''}`
+            ? `https://user-job-70755451505.us-central1.run.app/api/candidates/${candidateId}/resume${activeResumeId ? `?resumeId=${activeResumeId}` : ''}`
             : '';
 
           return {
@@ -106,7 +106,7 @@ export default function RecruiterHome() {
         const recruiterId = localStorage.getItem('id');
         if (!recruiterId || recruiterId === 'null') {
           console.warn("Recruiter ID missing, fetching all jobs as fallback.");
-          const allJobsRes = await fetch(`http://localhost:8081/api/jobs/all`, {
+          const allJobsRes = await fetch(`https://user-job-70755451505.us-central1.run.app/api/jobs/all`, {
             headers: token ? { 'Authorization': `Bearer ${token}` } : {}
           });
           if (allJobsRes.ok) {
@@ -118,7 +118,7 @@ export default function RecruiterHome() {
           return;
         }
 
-        const res = await fetch(`http://localhost:8081/api/recruiters/${recruiterId}/jobs`, {
+        const res = await fetch(`https://user-job-70755451505.us-central1.run.app/api/recruiters/${recruiterId}/jobs`, {
           headers: token ? { 'Authorization': `Bearer ${token}` } : {}
         });
 
@@ -129,7 +129,7 @@ export default function RecruiterHome() {
             setSelectedJob(data[0]);
           } else {
             // If this recruiter has no specific jobs, fall back to showing all jobs
-            const allRes = await fetch(`http://localhost:8081/api/jobs/all`);
+            const allRes = await fetch(`https://user-job-70755451505.us-central1.run.app/api/jobs/all`);
             if (allRes.ok) {
               const allData = await allRes.json();
               setJobs(allData);
@@ -139,7 +139,7 @@ export default function RecruiterHome() {
         } else {
           console.error('Failed to fetch recruiter-specific jobs, status:', res.status);
           // General fallback
-          const allRes = await fetch(`http://localhost:8081/api/jobs/all`);
+          const allRes = await fetch(`https://user-job-70755451505.us-central1.run.app/api/jobs/all`);
           if (allRes.ok) {
             const allData = await allRes.json();
             setJobs(allData);
@@ -172,7 +172,7 @@ export default function RecruiterHome() {
     };
 
     try {
-      const response = await fetch('http://localhost:8080/api/v1/swipes', {
+      const response = await fetch('https://swipe-match-70755451505.us-central1.run.app/api/v1/swipes', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload)

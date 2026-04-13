@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import Navbar from './Navbar';
 import { X, Heart, Briefcase, FileText } from 'lucide-react';
 
-const SWIPE_API = 'http://localhost:8080/api/v1/swipes';
+const SWIPE_API = 'https://swipe-match-70755451505.us-central1.run.app/api/v1/swipes';
 
 function CandidateDashboard({ userName }) {
   const [jobs, setJobs] = useState([]);
@@ -26,7 +26,7 @@ function CandidateDashboard({ userName }) {
 
         // Fetch candidate profile to get resumes list
         try {
-          const profileRes = await fetch('http://localhost:8081/api/candidates/me', {
+          const profileRes = await fetch('https://user-job-70755451505.us-central1.run.app/api/candidates/me', {
             headers: token ? { 'Authorization': `Bearer ${token}` } : {}
           });
           if (profileRes.ok) {
@@ -41,7 +41,7 @@ function CandidateDashboard({ userName }) {
         }
 
         // Fetch unswiped jobs
-        const res = await fetch(`http://localhost:8080/api/v1/swipes/candidates/${candidateId}/unswiped-jobs`, {
+        const res = await fetch(`https://swipe-match-70755451505.us-central1.run.app/api/v1/swipes/candidates/${candidateId}/unswiped-jobs`, {
           headers: token ? { 'Authorization': `Bearer ${token}` } : {}
         });
         if (res.ok) {
@@ -130,7 +130,7 @@ function CandidateDashboard({ userName }) {
     if (currentJob && currentJob.recruiterId) {
       setCurrentCompany("Loading company...");
       const token = localStorage.getItem('token');
-      fetch(`http://localhost:8081/api/recruiters/${currentJob.recruiterId}`, {
+      fetch(`https://user-job-70755451505.us-central1.run.app/api/recruiters/${currentJob.recruiterId}`, {
         headers: token ? { 'Authorization': `Bearer ${token}` } : {}
       })
         .then(res => {

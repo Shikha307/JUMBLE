@@ -29,7 +29,7 @@ function App() {
         setCheckingJobs(true);
         try {
           const recruiterId = localStorage.getItem('id');
-          const res = await fetch(`http://localhost:8081/api/recruiters/${recruiterId}/jobs`, {
+          const res = await fetch(`https://user-job-70755451505.us-central1.run.app/api/recruiters/${recruiterId}/jobs`, {
             headers: { 'Authorization': `Bearer ${token}` }
           });
           if (res.ok) {

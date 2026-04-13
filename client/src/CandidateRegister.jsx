@@ -147,7 +147,7 @@ function CandidateRegister() {
     formData.append('resume', resumeFile);
 
     try {
-      const response = await fetch('http://localhost:8081/api/auth/register/candidate', {
+      const response = await fetch('https://user-job-70755451505.us-central1.run.app/api/auth/register/candidate', {
         method: 'POST',
         body: formData
       });

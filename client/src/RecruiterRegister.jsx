@@ -73,7 +73,7 @@ function RecruiterRegister() {
 
     setLoading(true);
     try {
-      const response = await fetch('http://localhost:8081/api/auth/register/recruiter', {
+      const response = await fetch('https://user-job-70755451505.us-central1.run.app/api/auth/register/recruiter', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

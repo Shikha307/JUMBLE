@@ -32,8 +32,8 @@ function Navbar({ role, name }) {
     const token = localStorage.getItem('token');
     if (!id || !role) return;
     const endpoint = role === 'recruiter'
-      ? `http://localhost:8080/api/v1/matches/recruiter/${id}`
-      : `http://localhost:8080/api/v1/matches/candidate/${id}`;
+      ? `https://swipe-match-70755451505.us-central1.run.app/api/v1/matches/recruiter/${id}`
+      : `https://swipe-match-70755451505.us-central1.run.app/api/v1/matches/candidate/${id}`;
     fetch(endpoint, {
       headers: token ? { 'Authorization': `Bearer ${token}` } : {}
     })

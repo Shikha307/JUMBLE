@@ -74,7 +74,7 @@ function ManageProfile() {
   const fetchProfile = async () => {
     try {
       const endpoint = role === 'candidate' ? '/api/candidates/me' : '/api/recruiters/me';
-      const res = await fetch(`http://localhost:8081${endpoint}`, {
+      const res = await fetch(`https://user-job-70755451505.us-central1.run.app${endpoint}`, {
         headers: { 'Authorization': `Bearer ${token}` }
       });
       if (res.ok) {
@@ -148,7 +148,7 @@ function ManageProfile() {
         const blob = new Blob(['dummy'], { type: 'application/pdf' });
         formData.append('resume', blob, existingResume);
 
-        const res = await fetch('http://localhost:8081/api/candidates/me/profile', {
+        const res = await fetch('https://user-job-70755451505.us-central1.run.app/api/candidates/me/profile', {
           method: 'PUT',
           headers: { 'Authorization': `Bearer ${token}` },
           body: formData
@@ -157,7 +157,7 @@ function ManageProfile() {
         if (res.ok) setMessage('Profile updated successfully!');
         else setErrorMsg(await res.text() || 'Failed to update profile.');
       } else {
-        const res = await fetch('http://localhost:8081/api/recruiters/me/profile', {
+        const res = await fetch('https://user-job-70755451505.us-central1.run.app/api/recruiters/me/profile', {
           method: 'PUT',
           headers: {
             'Authorization': `Bearer ${token}`,
@@ -193,7 +193,7 @@ function ManageProfile() {
     setPasswordLoading(true);
     try {
       const endpoint = role === 'candidate' ? '/api/candidates/me/password' : '/api/recruiters/me/password';
-      const res = await fetch(`http://localhost:8081${endpoint}`, {
+      const res = await fetch(`https://user-job-70755451505.us-central1.run.app${endpoint}`, {
         method: 'PUT',
         headers: {
           'Authorization': `Bearer ${token}`,
@@ -238,7 +238,7 @@ function ManageProfile() {
       formData.append('fieldName', newResumeField);
       formData.append('resume', newResumeFile);
 
-      const res = await fetch('http://localhost:8081/api/candidates/me/resumes', {
+      const res = await fetch('https://user-job-70755451505.us-central1.run.app/api/candidates/me/resumes', {
         method: 'POST',
         headers: { 'Authorization': `Bearer ${token}` },
         body: formData
@@ -263,7 +263,7 @@ function ManageProfile() {
     setResumeLoading(true);
     setMessage(''); setErrorMsg('');
     try {
-      const res = await fetch(`http://localhost:8081/api/candidates/me/resumes/${resumeId}`, {
+      const res = await fetch(`https://user-job-70755451505.us-central1.run.app/api/candidates/me/resumes/${resumeId}`, {
         method: 'DELETE',
         headers: { 'Authorization': `Bearer ${token}` }
       });
@@ -285,7 +285,7 @@ function ManageProfile() {
     setActiveResumeLoading(true);
     setMessage(''); setErrorMsg('');
     try {
-      const res = await fetch('http://localhost:8081/api/candidates/me/active-resume', {
+      const res = await fetch('https://user-job-70755451505.us-central1.run.app/api/candidates/me/active-resume', {
         method: 'PUT',
         headers: {
           'Authorization': `Bearer ${token}`,
