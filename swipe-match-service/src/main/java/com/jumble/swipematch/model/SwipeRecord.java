@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.index.CompoundIndex;
+import org.springframework.data.mongodb.core.index.CompoundIndexes;
 
 /**
  * Aggregated swipe state for a (candidateId, jobId) pair stored in MongoDB.
@@ -16,7 +17,10 @@ import org.springframework.data.mongodb.core.index.CompoundIndex;
 @NoArgsConstructor
 @AllArgsConstructor
 @Document(collection = "swipe_records")
-@CompoundIndex(name = "candidate_job_idx", def = "{'candidateId': 1, 'jobId': 1}", unique = true)
+@CompoundIndexes({
+    @CompoundIndex(name = "candidate_job_idx", def = "{'candidateId': 1, 'jobId': 1}", unique = true),
+    @CompoundIndex(name = "job_swipe_status_idx", def = "{'jobId': 1, 'candidateSwipe': 1, 'recruiterSwipe': 1}")
+})
 public class SwipeRecord {
 
     @Id

@@ -112,14 +112,17 @@ public class SwipeService {
 
         java.util.Set<String> interestedCandidateIds = candidateResumeMap.keySet();
 
-        return candidateRepository.findAll()
+        if (interestedCandidateIds.isEmpty()) {
+            return java.util.Collections.emptyList();
+        }
+
+        // ✅ FIX: Fetch ONLY the specific candidates by ID — no full table scan
+        return candidateRepository.findAllById(interestedCandidateIds)
                 .stream()
-                .filter(candidate -> interestedCandidateIds.contains(candidate.getId()))
                 .filter(candidate -> country == null || country.isEmpty() || country.equalsIgnoreCase(candidate.getCountry()))
                 .peek(candidate -> {
                     // Override activeResumeId with the job-specific resume the candidate selected
                     String jobResumeId = candidateResumeMap.get(candidate.getId());
-                    // Always set to the job-specific resume (could be "default" or a specific UUID)
                     candidate.setActiveResumeId(jobResumeId != null && !jobResumeId.isEmpty() ? jobResumeId : "default");
                 })
                 .toList();
@@ -135,6 +138,13 @@ public class SwipeService {
                 .stream()
                 .map(SwipeRecord::getJobId)
                 .toList();
+
+        // ✅ FIX: Fetch ALL jobs, then exclude already-swiped ones
+        // We still need findAll here since we need jobs the candidate HASN'T seen,
+        // but we can short-circuit if nothing has been swiped yet
+        if (swipedJobIds.isEmpty()) {
+            return jobRepository.findAll();
+        }
 
         return jobRepository.findAll()
                 .stream()

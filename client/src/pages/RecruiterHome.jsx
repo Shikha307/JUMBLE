@@ -16,7 +16,6 @@ export default function RecruiterHome() {
   const [countries, setCountries] = useState([]);
   const [selectedCountry, setSelectedCountry] = useState('');
   const [animatingDirection, setAnimatingDirection] = useState(null);
-  const [showMatchCelebration, setShowMatchCelebration] = useState(false);
 
   // Fetch Unswiped Candidates for the selected job
   const fetchCandidates = async (silent = false) => {
@@ -37,7 +36,7 @@ export default function RecruiterHome() {
         let mappedData = data.map(c => {
           const candidateId = c.userId || c.id || '';
           const activeResumeId = c.activeResumeId || '';
-          const resumeUrl = candidateId 
+          const resumeUrl = candidateId
             ? `http://localhost:8081/api/candidates/${candidateId}/resume${activeResumeId ? `?resumeId=${activeResumeId}` : ''}`
             : '';
 
@@ -80,14 +79,13 @@ export default function RecruiterHome() {
     }
   };
 
-  // Fetch candidates on job/country change and set up 15s polling (Bug 2 fix)
+  // Fetch candidates once when a job is selected or the country filter changes
   useEffect(() => {
     if (!selectedJob) return;
+    setCurrentIndex(0);
     fetchCandidates();
-    const interval = setInterval(() => fetchCandidates(true), 15000);
-    return () => clearInterval(interval);
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [selectedJob, selectedCountry]);
+  }, [selectedJob?.id, selectedCountry]);
 
   // Fetch Countries on mount
   useEffect(() => {
@@ -185,27 +183,15 @@ export default function RecruiterHome() {
     } catch (error) {
       console.error("Error recording swipe:", error);
     }
-    
-    if (actionType === 'LIKED') {
-      // Trigger Match Celebration first
-      setShowMatchCelebration(true);
-      setTimeout(() => {
-        setShowMatchCelebration(false);
-        // Then start the swipe animation
-        setAnimatingDirection(direction);
-        setTimeout(() => {
-          setCurrentIndex(prevIndex => prevIndex + 1);
-          setAnimatingDirection(null);
-        }, 400);
-      }, 1200); // Overlay shows for 1.2 seconds
-    } else {
-      // Normal pass immediately starts swipe animation
-      setAnimatingDirection(direction);
-      setTimeout(() => {
-        setCurrentIndex(prevIndex => prevIndex + 1);
-        setAnimatingDirection(null);
-      }, 400); // 0.4s to match CSS animation duration
-    }
+
+    // Start animation
+    setAnimatingDirection(direction);
+
+    setTimeout(() => {
+      // Advance only after animation finishes
+      setCurrentIndex(prevIndex => prevIndex + 1);
+      setAnimatingDirection(null);
+    }, 400); // 0.4s to match CSS animation duration
   };
 
   const currentCandidate = candidates[currentIndex];
@@ -308,19 +294,14 @@ export default function RecruiterHome() {
                   <div className="next-card-behind">
                     <CandidateCard
                       candidate={candidates[currentIndex + 1]}
-                      onLike={() => {}}
-                      onPass={() => {}}
+                      onLike={() => { }}
+                      onPass={() => { }}
                     />
                   </div>
                 )}
-                
+
                 {/* ACTIVE CARD */}
                 <div className={`active-card front-card ${animatingDirection === 'LEFT' ? 'swipe-out-left' : ''} ${animatingDirection === 'RIGHT' ? 'swipe-out-right' : ''}`}>
-                  {showMatchCelebration && (
-                    <div className="match-celebration-overlay">
-                      <div className="match-text">IT'S A MATCH!</div>
-                    </div>
-                  )}
                   <CandidateCard
                     candidate={currentCandidate}
                     onLike={(id) => handleAction(id, 'LIKED')}
