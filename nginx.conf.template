@@ -5,6 +5,9 @@ events {
 http {
     include       mime.types;
     default_type  application/octet-stream;
+    
+    # Increase maximum upload limit for PDF resumes
+    client_max_body_size 50M;
 
     server {
         listen 80;

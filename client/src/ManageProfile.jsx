@@ -136,7 +136,7 @@ function ManageProfile() {
         }
 
         const formData = new FormData();
-        skills.forEach(s => formData.append('skills', s));
+        formData.append('skills', skills.join(','));
         formData.append('country', country);
         formData.append('University', university);
         if (linkedin) formData.append('linkedin', linkedin);
