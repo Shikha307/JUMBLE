@@ -101,7 +101,8 @@ jobs:
 
       - name: Build and push ml-worker image
         run: |
-          docker build -t $ECR_REGISTRY/jumble/ml-worker:latest -f ml/Dockerfile ml/
+          docker pull $ECR_REGISTRY/jumble/ml-worker:base || true
+          docker build --build-arg BASE_IMAGE=$ECR_REGISTRY/jumble/ml-worker:base -t $ECR_REGISTRY/jumble/ml-worker:latest -f ml/Dockerfile ml/
           docker push $ECR_REGISTRY/jumble/ml-worker:latest
 
   # ─────────────────────────────────────────────

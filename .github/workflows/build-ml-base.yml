@@ -1,0 +1,36 @@
+name: Build ML Base Image
+
+on:
+  workflow_dispatch:
+    inputs:
+      reason:
+        description: 'Reason for rebuilding the base image (e.g. updated requirements)'
+        required: false
+        default: 'Updated python requirements'
+
+env:
+  AWS_REGION: us-east-1
+  ECR_REGISTRY: 793432095797.dkr.ecr.us-east-1.amazonaws.com
+
+jobs:
+  build-base:
+    name: Build and Push ml-worker:base
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ env.AWS_REGION }}
+
+      - name: Login to Amazon ECR
+        uses: aws-actions/amazon-ecr-login@v2
+
+      - name: Build and push ml-worker base image
+        run: |
+          docker build -t $ECR_REGISTRY/jumble/ml-worker:base -f ml/Dockerfile.base ml/
+          docker push $ECR_REGISTRY/jumble/ml-worker:base
