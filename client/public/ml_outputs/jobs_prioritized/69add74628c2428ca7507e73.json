@@ -1,5 +1,17 @@
 [
   {
+    "recruiterId": "69d443588c7ccb6480e39262",
+    "roleName": "sof",
+    "description": "software eng",
+    "skillsNeeded": [
+      "python",
+      "java"
+    ],
+    "_class": "com.jumble.userjob.job.model.Job",
+    "id": "69d70b17853308d737d91b49",
+    "matchScore": 72.3
+  },
+  {
     "recruiterId": "69acfcfede8bc04c38f4c252",
     "roleName": "cyber intern",
     "description": "security ",
@@ -13,6 +25,40 @@
     "matchScore": 57.87
   },
   {
+    "recruiterId": "69db2b0766d84d62e841b98e",
+    "roleName": "Senior Python Engineer",
+    "description": "Python",
+    "skillsNeeded": [
+      "Python"
+    ],
+    "_class": "com.jumble.userjob.job.model.Job",
+    "id": "69db3ddd66d84d62e841b990",
+    "matchScore": 57.7
+  },
+  {
+    "recruiterId": "69db2b0766d84d62e841b98e",
+    "roleName": "Junior Python Dev",
+    "description": "Python",
+    "skillsNeeded": [
+      "Python"
+    ],
+    "_class": "com.jumble.userjob.job.model.Job",
+    "id": "69dc45bf66d84d62e841b995",
+    "matchScore": 56.56
+  },
+  {
+    "recruiterId": "69db1753faa96d7f27b0b88c",
+    "roleName": "Machine Learing Dev",
+    "description": "Looking for a machine learning dev experienced in python.",
+    "skillsNeeded": [
+      "Python",
+      "Machine Learning"
+    ],
+    "_class": "com.jumble.userjob.job.model.Job",
+    "id": "69db177ffaa96d7f27b0b88d",
+    "matchScore": 49.31
+  },
+  {
     "recruiterId": "R1",
     "roleName": "Software intern",
     "description": "build a full stack application using any tech stack",
@@ -24,6 +70,29 @@
     "_class": "com.jumble.userjob.job.model.Job",
     "id": "69acc074a425d47c979142e6",
     "matchScore": 46.88
+  },
+  {
+    "recruiterId": "69d9ab728f8c5656d6eb8d16",
+    "roleName": "ML Engineer",
+    "description": "Looking for an ML Engineer",
+    "skillsNeeded": [
+      "Python",
+      "Tensorflow"
+    ],
+    "_class": "com.jumble.userjob.job.model.Job",
+    "id": "69d9b2ef8f8c5656d6eb8d17",
+    "matchScore": 42.54
+  },
+  {
+    "recruiterId": "69db2b0766d84d62e841b98e",
+    "roleName": "Java Intern",
+    "description": "Java",
+    "skillsNeeded": [
+      "Java"
+    ],
+    "_class": "com.jumble.userjob.job.model.Job",
+    "id": "69dc3ea566d84d62e841b993",
+    "matchScore": 41.33
   },
   {
     "recruiterId": "R1",
@@ -50,6 +119,39 @@
     "_class": "com.jumble.userjob.job.model.Job",
     "id": "69acc5e37eba71d2aaaa208d",
     "matchScore": 38.26
+  },
+  {
+    "recruiterId": "69db2b0766d84d62e841b98e",
+    "roleName": "Senior Java Dev",
+    "description": "Java",
+    "skillsNeeded": [
+      "Java"
+    ],
+    "_class": "com.jumble.userjob.job.model.Job",
+    "id": "69db3e6266d84d62e841b991",
+    "matchScore": 37.3
+  },
+  {
+    "recruiterId": "69db1d06faa96d7f27b0b890",
+    "roleName": "Resume Test 2",
+    "description": "abcd",
+    "skillsNeeded": [
+      "Python"
+    ],
+    "_class": "com.jumble.userjob.job.model.Job",
+    "id": "69db212c66d84d62e841b987",
+    "matchScore": 34.84
+  },
+  {
+    "recruiterId": "69db1d06faa96d7f27b0b890",
+    "roleName": "Resume test 1",
+    "description": "abcd",
+    "skillsNeeded": [
+      "Java"
+    ],
+    "_class": "com.jumble.userjob.job.model.Job",
+    "id": "69db211f66d84d62e841b986",
+    "matchScore": 34.27
   },
   {
     "recruiterId": "69acfcfede8bc04c38f4c252",
@@ -84,6 +186,39 @@
     "_class": "com.jumble.userjob.job.model.Job",
     "id": "69acab6d32e1b554400f220e",
     "matchScore": 32.87
+  },
+  {
+    "recruiterId": "69db1753faa96d7f27b0b88c",
+    "roleName": "Resume 2",
+    "description": "resume 2 check",
+    "skillsNeeded": [
+      "Java"
+    ],
+    "_class": "com.jumble.userjob.job.model.Job",
+    "id": "69db1938faa96d7f27b0b88e",
+    "matchScore": 32.22
+  },
+  {
+    "recruiterId": "69d9ab728f8c5656d6eb8d16",
+    "roleName": "Test 2",
+    "description": "test2",
+    "skillsNeeded": [
+      "Python"
+    ],
+    "_class": "com.jumble.userjob.job.model.Job",
+    "id": "69d9bc878f8c5656d6eb8d1b",
+    "matchScore": 31.94
+  },
+  {
+    "recruiterId": "69d9ab728f8c5656d6eb8d16",
+    "roleName": "Test 1",
+    "description": "test1",
+    "skillsNeeded": [
+      "Java"
+    ],
+    "_class": "com.jumble.userjob.job.model.Job",
+    "id": "69d9bc7e8f8c5656d6eb8d1a",
+    "matchScore": 31.89
   },
   {
     "recruiterId": "R1",
@@ -139,6 +274,28 @@
     "matchScore": 29.02
   },
   {
+    "recruiterId": "69db1d06faa96d7f27b0b890",
+    "roleName": "Resume 2 Test new",
+    "description": "Resume 2 test new",
+    "skillsNeeded": [
+      "PYthon"
+    ],
+    "_class": "com.jumble.userjob.job.model.Job",
+    "id": "69db1d37faa96d7f27b0b892",
+    "matchScore": 28.93
+  },
+  {
+    "recruiterId": "69db1753faa96d7f27b0b88c",
+    "roleName": "Resume 2 test 2",
+    "description": "resume 2 test 2",
+    "skillsNeeded": [
+      "Python"
+    ],
+    "_class": "com.jumble.userjob.job.model.Job",
+    "id": "69db1b85faa96d7f27b0b88f",
+    "matchScore": 28.83
+  },
+  {
     "recruiterId": "69ad71c728c2428ca7507e67",
     "roleName": "Senior Devops Engineer",
     "description": "Looking for senior devops engineer with knowledge of kubernetes.",
@@ -164,6 +321,39 @@
     "_class": "com.jumble.userjob.job.model.Job",
     "id": "69acc1a4a425d47c979142e7",
     "matchScore": 28.25
+  },
+  {
+    "recruiterId": "69db2b0766d84d62e841b98e",
+    "roleName": "Senior DotNet Developer",
+    "description": "C#",
+    "skillsNeeded": [
+      "C#"
+    ],
+    "_class": "com.jumble.userjob.job.model.Job",
+    "id": "69db3fdf66d84d62e841b992",
+    "matchScore": 28.0
+  },
+  {
+    "recruiterId": "69db2b0766d84d62e841b98e",
+    "roleName": "Junior C# Intern",
+    "description": "C#",
+    "skillsNeeded": [
+      "C#"
+    ],
+    "_class": "com.jumble.userjob.job.model.Job",
+    "id": "69dc42da66d84d62e841b994",
+    "matchScore": 26.18
+  },
+  {
+    "recruiterId": "69d9ab728f8c5656d6eb8d16",
+    "roleName": "AirTral",
+    "description": "AirTrail resume",
+    "skillsNeeded": [
+      "Java"
+    ],
+    "_class": "com.jumble.userjob.job.model.Job",
+    "id": "69d9b8dd8f8c5656d6eb8d18",
+    "matchScore": 24.99
   },
   {
     "recruiterId": "69adca4e28c2428ca7507e6f",
@@ -216,6 +406,17 @@
     "matchScore": 22.89
   },
   {
+    "recruiterId": "69db1d06faa96d7f27b0b890",
+    "roleName": "Default Cover Letter test",
+    "description": "Default Cover Letter test",
+    "skillsNeeded": [
+      "Java"
+    ],
+    "_class": "com.jumble.userjob.job.model.Job",
+    "id": "69db1d22faa96d7f27b0b891",
+    "matchScore": 22.52
+  },
+  {
     "recruiterId": "69ad4085e2f5646291887c17",
     "roleName": "operating security",
     "description": "operating system using any os",
@@ -227,6 +428,45 @@
     "_class": "com.jumble.userjob.job.model.Job",
     "id": "69ad4af018f9f1541a270772",
     "matchScore": 21.07
+  },
+  {
+    "recruiterId": "69d443588c7ccb6480e39262",
+    "roleName": "data engineer",
+    "description": "looking for data people",
+    "skillsNeeded": [
+      "aws",
+      "azure",
+      "cloud"
+    ],
+    "_class": "com.jumble.userjob.job.model.Job",
+    "id": "69d4438d8c7ccb6480e39263",
+    "matchScore": 20.07
+  },
+  {
+    "recruiterId": "69d443588c7ccb6480e39262",
+    "roleName": "data engineer",
+    "description": "sdfghjk",
+    "skillsNeeded": [
+      "aws",
+      "azure",
+      "cloud"
+    ],
+    "_class": "com.jumble.userjob.job.model.Job",
+    "id": "69d5b3178c7ccb6480e39264",
+    "matchScore": 19.84
+  },
+  {
+    "recruiterId": "69d443588c7ccb6480e39262",
+    "roleName": "data engineer",
+    "description": "xxxxxsssss",
+    "skillsNeeded": [
+      "aws",
+      "azure",
+      "cloud"
+    ],
+    "_class": "com.jumble.userjob.job.model.Job",
+    "id": "69d5b32b8c7ccb6480e39265",
+    "matchScore": 19.12
   },
   {
     "recruiterId": "69ad4085e2f5646291887c17",
@@ -278,5 +518,16 @@
     "_class": "com.jumble.userjob.job.model.Job",
     "id": "69adcc2428c2428ca7507e72",
     "matchScore": 17.2
+  },
+  {
+    "recruiterId": "69d9ab728f8c5656d6eb8d16",
+    "roleName": "CV Resume",
+    "description": "CV Resume",
+    "skillsNeeded": [
+      "OpenCV"
+    ],
+    "_class": "com.jumble.userjob.job.model.Job",
+    "id": "69d9b9438f8c5656d6eb8d19",
+    "matchScore": 7.37
   }
 ]

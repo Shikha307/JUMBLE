@@ -1,5 +1,51 @@
 [
   {
+    "recruiterId": "69d9ab728f8c5656d6eb8d16",
+    "roleName": "ML Engineer",
+    "description": "Looking for an ML Engineer",
+    "skillsNeeded": [
+      "Python",
+      "Tensorflow"
+    ],
+    "_class": "com.jumble.userjob.job.model.Job",
+    "id": "69d9b2ef8f8c5656d6eb8d17",
+    "matchScore": 33.94
+  },
+  {
+    "recruiterId": "69db2b0766d84d62e841b98e",
+    "roleName": "Senior Python Engineer",
+    "description": "Python",
+    "skillsNeeded": [
+      "Python"
+    ],
+    "_class": "com.jumble.userjob.job.model.Job",
+    "id": "69db3ddd66d84d62e841b990",
+    "matchScore": 32.17
+  },
+  {
+    "recruiterId": "69db2b0766d84d62e841b98e",
+    "roleName": "Junior Python Dev",
+    "description": "Python",
+    "skillsNeeded": [
+      "Python"
+    ],
+    "_class": "com.jumble.userjob.job.model.Job",
+    "id": "69dc45bf66d84d62e841b995",
+    "matchScore": 29.8
+  },
+  {
+    "recruiterId": "69db1753faa96d7f27b0b88c",
+    "roleName": "Machine Learing Dev",
+    "description": "Looking for a machine learning dev experienced in python.",
+    "skillsNeeded": [
+      "Python",
+      "Machine Learning"
+    ],
+    "_class": "com.jumble.userjob.job.model.Job",
+    "id": "69db177ffaa96d7f27b0b88d",
+    "matchScore": 29.42
+  },
+  {
     "recruiterId": "R1",
     "roleName": "Senior ML Engineer",
     "description": "Looking for ML Engineer who has knowledge of Flutter, Python, Tensorflow, Keras.",
@@ -41,6 +87,18 @@
     "matchScore": 23.58
   },
   {
+    "recruiterId": "69d443588c7ccb6480e39262",
+    "roleName": "sof",
+    "description": "software eng",
+    "skillsNeeded": [
+      "python",
+      "java"
+    ],
+    "_class": "com.jumble.userjob.job.model.Job",
+    "id": "69d70b17853308d737d91b49",
+    "matchScore": 22.91
+  },
+  {
     "recruiterId": "R1",
     "roleName": "Senior Kubernetes Engineer",
     "description": "Looking for senior kubernetes engineer.",
@@ -78,6 +136,19 @@
     "_class": "com.jumble.userjob.job.model.Job",
     "id": "69ad720f28c2428ca7507e68",
     "matchScore": 20.43
+  },
+  {
+    "recruiterId": "69d443588c7ccb6480e39262",
+    "roleName": "data engineer",
+    "description": "sdfghjk",
+    "skillsNeeded": [
+      "aws",
+      "azure",
+      "cloud"
+    ],
+    "_class": "com.jumble.userjob.job.model.Job",
+    "id": "69d5b3178c7ccb6480e39264",
+    "matchScore": 19.23
   },
   {
     "recruiterId": "69cb1cba0be57363a0ce0fce",
@@ -133,6 +204,43 @@
     "matchScore": 15.88
   },
   {
+    "recruiterId": "69d443588c7ccb6480e39262",
+    "roleName": "data engineer",
+    "description": "xxxxxsssss",
+    "skillsNeeded": [
+      "aws",
+      "azure",
+      "cloud"
+    ],
+    "_class": "com.jumble.userjob.job.model.Job",
+    "id": "69d5b32b8c7ccb6480e39265",
+    "matchScore": 15.07
+  },
+  {
+    "recruiterId": "69d443588c7ccb6480e39262",
+    "roleName": "data engineer",
+    "description": "looking for data people",
+    "skillsNeeded": [
+      "aws",
+      "azure",
+      "cloud"
+    ],
+    "_class": "com.jumble.userjob.job.model.Job",
+    "id": "69d4438d8c7ccb6480e39263",
+    "matchScore": 14.42
+  },
+  {
+    "recruiterId": "69d9ab728f8c5656d6eb8d16",
+    "roleName": "CV Resume",
+    "description": "CV Resume",
+    "skillsNeeded": [
+      "OpenCV"
+    ],
+    "_class": "com.jumble.userjob.job.model.Job",
+    "id": "69d9b9438f8c5656d6eb8d19",
+    "matchScore": 14.32
+  },
+  {
     "recruiterId": "69adca4e28c2428ca7507e6f",
     "roleName": "Summer 2026 Intern- Software Engineer",
     "description": "Our vision for the future is based on the idea that transforming financial lives starts by giving our people the freedom to transform their own. We have a flexible work environment, and fluid career paths. We not only encourage but celebrate internal mobility. We also recognize the importance of purpose, well-being, and work-life balance. Within Empower and our communities, we work hard to create a welcoming and inclusive environment, and our associates dedicate thousands of hours to volunteering for causes that matter most to them.\n\nChart your own path and grow your career while helping more customers achieve financial freedom. Empower Yourself.\n\nJob Posting Description\n\nOur interns experience a wide range of opportunities during our 10-week summer internship program. We are looking for candidates who have an interest in the financial services industry and bring with them enthusiasm and passion for working in a fast-paced, growth-centric environment.\n\nEach intern will be paired with a manager, mentor, and executive sponsor for the summer and will present on a summer project at the end of the program. Interns are given opportunities to interact with senior leadership, learn about our various business areas, and network with peers and staff. During the internship, you will develop essential business acumen and engage with many aspects of our business. Our internship program includes professional and personal development training workshops.\n\nInterested candidates should be currently enrolled in a college or university and seeking a bachelor\u2019s or master\u2019s degree with a minimum GPA of 3.0. Interns should be planning on attending the fall semester/quarter following the internship.\n\nThe internship program begins on Wednesday May 27th and concludes on Friday July 31st. \nThis is an on-site and in-person internship based in our Greenwood Village, CO office. \nThis is a 40-hour-per-week role and is a paid position. \nHourly wages are between $24.00 and $25.00 based on the level of schooling completed.\n",
@@ -172,6 +280,39 @@
     "matchScore": 12.3
   },
   {
+    "recruiterId": "69db1d06faa96d7f27b0b890",
+    "roleName": "Resume 2 Test new",
+    "description": "Resume 2 test new",
+    "skillsNeeded": [
+      "PYthon"
+    ],
+    "_class": "com.jumble.userjob.job.model.Job",
+    "id": "69db1d37faa96d7f27b0b892",
+    "matchScore": 11.85
+  },
+  {
+    "recruiterId": "69db1753faa96d7f27b0b88c",
+    "roleName": "Resume 2 test 2",
+    "description": "resume 2 test 2",
+    "skillsNeeded": [
+      "Python"
+    ],
+    "_class": "com.jumble.userjob.job.model.Job",
+    "id": "69db1b85faa96d7f27b0b88f",
+    "matchScore": 11.2
+  },
+  {
+    "recruiterId": "69d9ab728f8c5656d6eb8d16",
+    "roleName": "Test 2",
+    "description": "test2",
+    "skillsNeeded": [
+      "Python"
+    ],
+    "_class": "com.jumble.userjob.job.model.Job",
+    "id": "69d9bc878f8c5656d6eb8d1b",
+    "matchScore": 9.63
+  },
+  {
     "recruiterId": "69ad4085e2f5646291887c17",
     "roleName": "network intern",
     "description": "2sss2",
@@ -209,6 +350,17 @@
     "matchScore": 8.54
   },
   {
+    "recruiterId": "69db2b0766d84d62e841b98e",
+    "roleName": "Senior DotNet Developer",
+    "description": "C#",
+    "skillsNeeded": [
+      "C#"
+    ],
+    "_class": "com.jumble.userjob.job.model.Job",
+    "id": "69db3fdf66d84d62e841b992",
+    "matchScore": 8.27
+  },
+  {
     "recruiterId": "69acaae932e1b554400f220d",
     "roleName": "ML Engineer",
     "description": "Looking for an expert ML Engineer.",
@@ -232,6 +384,72 @@
     "_class": "com.jumble.userjob.job.model.Job",
     "id": "69acfd2ede8bc04c38f4c253",
     "matchScore": 7.62
+  },
+  {
+    "recruiterId": "69db1d06faa96d7f27b0b890",
+    "roleName": "Resume Test 2",
+    "description": "abcd",
+    "skillsNeeded": [
+      "Python"
+    ],
+    "_class": "com.jumble.userjob.job.model.Job",
+    "id": "69db212c66d84d62e841b987",
+    "matchScore": 6.75
+  },
+  {
+    "recruiterId": "69db2b0766d84d62e841b98e",
+    "roleName": "Senior Java Dev",
+    "description": "Java",
+    "skillsNeeded": [
+      "Java"
+    ],
+    "_class": "com.jumble.userjob.job.model.Job",
+    "id": "69db3e6266d84d62e841b991",
+    "matchScore": 2.1
+  },
+  {
+    "recruiterId": "69db2b0766d84d62e841b98e",
+    "roleName": "Java Intern",
+    "description": "Java",
+    "skillsNeeded": [
+      "Java"
+    ],
+    "_class": "com.jumble.userjob.job.model.Job",
+    "id": "69dc3ea566d84d62e841b993",
+    "matchScore": 1.69
+  },
+  {
+    "recruiterId": "69db1753faa96d7f27b0b88c",
+    "roleName": "Resume 2",
+    "description": "resume 2 check",
+    "skillsNeeded": [
+      "Java"
+    ],
+    "_class": "com.jumble.userjob.job.model.Job",
+    "id": "69db1938faa96d7f27b0b88e",
+    "matchScore": 1.58
+  },
+  {
+    "recruiterId": "69db2b0766d84d62e841b98e",
+    "roleName": "Junior C# Intern",
+    "description": "C#",
+    "skillsNeeded": [
+      "C#"
+    ],
+    "_class": "com.jumble.userjob.job.model.Job",
+    "id": "69dc42da66d84d62e841b994",
+    "matchScore": 1.12
+  },
+  {
+    "recruiterId": "69d9ab728f8c5656d6eb8d16",
+    "roleName": "AirTral",
+    "description": "AirTrail resume",
+    "skillsNeeded": [
+      "Java"
+    ],
+    "_class": "com.jumble.userjob.job.model.Job",
+    "id": "69d9b8dd8f8c5656d6eb8d18",
+    "matchScore": 1.04
   },
   {
     "recruiterId": "69acfcfede8bc04c38f4c252",
@@ -265,6 +483,39 @@
     "_class": "com.jumble.userjob.job.model.Job",
     "id": "69acfae40bb735b8163c5b25",
     "matchScore": -4.78
+  },
+  {
+    "recruiterId": "69db1d06faa96d7f27b0b890",
+    "roleName": "Resume test 1",
+    "description": "abcd",
+    "skillsNeeded": [
+      "Java"
+    ],
+    "_class": "com.jumble.userjob.job.model.Job",
+    "id": "69db211f66d84d62e841b986",
+    "matchScore": -6.11
+  },
+  {
+    "recruiterId": "69db1d06faa96d7f27b0b890",
+    "roleName": "Default Cover Letter test",
+    "description": "Default Cover Letter test",
+    "skillsNeeded": [
+      "Java"
+    ],
+    "_class": "com.jumble.userjob.job.model.Job",
+    "id": "69db1d22faa96d7f27b0b891",
+    "matchScore": -8.89
+  },
+  {
+    "recruiterId": "69d9ab728f8c5656d6eb8d16",
+    "roleName": "Test 1",
+    "description": "test1",
+    "skillsNeeded": [
+      "Java"
+    ],
+    "_class": "com.jumble.userjob.job.model.Job",
+    "id": "69d9bc7e8f8c5656d6eb8d1a",
+    "matchScore": -9.14
   },
   {
     "recruiterId": "69ad4085e2f5646291887c17",

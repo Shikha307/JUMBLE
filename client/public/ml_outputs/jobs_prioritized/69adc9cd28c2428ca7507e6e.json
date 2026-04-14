@@ -1,5 +1,17 @@
 [
   {
+    "recruiterId": "69d443588c7ccb6480e39262",
+    "roleName": "sof",
+    "description": "software eng",
+    "skillsNeeded": [
+      "python",
+      "java"
+    ],
+    "_class": "com.jumble.userjob.job.model.Job",
+    "id": "69d70b17853308d737d91b49",
+    "matchScore": 46.15
+  },
+  {
     "recruiterId": "69acfcfede8bc04c38f4c252",
     "roleName": "cyber intern",
     "description": "security ",
@@ -13,6 +25,28 @@
     "matchScore": 41.38
   },
   {
+    "recruiterId": "69db2b0766d84d62e841b98e",
+    "roleName": "Senior Python Engineer",
+    "description": "Python",
+    "skillsNeeded": [
+      "Python"
+    ],
+    "_class": "com.jumble.userjob.job.model.Job",
+    "id": "69db3ddd66d84d62e841b990",
+    "matchScore": 39.26
+  },
+  {
+    "recruiterId": "69db2b0766d84d62e841b98e",
+    "roleName": "Junior Python Dev",
+    "description": "Python",
+    "skillsNeeded": [
+      "Python"
+    ],
+    "_class": "com.jumble.userjob.job.model.Job",
+    "id": "69dc45bf66d84d62e841b995",
+    "matchScore": 38.57
+  },
+  {
     "recruiterId": "R1",
     "roleName": "Software intern",
     "description": "build a full stack application using any tech stack",
@@ -24,6 +58,18 @@
     "_class": "com.jumble.userjob.job.model.Job",
     "id": "69acc074a425d47c979142e6",
     "matchScore": 35.4
+  },
+  {
+    "recruiterId": "69db1753faa96d7f27b0b88c",
+    "roleName": "Machine Learing Dev",
+    "description": "Looking for a machine learning dev experienced in python.",
+    "skillsNeeded": [
+      "Python",
+      "Machine Learning"
+    ],
+    "_class": "com.jumble.userjob.job.model.Job",
+    "id": "69db177ffaa96d7f27b0b88d",
+    "matchScore": 35.11
   },
   {
     "recruiterId": "R1",
@@ -40,6 +86,18 @@
     "matchScore": 32.17
   },
   {
+    "recruiterId": "69d9ab728f8c5656d6eb8d16",
+    "roleName": "ML Engineer",
+    "description": "Looking for an ML Engineer",
+    "skillsNeeded": [
+      "Python",
+      "Tensorflow"
+    ],
+    "_class": "com.jumble.userjob.job.model.Job",
+    "id": "69d9b2ef8f8c5656d6eb8d17",
+    "matchScore": 31.88
+  },
+  {
     "recruiterId": "69adb21d28c2428ca7507e69",
     "roleName": "Software Developer Intern 2026",
     "description": "Your Role And Responsibilities\n\nWe are looking for Software Developer Interns to join our engineering teams. As an intern, you will work alongside experienced IBM developers to design, build, and test software that powers our cloud, AI, and hybrid\u2011platform solutions. This role is designed for students who are passionate about coding\u2014regardless of which programming language they started with. You will gain hands-on experience in real-world projects, learn modern development practices, and collaborate in an Agile environment where your ideas can make an immediate impact.\n\nWhat You\u2019ll Do\n\n Support the design, development, testing, and debugging of software in front-end, back-end, or full\u2011stack environments.\n Work with a variety of programming languages depending on the project (examples: Python, Java, JavaScript, TypeScript, C++, Go, Rust, Swift, Kotlin, or others).\n Help build user interfaces using frameworks like React or contribute to back-end services and APIs.\n Use Git and other version\u2011control and collaboration tools.\n Work with cloud and container technologies such as Docker, Kubernetes, and REST APIs.\n Participate in Agile ceremonies, code reviews, and technical discussions.\n Explore emerging technologies, including AI/ML, automation, and cloud-native development.\n\nPreferred Education\n\nBachelor's Degree\n\nRequired Technical And Professional Expertise\n\n To be eligible, candidates must be currently enrolled in a Bachelor\u2019s, Master\u2019s, MBA, or PhD program, with an expected graduation date between December 2026 and May 2029.\n Coursework or project experience in software development using any programming language.\n Familiarity with fundamental concepts such as data structures, basic algorithms, or debugging.\n Exposure to front-end or back-end technologies (React, Node.js, Python, Java, SQL, etc.).\n Experience using Git or similar version control tools.\n Interest in cloud computing, containers, or modern deployment practices.\n Strong analytical thinking, problem\u2011solving, and communication skills.\n Ability to collaborate and learn quickly in a team environment.\n\nPreferred Technical And Professional Experience\n\n Experience with cloud services (IBM Cloud, AWS, Azure, or GCP).\n Familiarity with REST APIs and databases (relational or NoSQL).\n Exposure to CI/CD pipelines or automation tools.\n Personal or open-source projects that demonstrate creativity and initiative.\n Understanding of Agile development methods.",
@@ -52,6 +110,17 @@
     "_class": "com.jumble.userjob.job.model.Job",
     "id": "69adb2d528c2428ca7507e6a",
     "matchScore": 28.67
+  },
+  {
+    "recruiterId": "69db2b0766d84d62e841b98e",
+    "roleName": "Java Intern",
+    "description": "Java",
+    "skillsNeeded": [
+      "Java"
+    ],
+    "_class": "com.jumble.userjob.job.model.Job",
+    "id": "69dc3ea566d84d62e841b993",
+    "matchScore": 26.49
   },
   {
     "recruiterId": "69ad71c728c2428ca7507e67",
@@ -117,6 +186,17 @@
     "matchScore": 20.99
   },
   {
+    "recruiterId": "69db2b0766d84d62e841b98e",
+    "roleName": "Senior Java Dev",
+    "description": "Java",
+    "skillsNeeded": [
+      "Java"
+    ],
+    "_class": "com.jumble.userjob.job.model.Job",
+    "id": "69db3e6266d84d62e841b991",
+    "matchScore": 20.95
+  },
+  {
     "recruiterId": "69ad3b55c7d5f2c747b8aa44",
     "roleName": "Senior Kubernetes Engineer",
     "description": "Kubenetes chahiye. Padh ke aao.",
@@ -139,6 +219,17 @@
     "_class": "com.jumble.userjob.job.model.Job",
     "id": "69ad14a289e52b7eba77c417",
     "matchScore": 20.06
+  },
+  {
+    "recruiterId": "69db1753faa96d7f27b0b88c",
+    "roleName": "Resume 2",
+    "description": "resume 2 check",
+    "skillsNeeded": [
+      "Java"
+    ],
+    "_class": "com.jumble.userjob.job.model.Job",
+    "id": "69db1938faa96d7f27b0b88e",
+    "matchScore": 19.6
   },
   {
     "recruiterId": "69ad4085e2f5646291887c17",
@@ -165,6 +256,28 @@
     "matchScore": 18.25
   },
   {
+    "recruiterId": "69db1d06faa96d7f27b0b890",
+    "roleName": "Resume Test 2",
+    "description": "abcd",
+    "skillsNeeded": [
+      "Python"
+    ],
+    "_class": "com.jumble.userjob.job.model.Job",
+    "id": "69db212c66d84d62e841b987",
+    "matchScore": 17.78
+  },
+  {
+    "recruiterId": "69d9ab728f8c5656d6eb8d16",
+    "roleName": "Test 2",
+    "description": "test2",
+    "skillsNeeded": [
+      "Python"
+    ],
+    "_class": "com.jumble.userjob.job.model.Job",
+    "id": "69d9bc878f8c5656d6eb8d1b",
+    "matchScore": 17.77
+  },
+  {
     "recruiterId": "69ad4085e2f5646291887c17",
     "roleName": "network intern",
     "description": "2sss2",
@@ -174,6 +287,41 @@
     "_class": "com.jumble.userjob.job.model.Job",
     "id": "69ad40a0e2f5646291887c18",
     "matchScore": 17.41
+  },
+  {
+    "recruiterId": "69db1d06faa96d7f27b0b890",
+    "roleName": "Resume 2 Test new",
+    "description": "Resume 2 test new",
+    "skillsNeeded": [
+      "PYthon"
+    ],
+    "_class": "com.jumble.userjob.job.model.Job",
+    "id": "69db1d37faa96d7f27b0b892",
+    "matchScore": 16.92
+  },
+  {
+    "recruiterId": "69d443588c7ccb6480e39262",
+    "roleName": "data engineer",
+    "description": "looking for data people",
+    "skillsNeeded": [
+      "aws",
+      "azure",
+      "cloud"
+    ],
+    "_class": "com.jumble.userjob.job.model.Job",
+    "id": "69d4438d8c7ccb6480e39263",
+    "matchScore": 16.88
+  },
+  {
+    "recruiterId": "69db1753faa96d7f27b0b88c",
+    "roleName": "Resume 2 test 2",
+    "description": "resume 2 test 2",
+    "skillsNeeded": [
+      "Python"
+    ],
+    "_class": "com.jumble.userjob.job.model.Job",
+    "id": "69db1b85faa96d7f27b0b88f",
+    "matchScore": 16.04
   },
   {
     "recruiterId": "69adca4e28c2428ca7507e6f",
@@ -189,6 +337,43 @@
     "matchScore": 15.98
   },
   {
+    "recruiterId": "69d443588c7ccb6480e39262",
+    "roleName": "data engineer",
+    "description": "xxxxxsssss",
+    "skillsNeeded": [
+      "aws",
+      "azure",
+      "cloud"
+    ],
+    "_class": "com.jumble.userjob.job.model.Job",
+    "id": "69d5b32b8c7ccb6480e39265",
+    "matchScore": 15.39
+  },
+  {
+    "recruiterId": "69db1d06faa96d7f27b0b890",
+    "roleName": "Resume test 1",
+    "description": "abcd",
+    "skillsNeeded": [
+      "Java"
+    ],
+    "_class": "com.jumble.userjob.job.model.Job",
+    "id": "69db211f66d84d62e841b986",
+    "matchScore": 14.5
+  },
+  {
+    "recruiterId": "69d443588c7ccb6480e39262",
+    "roleName": "data engineer",
+    "description": "sdfghjk",
+    "skillsNeeded": [
+      "aws",
+      "azure",
+      "cloud"
+    ],
+    "_class": "com.jumble.userjob.job.model.Job",
+    "id": "69d5b3178c7ccb6480e39264",
+    "matchScore": 14.36
+  },
+  {
     "recruiterId": "69cb1cba0be57363a0ce0fce",
     "roleName": "Junior backend developer",
     "description": "We are a fast-growing technology company focused on building scalable, user-centered digital products. Our team values clean architecture, efficient systems, and continuous learning. We are looking for a Backend Developer who is passionate about building reliable and high-performance services.",
@@ -202,6 +387,28 @@
     "_class": "com.jumble.userjob.job.model.Job",
     "id": "69cb266c0be57363a0ce0fcf",
     "matchScore": 14.26
+  },
+  {
+    "recruiterId": "69db1d06faa96d7f27b0b890",
+    "roleName": "Default Cover Letter test",
+    "description": "Default Cover Letter test",
+    "skillsNeeded": [
+      "Java"
+    ],
+    "_class": "com.jumble.userjob.job.model.Job",
+    "id": "69db1d22faa96d7f27b0b891",
+    "matchScore": 13.95
+  },
+  {
+    "recruiterId": "69db2b0766d84d62e841b98e",
+    "roleName": "Junior C# Intern",
+    "description": "C#",
+    "skillsNeeded": [
+      "C#"
+    ],
+    "_class": "com.jumble.userjob.job.model.Job",
+    "id": "69dc42da66d84d62e841b994",
+    "matchScore": 13.81
   },
   {
     "recruiterId": "69add82528c2428ca7507e74",
@@ -228,6 +435,17 @@
     "matchScore": 13.02
   },
   {
+    "recruiterId": "69d9ab728f8c5656d6eb8d16",
+    "roleName": "Test 1",
+    "description": "test1",
+    "skillsNeeded": [
+      "Java"
+    ],
+    "_class": "com.jumble.userjob.job.model.Job",
+    "id": "69d9bc7e8f8c5656d6eb8d1a",
+    "matchScore": 12.03
+  },
+  {
     "recruiterId": "R1",
     "roleName": "ml intern",
     "description": "build any application",
@@ -239,6 +457,28 @@
     "_class": "com.jumble.userjob.job.model.Job",
     "id": "69acc1a4a425d47c979142e7",
     "matchScore": 11.71
+  },
+  {
+    "recruiterId": "69d9ab728f8c5656d6eb8d16",
+    "roleName": "AirTral",
+    "description": "AirTrail resume",
+    "skillsNeeded": [
+      "Java"
+    ],
+    "_class": "com.jumble.userjob.job.model.Job",
+    "id": "69d9b8dd8f8c5656d6eb8d18",
+    "matchScore": 11.34
+  },
+  {
+    "recruiterId": "69db2b0766d84d62e841b98e",
+    "roleName": "Senior DotNet Developer",
+    "description": "C#",
+    "skillsNeeded": [
+      "C#"
+    ],
+    "_class": "com.jumble.userjob.job.model.Job",
+    "id": "69db3fdf66d84d62e841b992",
+    "matchScore": 11.2
   },
   {
     "recruiterId": "R1",
@@ -278,5 +518,16 @@
     "_class": "com.jumble.userjob.job.model.Job",
     "id": "69ad4af018f9f1541a270772",
     "matchScore": 6.86
+  },
+  {
+    "recruiterId": "69d9ab728f8c5656d6eb8d16",
+    "roleName": "CV Resume",
+    "description": "CV Resume",
+    "skillsNeeded": [
+      "OpenCV"
+    ],
+    "_class": "com.jumble.userjob.job.model.Job",
+    "id": "69d9b9438f8c5656d6eb8d19",
+    "matchScore": -3.08
   }
 ]
