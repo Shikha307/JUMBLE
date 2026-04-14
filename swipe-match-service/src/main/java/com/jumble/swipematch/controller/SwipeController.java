@@ -16,8 +16,14 @@ public class SwipeController {
 
     @PostMapping
     public ResponseEntity<String> recordSwipe(@RequestBody SwipeRequestDTO request) {
-        swipeService.processSwipe(request);
-        return ResponseEntity.ok("Swipe recorded successfully");
+        try {
+            swipeService.processSwipe(request);
+            return ResponseEntity.ok("Swipe recorded successfully");
+        } catch (Exception e) {
+            java.io.StringWriter sw = new java.io.StringWriter();
+            e.printStackTrace(new java.io.PrintWriter(sw));
+            return ResponseEntity.status(500).body(sw.toString());
+        }
     }
 
     /**
