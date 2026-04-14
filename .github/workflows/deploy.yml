@@ -130,9 +130,45 @@ jobs:
           docker push $ECR_REGISTRY/jumble/nginx:latest
 
   # ─────────────────────────────────────────────
-  # 5. Deploy: force new ECS deployments
-  #    Runs after ALL 4 build jobs succeed
+  # 5. Build React frontend & deploy to S3
   # ─────────────────────────────────────────────
+  frontend:
+    name: frontend (React/Vite)
+    runs-on: ubuntu-latest
+    env:
+      VITE_SWIPE_API_URL: ${{ secrets.VITE_SWIPE_API_URL }}
+      VITE_USER_JOB_API_URL: ${{ secrets.VITE_USER_JOB_API_URL }}
+      VITE_ML_OUTPUTS_URL: ${{ secrets.VITE_ML_OUTPUTS_URL }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        working-directory: client
+        run: npm ci || npm install
+
+      - name: Build frontend
+        working-directory: client
+        run: npm run build
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ env.AWS_REGION }}
+
+      - name: Deploy to S3
+        working-directory: client
+        run: aws s3 sync dist/ s3://${{ secrets.FRONTEND_S3_BUCKET }} --delete
+
+  # ─────────────────────────────────────────────
+  # 6. Deploy: force new ECS deployments
   deploy:
     name: Deploy to ECS
     runs-on: ubuntu-latest
