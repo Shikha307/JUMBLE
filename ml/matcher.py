@@ -126,8 +126,7 @@ def generate_matrices(all_candidates, all_jobs):
                 Bucket=S3_BUCKET,
                 Key=f"jobs_prioritized/{c_id}.json",
                 Body=json_data,
-                ContentType="application/json",
-                ACL="public-read"
+                ContentType="application/json"
             )
         else:
             with open(os.path.join(JOBS_PRIORITIZED_DIR, f"{c_id}.json"), "w") as f:
@@ -158,8 +157,7 @@ def generate_matrices(all_candidates, all_jobs):
                 Bucket=S3_BUCKET,
                 Key=f"candidates_prioritized/{j_id}.json",
                 Body=json_data,
-                ContentType="application/json",
-                ACL="public-read"
+                ContentType="application/json"
             )
         else:
             with open(os.path.join(CANDIDATES_PRIORITIZED_DIR, f"{j_id}.json"), "w") as f:
