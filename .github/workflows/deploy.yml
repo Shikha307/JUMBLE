@@ -150,7 +150,7 @@ jobs:
 
       - name: Install dependencies
         working-directory: client
-        run: npm ci || npm install
+        run: npm ci --legacy-peer-deps || npm install --legacy-peer-deps
 
       - name: Build frontend
         working-directory: client
