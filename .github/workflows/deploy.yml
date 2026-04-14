@@ -1,4 +1,4 @@
-name: Build & Push to ECR
+name: Build, Push & Deploy to ECS
 
 on:
   push:
@@ -7,6 +7,7 @@ on:
 env:
   AWS_REGION: us-east-1
   ECR_REGISTRY: 793432095797.dkr.ecr.us-east-1.amazonaws.com
+  ECS_CLUSTER: jumble-cluster
 
 jobs:
   # ─────────────────────────────────────────────
@@ -127,3 +128,35 @@ jobs:
         run: |
           docker build -t $ECR_REGISTRY/jumble/nginx:latest -f Dockerfile.nginx .
           docker push $ECR_REGISTRY/jumble/nginx:latest
+
+  # ─────────────────────────────────────────────
+  # 5. Deploy: force new ECS deployments
+  #    Runs after ALL 4 build jobs succeed
+  # ─────────────────────────────────────────────
+  deploy:
+    name: Deploy to ECS
+    runs-on: ubuntu-latest
+    needs: [user-job, swipe-match, ml-worker, nginx]
+    steps:
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ env.AWS_REGION }}
+
+      - name: Force new ECS deployments
+        run: |
+          echo "Deploying user-job-service..."
+          aws ecs update-service --cluster $ECS_CLUSTER --service user-job-service --force-new-deployment --no-cli-pager
+
+          echo "Deploying swipe-match-service..."
+          aws ecs update-service --cluster $ECS_CLUSTER --service swipe-match-service --force-new-deployment --no-cli-pager
+
+          echo "Deploying nginx-service..."
+          aws ecs update-service --cluster $ECS_CLUSTER --service nginx-service --force-new-deployment --no-cli-pager
+
+          echo "Deploying ml-worker-service..."
+          aws ecs update-service --cluster $ECS_CLUSTER --service ml-worker-service --force-new-deployment --no-cli-pager
+
+          echo "All services deployment triggered successfully!"
