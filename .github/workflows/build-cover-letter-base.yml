@@ -12,7 +12,7 @@ on:
 
 env:
   REGISTRY: ghcr.io
-  IMAGE_NAME: ${{ github.repository_owner }}/cover-letter-base
+  IMAGE_NAME: shikha307/cover-letter-base
 
 jobs:
   build-base:
