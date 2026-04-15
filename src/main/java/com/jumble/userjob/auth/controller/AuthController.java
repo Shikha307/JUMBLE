@@ -59,7 +59,7 @@ public class AuthController {
             String name;
             String id;
 
-            Optional<Candidate> candidateOpt = candidateRepository.findByEmail(request.getEmail());
+            Optional<Candidate> candidateOpt = candidateRepository.findByEmailWithoutResume(request.getEmail());
             if (candidateOpt.isPresent()) {
                 role = "candidate";
                 name = candidateOpt.get().getName();

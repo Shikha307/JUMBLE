@@ -22,4 +22,5 @@ public class Match {
     private String recruiterId;
     private Instant matchedAt;
     private String candidateResumeId;
+    private String candidateCoverLetterText;
 }

@@ -31,6 +31,10 @@ public class CandidateService {
         return candidateRepository.findById(id);
     }
 
+    public Optional<Candidate> getUserByIdWithoutResume(String id) {
+        return candidateRepository.findByIdWithoutResume(id);
+    }
+
     public Candidate updateUser(String id, Candidate user) {
         return candidateRepository.save(user);
     }

@@ -46,6 +46,7 @@ public class SwipeService {
                 .direction(request.getDirection())
                 .timestamp(Instant.now())
                 .resumeId(request.getResumeId())
+            .coverLetterText(request.getCoverLetterText())
                 .build();
 
         swipeRepository.save(swipe);
@@ -73,12 +74,15 @@ public class SwipeService {
 
         SwipeRecord record = mongoSwipeRecordRepository
                 .findByCandidateIdAndJobId(candidateId, jobId)
-                .orElse(new SwipeRecord(null, request.getCandidateId(), request.getJobId(), null, null, false, null));
+            .orElse(new SwipeRecord(null, request.getCandidateId(), request.getJobId(), null, null, false, null, null));
 
         if (request.getSwiperRole() == UserRole.CANDIDATE) {
             record.setCandidateSwipe(dir);
             if (dir == SwipeDirection.RIGHT) {
                 record.setCandidateResumeId(request.getResumeId());
+                if (request.getCoverLetterText() != null && !request.getCoverLetterText().isBlank()) {
+                    record.setCandidateCoverLetterText(request.getCoverLetterText().trim());
+                }
             }
         } else {
             record.setRecruiterSwipe(dir);
@@ -110,6 +114,12 @@ public class SwipeService {
                         r -> r.getCandidateResumeId() != null ? r.getCandidateResumeId() : "",
                         (a, b) -> a));
 
+        java.util.Map<String, String> candidateCoverLetterMap = interestedRecords.stream()
+            .collect(java.util.stream.Collectors.toMap(
+                SwipeRecord::getCandidateId,
+                r -> r.getCandidateCoverLetterText() != null ? r.getCandidateCoverLetterText() : "",
+                (a, b) -> a));
+
         java.util.Set<String> interestedCandidateIds = candidateResumeMap.keySet();
 
         if (interestedCandidateIds.isEmpty()) {
@@ -117,13 +127,16 @@ public class SwipeService {
         }
 
         // ✅ FIX: Fetch ONLY the specific candidates by ID — no full table scan
-        return candidateRepository.findAllById(interestedCandidateIds)
+        return candidateRepository.findSlimByIdIn(interestedCandidateIds)
                 .stream()
                 .filter(candidate -> country == null || country.isEmpty() || country.equalsIgnoreCase(candidate.getCountry()))
                 .peek(candidate -> {
                     // Override activeResumeId with the job-specific resume the candidate selected
                     String jobResumeId = candidateResumeMap.get(candidate.getId());
                     candidate.setActiveResumeId(jobResumeId != null && !jobResumeId.isEmpty() ? jobResumeId : "default");
+
+                    String coverLetterText = candidateCoverLetterMap.get(candidate.getId());
+                    candidate.setCoverLetterText(coverLetterText != null && !coverLetterText.isEmpty() ? coverLetterText : null);
                 })
                 .toList();
     }
@@ -146,9 +159,6 @@ public class SwipeService {
             return jobRepository.findAll();
         }
 
-        return jobRepository.findAll()
-                .stream()
-                .filter(job -> !swipedJobIds.contains(job.getId()))
-                .toList();
+        return jobRepository.findByIdNotIn(swipedJobIds);
     }
 }

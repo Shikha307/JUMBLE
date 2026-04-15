@@ -4,6 +4,7 @@ import com.jumble.userjob.ai.dto.CoverLetterRequestDto;
 import com.jumble.userjob.ai.dto.CoverLetterResponseDto;
 import com.jumble.userjob.ai.service.CoverLetterClientService;
 import com.jumble.userjob.candidate.model.Candidate;
+import com.jumble.userjob.candidate.model.CandidateResume;
 import com.jumble.userjob.candidate.repository.CandidateRepository;
 import com.jumble.userjob.job.model.Job;
 import com.jumble.userjob.job.service.JobService;
@@ -32,6 +33,7 @@ public class AiController {
     @PostMapping("/cover-letter/{jobId}")
     public ResponseEntity<?> generateCoverLetter(
             @PathVariable String jobId,
+            @RequestParam(value = "resumeId", required = false) String resumeId,
             Authentication authentication
     ) {
         String email = authentication.getName();
@@ -49,16 +51,36 @@ public class AiController {
         Candidate candidate = candidateOpt.get();
         Job job = jobOpt.get();
 
-        if (candidate.getResumeData() == null || candidate.getResumeData().length == 0) {
+        byte[] selectedResumeBytes = null;
+        String selectedResumeFilename = candidate.getResumeFilename();
+
+        if (resumeId != null && !resumeId.isBlank() && !"default".equalsIgnoreCase(resumeId)) {
+            if (candidate.getResumes() != null) {
+                for (CandidateResume resume : candidate.getResumes()) {
+                    if (resumeId.equals(resume.getId())) {
+                        selectedResumeBytes = resume.getData();
+                        selectedResumeFilename = resume.getFilename();
+                        break;
+                    }
+                }
+            }
+            if (selectedResumeBytes == null) {
+                return ResponseEntity.status(404).body("Selected resume not found.");
+            }
+        } else {
+            selectedResumeBytes = candidate.getResumeData();
+        }
+
+        if (selectedResumeBytes == null || selectedResumeBytes.length == 0) {
             return ResponseEntity.status(404).body("Resume not found.");
         }
 
-        String resumeBase64 = Base64.getEncoder().encodeToString(candidate.getResumeData());
+        String resumeBase64 = Base64.getEncoder().encodeToString(selectedResumeBytes);
 
         CoverLetterRequestDto requestDto = new CoverLetterRequestDto(
                 candidate.getName(),
                 job.getDescription(),
-                candidate.getResumeFilename(),
+                selectedResumeFilename,
                 resumeBase64
         );
 

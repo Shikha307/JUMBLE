@@ -33,7 +33,7 @@ public class CandidateProfileController {
     @GetMapping("/me")
     public ResponseEntity<?> getMyProfile(Authentication authentication) {
         String email = authentication.getName();
-        Optional<Candidate> candidateOpt = candidateRepository.findByEmail(email);
+        Optional<Candidate> candidateOpt = candidateRepository.findByEmailWithoutResume(email);
 
         if (candidateOpt.isPresent()) {
             Candidate candidate = candidateOpt.get();
