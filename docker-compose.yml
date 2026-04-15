@@ -78,3 +78,13 @@ services:
       - swipe-match
     restart: always
 
+  cover-letter:
+    build:
+      context: ./cover-letter-service
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    env_file:
+      - ./cover-letter-service/.env
+    restart: always
+
