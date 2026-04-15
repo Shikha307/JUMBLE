@@ -41,4 +41,5 @@ public class SwipeRecord {
     private boolean matched;
 
     private String candidateResumeId;
+    private String candidateCoverLetterText;
 }

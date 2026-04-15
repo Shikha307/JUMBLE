@@ -12,4 +12,5 @@ public class SwipeRequestDTO {
     private UserRole swiperRole;
     private SwipeDirection direction;
     private String resumeId;
+    private String coverLetterText;
 }

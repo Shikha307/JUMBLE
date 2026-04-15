@@ -15,6 +15,10 @@ function CandidateDashboard({ userName }) {
   const [resumes, setResumes] = useState([]);
   const [defaultResumeName, setDefaultResumeName] = useState(null);
   const [selectedResumeId, setSelectedResumeId] = useState('');
+  const [generatedCoverLetters, setGeneratedCoverLetters] = useState({});
+  const [isGeneratingCoverLetter, setIsGeneratingCoverLetter] = useState(false);
+  const [coverLetterError, setCoverLetterError] = useState(null);
+  const [isCoverLetterModalOpen, setIsCoverLetterModalOpen] = useState(false);
 
   // Fetch jobs and candidate profile (resumes)
   useEffect(() => {
@@ -101,7 +105,8 @@ function CandidateDashboard({ userName }) {
           recruiterId: currentJob.recruiterId,
           swiperRole: "CANDIDATE",
           direction: direction,
-          resumeId: selectedResumeId
+          resumeId: selectedResumeId,
+          coverLetterText: direction === 'RIGHT' ? (generatedCoverLetters[currentJob.id] || null) : null
         })
       });
 
@@ -121,8 +126,98 @@ function CandidateDashboard({ userName }) {
     }
   };
 
+  const handleGenerateCoverLetter = async () => {
+    const currentJob = jobs[currentIndex];
+    if (!currentJob) return;
+
+    setIsGeneratingCoverLetter(true);
+    setCoverLetterError(null);
+
+    try {
+      const token = localStorage.getItem('token');
+      const resumeId = selectedResumeId || 'default';
+      const url = `${USER_JOB_API}/api/ai/cover-letter/${currentJob.id}?resumeId=${encodeURIComponent(resumeId)}`;
+
+      const res = await fetch(url, {
+        method: 'POST',
+        headers: token ? { 'Authorization': `Bearer ${token}` } : {}
+      });
+
+      if (!res.ok) {
+        const errText = await res.text();
+        throw new Error(errText || 'Failed to generate cover letter.');
+      }
+
+      const data = await res.json();
+
+      const extractCoverLetterText = (payload) => {
+        if (!payload) return '';
+
+        if (typeof payload === 'string') {
+          return payload.trim();
+        }
+
+        const direct = [
+          payload.coverLetter,
+          payload.cover_letter,
+          payload.coverletter,
+          payload.letter,
+          payload.content,
+          payload.text
+        ];
+
+        for (const value of direct) {
+          if (typeof value === 'string' && value.trim()) {
+            return value.trim();
+          }
+        }
+
+        const nested = [payload.data, payload.result, payload.response, payload.body];
+        for (const value of nested) {
+          if (value && typeof value === 'object') {
+            const nestedText = extractCoverLetterText(value);
+            if (nestedText) return nestedText;
+          }
+        }
+
+        // Some backends return a JSON string in "detail".
+        if (typeof payload.detail === 'string' && payload.detail.trim()) {
+          try {
+            const parsedDetail = JSON.parse(payload.detail);
+            const detailText = extractCoverLetterText(parsedDetail);
+            if (detailText) return detailText;
+          } catch {
+            return payload.detail.trim();
+          }
+        }
+
+        return '';
+      };
+
+      const letterText = extractCoverLetterText(data);
+
+      if (!letterText) {
+        throw new Error(`Cover letter was empty. Response keys: ${Object.keys(data || {}).join(', ')}`);
+      }
+
+      setGeneratedCoverLetters(prev => ({
+        ...prev,
+        [currentJob.id]: letterText
+      }));
+    } catch (err) {
+      setCoverLetterError(err.message || 'Failed to generate cover letter.');
+    } finally {
+      setIsGeneratingCoverLetter(false);
+    }
+  };
+
   const currentJob = jobs[currentIndex];
+  const currentCoverLetter = currentJob ? (generatedCoverLetters[currentJob.id] || '').trim() : '';
   const isFinished = !loading && currentIndex >= jobs.length;
+
+  useEffect(() => {
+    setIsCoverLetterModalOpen(false);
+  }, [currentIndex]);
 
   // Fetch company whenever currentJob changes
   useEffect(() => {
@@ -265,6 +360,94 @@ function CandidateDashboard({ userName }) {
                     </select>
                   </div>
                 )}
+
+                <div className="resume-select-section" style={{
+                  marginTop: '1rem',
+                  padding: '1rem',
+                  background: 'rgba(20, 184, 166, 0.06)',
+                  borderRadius: '12px',
+                  border: '1px solid rgba(20, 184, 166, 0.25)'
+                }}>
+                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '0.75rem' }}>
+                    <label style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '0.5rem',
+                      fontWeight: 600,
+                      fontSize: '0.9rem',
+                      color: '#0f766e'
+                    }}>
+                      <FileText size={16} />
+                      Optional: Generate cover letter
+                    </label>
+                    <button
+                      type="button"
+                      onClick={handleGenerateCoverLetter}
+                      disabled={isGeneratingCoverLetter}
+                      style={{
+                        padding: '0.5rem 0.9rem',
+                        borderRadius: '8px',
+                        border: 'none',
+                        background: isGeneratingCoverLetter ? '#94a3b8' : '#0d9488',
+                        color: 'white',
+                        fontWeight: 600,
+                        fontSize: '0.85rem',
+                        cursor: isGeneratingCoverLetter ? 'not-allowed' : 'pointer'
+                      }}
+                    >
+                      {isGeneratingCoverLetter ? 'Generating...' : 'Generate'}
+                    </button>
+                  </div>
+
+                  {coverLetterError && (
+                    <div style={{ marginTop: '0.6rem', color: '#dc2626', fontSize: '0.85rem' }}>
+                      {coverLetterError}
+                    </div>
+                  )}
+
+                  {currentCoverLetter && (
+                    <div style={{ marginTop: '0.8rem', background: 'white', borderRadius: '10px', border: '1px solid #cbd5e1', padding: '0.75rem' }}>
+                      <div style={{ fontSize: '0.75rem', color: '#64748b', textTransform: 'uppercase', fontWeight: 700, marginBottom: '0.6rem' }}>
+                        Cover Letter Ready
+                      </div>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', flexWrap: 'wrap' }}>
+                        <button
+                          type="button"
+                          onClick={() => setIsCoverLetterModalOpen(true)}
+                          style={{
+                            padding: '0.45rem 0.8rem',
+                            borderRadius: '8px',
+                            border: 'none',
+                            background: '#ecfeff',
+                            color: '#0f766e',
+                            fontWeight: 700,
+                            fontSize: '0.82rem',
+                            cursor: 'pointer'
+                          }}
+                        >
+                          View Cover Letter
+                        </button>
+                        <button
+                          type="button"
+                          onClick={handleGenerateCoverLetter}
+                          disabled={isGeneratingCoverLetter}
+                          style={{
+                            border: 'none',
+                            background: 'transparent',
+                            color: isGeneratingCoverLetter ? '#94a3b8' : '#0d9488',
+                            fontWeight: 600,
+                            fontSize: '0.8rem',
+                            textDecoration: 'underline',
+                            cursor: isGeneratingCoverLetter ? 'not-allowed' : 'pointer',
+                            padding: 0
+                          }}
+                        >
+                          {isGeneratingCoverLetter ? 'Re-generating...' : 'Re-generate cover letter'}
+                        </button>
+                      </div>
+                    </div>
+                  )}
+                </div>
               </div>
 
               <div className="card-actions">
@@ -289,6 +472,61 @@ function CandidateDashboard({ userName }) {
         )}
 
       </main>
+
+      {isCoverLetterModalOpen && currentCoverLetter && (
+        <div
+          onClick={() => setIsCoverLetterModalOpen(false)}
+          style={{
+            position: 'fixed',
+            inset: 0,
+            background: 'rgba(0,0,0,0.65)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            zIndex: 99999,
+            backdropFilter: 'blur(3px)'
+          }}
+        >
+          <div
+            onClick={(e) => e.stopPropagation()}
+            style={{
+              width: '90%',
+              maxWidth: '680px',
+              maxHeight: '80vh',
+              overflowY: 'auto',
+              background: 'white',
+              borderRadius: '16px',
+              padding: '1.5rem',
+              boxShadow: '0 20px 50px rgba(0,0,0,0.3)',
+              position: 'relative'
+            }}
+          >
+            <button
+              onClick={() => setIsCoverLetterModalOpen(false)}
+              style={{
+                position: 'absolute',
+                top: '0.9rem',
+                right: '0.9rem',
+                background: '#f8fafc',
+                border: '1px solid #e2e8f0',
+                borderRadius: '999px',
+                cursor: 'pointer',
+                width: '32px',
+                height: '32px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center'
+              }}
+            >
+              <X size={18} />
+            </button>
+            <h3 style={{ marginTop: 0, marginBottom: '0.8rem', color: '#0f172a' }}>Cover Letter</h3>
+            <div style={{ whiteSpace: 'pre-wrap', lineHeight: 1.6, color: '#334155', fontSize: '0.95rem' }}>
+              {currentCoverLetter}
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

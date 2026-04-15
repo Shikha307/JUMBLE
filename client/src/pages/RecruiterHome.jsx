@@ -47,7 +47,10 @@ export default function RecruiterHome() {
             skills: Array.isArray(c.skills) ? c.skills : [],
             linkedin: c.linkedin || c.socialLinks?.linkedin || '',
             email: c.email || '',
-            resumeUrl: resumeUrl
+            resumeUrl: resumeUrl,
+            coverLetterText: typeof c.coverLetterText === 'string' && c.coverLetterText.trim().length > 0
+              ? c.coverLetterText
+              : null
           };
         });
 

@@ -28,4 +28,5 @@ public class Swipe {
     private SwipeDirection direction;
     private Instant timestamp;
     private String resumeId;
+    private String coverLetterText;
 }

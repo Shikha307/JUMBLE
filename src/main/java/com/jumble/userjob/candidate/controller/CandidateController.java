@@ -52,7 +52,7 @@ public class CandidateController {
 
     @GetMapping("/{id}")
     public ResponseEntity<Candidate> getUserById(@PathVariable String id) {
-        return userService.getUserById(id)
+        return userService.getUserByIdWithoutResume(id)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
