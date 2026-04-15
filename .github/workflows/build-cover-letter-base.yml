@@ -1,0 +1,41 @@
+name: Build & Push Cover Letter Base Image
+
+on:
+  push:
+    paths:
+      - 'cover-letter-service/requirements.txt'
+      - 'cover-letter-service/Dockerfile.base'
+      - '.github/workflows/build-cover-letter-base.yml'
+    branches:
+      - main
+  workflow_dispatch:
+
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: ${{ github.repository_owner }}/cover-letter-base
+
+jobs:
+  build-base:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Log in to the Container registry
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build and push cover letter base Docker image
+        uses: docker/build-push-action@v5
+        with:
+          context: cover-letter-service
+          file: cover-letter-service/Dockerfile.base
+          push: true
+          tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest

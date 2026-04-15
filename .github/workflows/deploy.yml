@@ -106,7 +106,32 @@ jobs:
           docker push $ECR_REGISTRY/jumble/ml-worker:latest
 
   # ─────────────────────────────────────────────
-  # 4. Build & push nginx (API Gateway)
+  # 4. Build & push cover-letter (Python)
+  # ─────────────────────────────────────────────
+  cover-letter:
+    name: cover-letter service
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ env.AWS_REGION }}
+
+      - name: Login to Amazon ECR
+        uses: aws-actions/amazon-ecr-login@v2
+
+      - name: Build and push cover-letter image
+        run: |
+          docker build --build-arg BASE_IMAGE=ghcr.io/${{ github.repository_owner }}/cover-letter-base:latest -t $ECR_REGISTRY/jumble/cover-letter:latest -f cover-letter-service/Dockerfile cover-letter-service/
+          docker push $ECR_REGISTRY/jumble/cover-letter:latest
+
+  # ─────────────────────────────────────────────
+  # 5. Build & push nginx (API Gateway)
   # ─────────────────────────────────────────────
   nginx:
     name: nginx gateway
@@ -131,7 +156,7 @@ jobs:
           docker push $ECR_REGISTRY/jumble/nginx:latest
 
   # ─────────────────────────────────────────────
-  # 5. Build React frontend & deploy to S3
+  # 6. Build React frontend & deploy to S3
   # ─────────────────────────────────────────────
   frontend:
     name: frontend (React/Vite)
@@ -169,11 +194,11 @@ jobs:
         run: aws s3 sync dist/ s3://${{ secrets.FRONTEND_S3_BUCKET }} --delete
 
   # ─────────────────────────────────────────────
-  # 6. Deploy: force new ECS deployments
+  # 7. Deploy: force new ECS deployments
   deploy:
     name: Deploy to ECS
     runs-on: ubuntu-latest
-    needs: [user-job, swipe-match, ml-worker, nginx]
+    needs: [user-job, swipe-match, ml-worker, cover-letter, nginx]
     steps:
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v4
@@ -195,5 +220,8 @@ jobs:
 
           echo "Deploying ml-worker-service..."
           aws ecs update-service --cluster $ECS_CLUSTER --service ml-worker-service --force-new-deployment --no-cli-pager
+
+          echo "Deploying cover-letter-service..."
+          aws ecs update-service --cluster $ECS_CLUSTER --service cover-letter-service --force-new-deployment --no-cli-pager
 
           echo "All services deployment triggered successfully!"

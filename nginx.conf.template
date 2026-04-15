@@ -32,6 +32,13 @@ http {
             proxy_set_header X-Real-IP $remote_addr;
         }
 
+        # Cover Letter AI Service
+        location /api/generate-cover-letter {
+            proxy_pass http://${COVER_LETTER_HOST}:8000/generate-cover-letter;
+            proxy_set_header Host $host;
+            proxy_set_header X-Real-IP $remote_addr;
+        }
+
         # Healthcheck endpoint
         location /health {
             return 200 'healthy\n';
