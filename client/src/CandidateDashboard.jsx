@@ -11,7 +11,9 @@ function CandidateDashboard({ userName }) {
   const [currentCompany, setCurrentCompany] = useState("Loading company...");
   const [animatingDirection, setAnimatingDirection] = useState(null);
 
-  // Resume selection state
+  const [isGeneratingCL, setIsGeneratingCL] = useState(false);
+  const [generatedCL, setGeneratedCL] = useState(null);
+  const [clError, setClError] = useState(null);
   const [resumes, setResumes] = useState([]);
   const [defaultResumeName, setDefaultResumeName] = useState(null);
   const [selectedResumeId, setSelectedResumeId] = useState('');
@@ -120,6 +122,85 @@ function CandidateDashboard({ userName }) {
       console.error('Swipe error:', err);
     }
   };
+
+  const handleGenerateCoverLetter = async () => {
+    const currentJob = jobs[currentIndex];
+    if (!currentJob) return;
+    
+    setIsGeneratingCL(true);
+    setClError(null);
+    setGeneratedCL(null);
+
+    try {
+      const candidateId = localStorage.getItem('id');
+      const candidateName = localStorage.getItem('name') || "Candidate";
+      const token = localStorage.getItem('token');
+      
+      const queryParams = (selectedResumeId && selectedResumeId !== 'default') ? `?resumeId=${selectedResumeId}` : '';
+      const candRes = await fetch(`${USER_JOB_API}/api/candidates/${candidateId}/resume${queryParams}`, {
+        headers: token ? { 'Authorization': `Bearer ${token}` } : {}
+      });
+      
+      if (!candRes.ok) {
+        throw new Error("Could not fetch your resume. Please make sure you have uploaded one in your profile.");
+      }
+      
+      const blob = await candRes.blob();
+      
+      const reader = new FileReader();
+      reader.readAsDataURL(blob);
+      
+      reader.onloadend = async () => {
+        let base64data = reader.result;
+        const base64Prefix = base64data.indexOf('base64,');
+        if (base64Prefix !== -1) {
+          base64data = base64data.substring(base64Prefix + 7);
+        }
+        
+        const jobDesc = currentJob.description || currentJob.requirements || `Job Title: ${currentJob.roleName || currentJob.title}`;
+        
+        try {
+          const aiRes = await fetch("http://localhost:8000/generate-cover-letter", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+              candidate_name: candidateName,
+              job_description: jobDesc,
+              resume_base64: base64data
+            })
+          });
+          
+          if (!aiRes.ok) {
+            const errData = await aiRes.json();
+            throw new Error(errData.detail || "Failed to generate cover letter.");
+          }
+          
+          const aiData = await aiRes.json();
+          setGeneratedCL(aiData.cover_letter);
+        } catch (err) {
+          setClError(err.message);
+        } finally {
+          setIsGeneratingCL(false);
+        }
+      };
+      
+      reader.onerror = () => {
+        setIsGeneratingCL(false);
+        setClError("Failed to read resume file.");
+      };
+      
+    } catch (err) {
+      setIsGeneratingCL(false);
+      setClError(err.message);
+    }
+  };
+
+  useEffect(() => {
+    setGeneratedCL(null);
+    setClError(null);
+  }, [currentIndex]);
 
   const currentJob = jobs[currentIndex];
   const isFinished = !loading && currentIndex >= jobs.length;
@@ -265,6 +346,59 @@ function CandidateDashboard({ userName }) {
                     </select>
                   </div>
                 )}
+
+                {/* AI Cover Letter Generator Area */}
+                <div style={{ marginTop: '1.5rem', width: '100%', padding: '1.5rem', background: 'linear-gradient(135deg, #f0fdfa, #ccfbf1)', borderRadius: '16px', border: '1px solid #99f6e4', textAlign: 'left', boxSizing: 'border-box' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1rem' }}>
+                    <h4 style={{ margin: 0, color: '#0f766e', display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '1.05rem' }}>
+                      ✨ AI Cover Letter Assistant
+                    </h4>
+                    <button 
+                      onClick={handleGenerateCoverLetter}
+                      disabled={isGeneratingCL}
+                      style={{ 
+                        padding: '0.6rem 1.2rem', 
+                        background: isGeneratingCL ? '#94a3b8' : '#0d9488', 
+                        color: 'white', border: 'none', borderRadius: '10px', fontWeight: 600, 
+                        cursor: isGeneratingCL ? 'not-allowed' : 'pointer',
+                        display: 'flex', alignItems: 'center', gap: '0.5rem',
+                        transition: 'background 0.2s'
+                      }}
+                    >
+                      {isGeneratingCL ? (
+                        <><span className="spinner" style={{ width: '14px', height: '14px', borderWidth: '2px', borderColor: 'rgba(255,255,255,0.3)', borderTopColor: 'white' }}></span> Generating...</>
+                      ) : (
+                        "Generate Cover Letter"
+                      )}
+                    </button>
+                  </div>
+                  
+                  {clError && (
+                    <div style={{ padding: '0.75rem', background: '#fef2f2', color: '#ef4444', borderRadius: '8px', fontSize: '0.9rem', marginBottom: '1rem' }}>
+                      {clError}
+                    </div>
+                  )}
+                  
+                  {generatedCL && (
+                    <div style={{ background: 'white', padding: '1.25rem', borderRadius: '12px', border: '1px solid #e2e8f0', boxShadow: '0 4px 6px -1px rgba(0,0,0,0.05)' }}>
+                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem', borderBottom: '1px solid #f1f5f9', paddingBottom: '0.75rem' }}>
+                        <span style={{ fontSize: '0.8rem', fontWeight: 700, color: '#64748b', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Generated Letter</span>
+                        <button 
+                          onClick={() => {
+                            navigator.clipboard.writeText(generatedCL);
+                            alert("Copied to clipboard!");
+                          }}
+                          style={{ fontSize: '0.8rem', padding: '0.3rem 0.75rem', background: '#f8fafc', border: '1px solid #e2e8f0', borderRadius: '6px', cursor: 'pointer', color: '#475569', fontWeight: 500 }}
+                        >
+                          Copy text
+                        </button>
+                      </div>
+                      <div style={{ whiteSpace: 'pre-wrap', color: '#334155', fontSize: '0.95rem', lineHeight: 1.6, maxHeight: '200px', overflowY: 'auto' }}>
+                        {generatedCL}
+                      </div>
+                    </div>
+                  )}
+                </div>
               </div>
 
               <div className="card-actions">
