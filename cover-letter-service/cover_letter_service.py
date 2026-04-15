@@ -25,7 +25,8 @@ Write a professional cover letter based on the following information.
 Candidate Name: {candidate_name}
 
 Rules:
-- Do NOT use placeholders such as [Your Name], [Company Name], or [Date].
+- Do NOT use placeholders such as [Your Name], [Company Name], [Date], [Your Email], or [Today's Date].
+- If information like email, date, or contact info is missing, do not include placeholders for it. Omit it entirely or format it without placeholders.
 - Use the candidate name provided above.
 - If the exact company name is not known, address the letter to "Hiring Manager".
 - Keep it professional and concise.
