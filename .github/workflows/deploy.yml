@@ -125,6 +125,13 @@ jobs:
       - name: Login to Amazon ECR
         uses: aws-actions/amazon-ecr-login@v2
 
+      - name: Log in to GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
       - name: Build and push cover-letter image
         run: |
           docker build --build-arg BASE_IMAGE=ghcr.io/shikha307/cover-letter-base:latest -t $ECR_REGISTRY/jumble/cover-letter:latest -f cover-letter-service/Dockerfile cover-letter-service/
