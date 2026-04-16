@@ -1,13 +1,6 @@
 name: Build & Push Cover Letter Base Image
 
 on:
-  push:
-    paths:
-      - 'cover-letter-service/requirements.txt'
-      - 'cover-letter-service/Dockerfile.base'
-      - '.github/workflows/build-cover-letter-base.yml'
-    branches:
-      - main
   workflow_dispatch:
 
 env:
